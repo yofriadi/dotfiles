@@ -105,5 +105,5 @@ alias nf="npm run format"
 alias nd="npm run dev"
 alias nb="npm run build"
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=~/.local/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin # Export go path
+export PATH=~/.local/bin:$PATH # Export AWS path
