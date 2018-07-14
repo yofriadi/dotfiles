@@ -16,7 +16,6 @@ set mat=2  " How many tenths of a second to blink when matching brackets
 " set incsearch  " search as characters are entered
 set hlsearch  " highlight matches search
 set foldenable  " enable folding
-let mapleader="  "  " leader is double space
 set autoread  " Set to auto read when a file is changed from the outside
 set so=2  " Set 3 lines to the cursor - when moving vertically using j/k
 set ruler  " Always show current position
@@ -29,6 +28,9 @@ set background=dark  "set background to dark
 set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
+set autoread  " refresh file if changed from outside
+
+let mapleader=" "  " leader is space
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -66,7 +68,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-sensible'
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+"Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+"Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -74,8 +77,19 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-commentary'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
+Plug 'junegunn/gv.vim', {'on': 'GV'}
 " Plug 'terryma/vim-multiple-cursors'
+
+" Javascript language support
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'rhysd/npm-debug-log.vim'
+Plug 'cdata/vim-tagged-template'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
@@ -83,15 +97,18 @@ Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
 " Initialize plugin system
 call plug#end()
 
+colorscheme molokai
+
 " NERDTree
 let NERDTreeShowHidden=1
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
-let g:deoplete#enable_at_startup = 1
-colorscheme molokai
+" Use deoplete.
+"let g:deoplete#enable_at_startup = 1
 
+" q
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='dark'
