@@ -74,6 +74,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
+Plug 'w0rp/ale'
 " Plug 'terryma/vim-multiple-cursors'
 
 " On-demand loading
