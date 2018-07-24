@@ -1,21 +1,19 @@
-set termguicolors  " use true color
-set guicursor=n:blinkon1  " set blinking cursor
-" syntax enable  " enable syntax processing
+set termguicolors  " Use true color
+set guicursor=n:blinkon1  " Set blinking cursor
 set shiftwidth=2  " 1 tab = 2 spaces
-set tabstop=2  " number of visual spaces per tab
-set softtabstop=2  " number of spaces in tab when editing
-set expandtab  " tabs are spaces
+set tabstop=2  " Number of visual spaces per tab
+set softtabstop=2  " Number of spaces in tab when editing
+set expandtab  " Tabs are spaces
 set smarttab  " Be smart when using tabs
-set number  " show line number
-set showcmd  " show command in bottom bar 
-set cursorline  " highlight current line
-set wildmenu  " visual autocomplete for command menu
-set lazyredraw  " redraw only when need to
-set showmatch  " highlight matching
+set number  " Show line number
+set showcmd  " Show command in bottom bar 
+set cursorline  " Highlight current line
+set wildmenu  " Visual autocomplete for command menu
+set lazyredraw  " Redraw only when need to
+set showmatch  " Highlight matching
 set mat=2  " How many tenths of a second to blink when matching brackets
-" set incsearch  " search as characters are entered
-set hlsearch  " highlight matches search
-set foldenable  " enable folding
+set hlsearch  " Highlight matches search
+set foldenable  " Enable folding
 set autoread  " Set to auto read when a file is changed from the outside
 set so=2  " Set 3 lines to the cursor - when moving vertically using j/k
 set ruler  " Always show current position
@@ -24,17 +22,16 @@ set hid  " A buffer becomes hidden when it is abandoned
 set ignorecase  " Ignore case when searching
 set smartcase  " When searching try to be smart about cases 
 set magic  " For regular expressions turn magic on
-set background=dark  "set background to dark
+set background=dark
 set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
-set autoread  " refresh file if changed from outside
+set whichwrap+=<,>,h,l  " cursor move beyond edges
+" set autoread  " refresh file if changed from outside
+" syntax enable  " enable syntax processing
+" set incsearch  " search as characters are entered
 
-let mapleader=" "  " leader is space
-
-" Configure backspace so it acts as it should act
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
+let mapleader=" "  " Leader is space
 
 " No annoying sound on errors
 set noerrorbells
@@ -42,7 +39,7 @@ set novisualbell
 set t_vb=
 set tm=500
 
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
+" Turn backup off
 set nobackup
 set nowb
 set noswapfile
@@ -53,23 +50,16 @@ nnoremap k gk
 nnoremap gV `[v`]
 
 " persistence undo
-set undodir=~/.config/nvim/undodir
-set undofile
+" set undodir=~/.config/nvim/undodir
+" set undofile
 
-" Return to last edit position when opening files (You want this!)
+" Return to last edit position when opening files
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" Specify a directory for Vim plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
+" Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
-
-" Make sure you use single quotes
-
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-sensible'
-"Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-"Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -79,36 +69,36 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 Plug 'junegunn/gv.vim', {'on': 'GV'}
-" Plug 'terryma/vim-multiple-cursors'
+Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
+Plug 'edkolev/tmuxline.vim'
+Plug 'tpope/vim-obsession'
 
 " Javascript language support
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
 Plug 'cdata/vim-tagged-template'
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
-
-" Initialize plugin system
 call plug#end()
 
+" Reserved for later
+" Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" Plug 'terryma/vim-multiple-cursors'
+
+" Use deoplete.
+" let g:deoplete#enable_at_startup = 1
+
+" Theme
 colorscheme molokai
 
 " NERDTree
 let NERDTreeShowHidden=1
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark<Space>
-map <leader>nf :NERDTreeFind<cr>
+map <leader>n :NERDTreeToggle<cr>
 
-" Use deoplete.
-"let g:deoplete#enable_at_startup = 1
-
-" q
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='dark'
