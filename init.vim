@@ -76,6 +76,8 @@ Plug 'junegunn/gv.vim', {'on': 'GV'}
 Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
 Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-obsession'
+Plug 'RRethy/vim-illuminate'
+Plug 'mileszs/ack.vim'
 
 " Javascript language support
 Plug 'pangloss/vim-javascript'
@@ -112,3 +114,13 @@ let g:airline_right_sep=''
 " Yankstack
 nmap <c-p> <Plug>yankstack_substitute_older_paste
 nmap <c-n> <Plug>yankstack_substitute_newer_paste
+
+" vim-illuminate
+let g:Illuminate_ftblacklist = ['nerdtree']
+let g:Illuminate_delay = 0
+
+" fix jsx end-tag gets different color
+hi link xmlEndTag xmlTag
+
+" ack.vim | ag & ack integration
+let g:ackprg = 'ag --vimgrep'
