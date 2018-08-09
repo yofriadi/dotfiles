@@ -78,6 +78,7 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'tpope/vim-obsession'
 Plug 'RRethy/vim-illuminate'
 Plug 'mileszs/ack.vim'
+Plug 'Shougo/deol.nvim'
 
 " Javascript language support
 Plug 'pangloss/vim-javascript'
@@ -122,5 +123,12 @@ let g:Illuminate_delay = 0
 " fix jsx end-tag gets different color
 hi link xmlEndTag xmlTag
 
+" FuzzySearch
+map <leader>f :FZF<cr>
+
 " ack.vim | ag & ack integration
 let g:ackprg = 'ag --vimgrep'
+
+" Deol
+tnoremap <ESC>   <C-\><C-n>
+map <leader>d :Deol<cr>
