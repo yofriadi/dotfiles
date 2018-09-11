@@ -27,7 +27,11 @@ set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
 set whichwrap+=<,>,h,l  " cursor move beyond edges
-" set autoread  " refresh file if changed from outside
+set noshowmode
+set noruler
+set laststatus=0
+set noshowcmd
+set autoread  " refresh file if changed from outside
 " syntax enable  " enable syntax processing
 " set incsearch  " search as characters are entered
 
@@ -49,6 +53,9 @@ nnoremap j gj
 nnoremap k gk
 nnoremap gV `[v`]
 
+nmap <Tab> :bn<CR>
+nmap <S-Tab> :bp<CR>
+
 " persistence undo
 " set undodir=~/.config/nvim/undodir
 " set undofile
@@ -58,7 +65,8 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " Vim Plug
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'tomasr/molokai'
+" Plug 'tomasr/molokai'
+Plug 'mhartington/oceanic-next'
 Plug 'tpope/vim-sensible'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -66,7 +74,7 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'edkolev/tmuxline.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
@@ -85,6 +93,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
 Plug 'cdata/vim-tagged-template'
+Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 " Reserved for later
@@ -96,7 +105,9 @@ call plug#end()
 " let g:deoplete#enable_at_startup = 1
 
 " Theme
-colorscheme molokai
+colorscheme OceanicNext
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -104,7 +115,7 @@ map <leader>n :NERDTreeToggle<cr>
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='dark'
+let g:airline_theme='oceanicnext'
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 1
