@@ -27,15 +27,16 @@ set ai " Auto indent
 set si " Smart indent
 set wrap " Wrap lines
 set whichwrap+=<,>,h,l  " cursor move beyond edges
-set noshowmode
-set noruler
-set laststatus=0
-set noshowcmd
+" set noshowmode
+" set noruler
+" set laststatus=0
+" set noshowcmd
 set autoread  " refresh file if changed from outside
 " syntax enable  " enable syntax processing
 " set incsearch  " search as characters are entered
 
 let mapleader=" "  " Leader is space
+let s:hidden_all = 1
 
 " No annoying sound on errors
 set noerrorbells
@@ -74,7 +75,7 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'edkolev/tmuxline.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}

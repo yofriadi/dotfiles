@@ -2,12 +2,12 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/yofri/.oh-my-zsh"
+  export ZSH="/home/pmn/.oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -48,7 +48,10 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
@@ -97,6 +100,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Dafuq
+# eval $(thefuck --alias)
+
+alias top="vtop"
+alias mkcert="~/go/bin/mkcert"
+alias noti="~/go/bin/noti"
+alias n="nvim"
+
+alias ni="npm i"
 alias ns="npm start"
 alias nw="npm run watch"
 alias nl="npm run lint"
@@ -105,5 +117,9 @@ alias nf="npm run format"
 alias nd="npm run dev"
 alias nb="npm run build"
 
-export PATH=$PATH:/usr/local/go/bin # Export go path
+# Google cloud shell
+alias gc="gcloud"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH=$PATH:/usr/local/go/bin  # Export Go path
 export PATH=~/.local/bin:$PATH # Export AWS path
