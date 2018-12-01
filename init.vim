@@ -88,6 +88,7 @@ Plug 'tpope/vim-obsession'
 Plug 'RRethy/vim-illuminate'
 Plug 'mileszs/ack.vim'
 Plug 'Shougo/deol.nvim'
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 " Javascript language support
 Plug 'pangloss/vim-javascript'
@@ -98,12 +99,10 @@ Plug 'leafgarland/typescript-vim'
 call plug#end()
 
 " Reserved for later
-" Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " Plug 'terryma/vim-multiple-cursors'
 
 " Use deoplete.
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 " Theme
 colorscheme OceanicNext
