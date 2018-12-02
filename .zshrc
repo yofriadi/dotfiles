@@ -100,6 +100,9 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# Z
+. ~/.z.sh
+
 # Dafuq
 # eval $(thefuck --alias)
 
@@ -108,14 +111,24 @@ alias mkcert="~/go/bin/mkcert"
 alias noti="~/go/bin/noti"
 alias n="nvim"
 
+# Node package manager
 alias ni="npm i"
 alias ns="npm start"
 alias nw="npm run watch"
 alias nl="npm run lint"
 alias nt="npm run test"
+alias ntw="npm run test:watch"
+alias ntd="npm run test:debug"
 alias nf="npm run format"
 alias nd="npm run dev"
 alias nb="npm run build"
+alias no="npm outdated"
+alias nu="npm uninstall"
+
+# Docker
+alias d="docker"
+alias dc="docker container"
+alias di="docker image"
 
 # Google cloud shell
 alias gc="gcloud"
