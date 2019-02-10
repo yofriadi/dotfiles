@@ -159,7 +159,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 " General
 Plug 'tpope/vim-sensible'
 Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
 
 " Theming
 Plug 'mhartington/oceanic-next'
@@ -168,8 +167,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 " File listing
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
 Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
+Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
 
 " Auto completion
 Plug 'Shougo/deol.nvim'
@@ -180,21 +179,22 @@ Plug 'ervandew/supertab'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
-Plug 'cdata/vim-tagged-template'
 
 " Buffer
 Plug 'jlanzarotta/bufexplorer'
 Plug 'schickling/vim-bufonly'
 Plug 'wesQ3/vim-windowswap'
 
+" Version control
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim', {'on': 'GV'}
+
 " Uncategorized
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'
 Plug 'w0rp/ale'
-Plug 'junegunn/gv.vim', {'on': 'GV'}
 Plug 'tpope/vim-obsession'
 Plug 'RRethy/vim-illuminate'
 Plug 'mileszs/ack.vim'
@@ -223,14 +223,13 @@ let NERDTreeShowHidden=1
 map <leader><Tab> :NERDTreeToggle<CR>
 
 " vim-airline
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tmuxline#enabled = 1
+let g:airline_skip_empty_sections = 1
 let g:airline_theme='oceanicnext'
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tmuxline#enabled = 1
 let g:tmuxline_preset = 'nightly_fox'
-let g:airline_left_sep=''
-let g:airline_right_sep=''
 
 " Yankstack
 nmap <c-p> <Plug>yankstack_substitute_older_paste
@@ -241,8 +240,9 @@ let g:Illuminate_ftblacklist = ['nerdtree']
 let g:Illuminate_delay = 0
 
 " ale auto fix
-let g:alefixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
 let g:ale_fix_on_save = 1
+map <leader>x :ALEFix<cr>
 
 " FuzzySearch
 map <leader>f :FZF<cr>
@@ -265,7 +265,8 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 " Reserved
-" Plug 'tomasr/molokai'
 " Plug 'leafgarland/typescript-vim'
 " Plug 'junegunn/rainbow_parentheses.vim'
 " Plug 'terryma/vim-multiple-cursors'
+" Plug 'honza/vim-snippets'
+" Plug 'cdata/vim-tagged-template'
