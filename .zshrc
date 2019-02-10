@@ -103,6 +103,9 @@ export NVM_DIR="$HOME/.nvm"
 # Z
 . ~/.z.sh
 
+# z.lua
+eval "$(lua ~/.z.lua --init zsh)"
+
 # Dafuq
 # eval $(thefuck --alias)
 
@@ -110,8 +113,10 @@ alias top="vtop"
 alias mkcert="~/go/bin/mkcert"
 alias noti="~/go/bin/noti"
 alias n="nvim"
+alias k="kak"
 
 # Node package manager
+alias niy="npm init -y"
 alias ni="npm i"
 alias ns="npm start"
 alias nw="npm run watch"
@@ -119,6 +124,8 @@ alias nl="npm run lint"
 alias nt="npm run test"
 alias ntw="npm run test:watch"
 alias ntd="npm run test:debug"
+alias ntc="npm run test:coverage"
+alias nti="npm run test:integration"
 alias nf="npm run format"
 alias nd="npm run dev"
 alias nb="npm run build"
@@ -129,10 +136,18 @@ alias nu="npm uninstall"
 alias d="docker"
 alias dc="docker container"
 alias di="docker image"
+alias db="docker build"
+alias dr="docker run"
+alias dn="docker network"
+alias dp="docker pull"
 
 # Google cloud shell
 alias gc="gcloud"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH=$PATH:/usr/local/go/bin  # Export Go path
+export GOPATH=~/go
+export GOBIN=$GOPATH:/bin
 export PATH=~/.local/bin:$PATH # Export AWS path
+
+[[ -s "/home/pmn/.gvm/scripts/gvm" ]] && source "/home/pmn/.gvm/scripts/gvm"

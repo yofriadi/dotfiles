@@ -19,8 +19,8 @@ window:
   # Falls back to size specified by window manager if set to 0x0.
   # (changes require restart)
   dimensions:
-    columns: 252
-    lines: 64
+    columns: 178
+    lines: 45
 
   # Adds this many blank pixels of padding around the window
   # Units are physical pixels; this is not DPI aware.
@@ -31,7 +31,7 @@ window:
 
   # Window decorations
   # Setting this to false will result in window without borders and title bar.
-  decorations: false
+  decorations: none
 
 # Display tabs using this many cells (changes require restart)
 tabspaces: 2
@@ -97,7 +97,7 @@ font:
   # screens and make reading text a little easier.
   # On X11 it is possible to change the DPI for each instance of alacritty by using
   # `WINIT_HIDPI_FACTOR=1.0 alacritty` to scale the font.
-  scale_with_dpi: true
+  # scale_with_dpi: true
 
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
@@ -109,7 +109,7 @@ render_timer: false
 
 # Use custom cursor colors. If true, display the cursor in the cursor.foreground
 # and cursor.background colors, otherwise invert the colors of the cursor.
-custom_cursor_colors: false
+# custom_cursor_colors: false
 
 # Colors (Tomorrow Night Bright)
 colors:
@@ -229,14 +229,15 @@ mouse:
   # scrolling for applications like `man`.
   #
   # To disable this completely, set `faux_scrollback_lines` to 0.
-  faux_scrollback_lines: 1
+  faux_scrolling_lines: 1
+  hide_when_typing: false
 
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
 dynamic_title: true
 
-hide_cursor_when_typing: false
+# hide_cursor_when_typing: false
 
 # Style of the cursor
 #
@@ -244,10 +245,12 @@ hide_cursor_when_typing: false
 # - Block
 # - Underline
 # - Beam
-cursor_style: Block
+cursor:
+  style: Block
+  unfocused_hollow: true
 
 # Whether the cursor should be a hollow block on window focus loss
-unfocused_hollow_cursor: true
+# unfocused_hollow_cursor: true
 
 # Live config reload (changes require restart)
 live_config_reload: true
