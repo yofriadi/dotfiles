@@ -2,32 +2,38 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/pmn/.oh-my-zsh"
+export ZSH="/home/yofriadi/.oh-my-zsh"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="spaceship"
+ZSH_THEME="robbyrussell"
 
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
 # DISABLE_AUTO_UPDATE="true"
 
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
+
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -57,13 +63,12 @@ ZSH_THEME="spaceship"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -84,9 +89,6 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -96,26 +98,15 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# Z
-. ~/.z.sh
-
-# z.lua
-eval "$(lua ~/.z.lua --init zsh)"
-
-# Dafuq
-# eval $(thefuck --alias)
-
-alias top="vtop"
-alias mkcert="~/go/bin/mkcert"
-alias noti="~/go/bin/noti"
 alias n="nvim"
-alias k="kak"
+alias cat="bat"
 
-# Node package manager
+# exa
+alias ls="exa"
+alias l="exa -l"
+alias lsa="exa -la"
+
+# npm
 alias niy="npm init -y"
 alias ni="npm i"
 alias ns="npm start"
@@ -132,7 +123,20 @@ alias nb="npm run build"
 alias no="npm outdated"
 alias nu="npm uninstall"
 
-# Docker
+# yarn
+alias ys="yarn start"
+alias yw="yarn run watch"
+alias yl="yarn run lint"
+alias yt="yarn run test"
+alias ytw="yarn run test:watch"
+alias ytd="yarn run test:debug"
+alias ytc="yarn run test:coverage"
+alias yti="yarn run test:integration"
+alias yf="yarn run format"
+alias yd="yarn run dev"
+alias yb="yarn run build"
+
+# docker
 alias d="docker"
 alias dc="docker container"
 alias di="docker image"
@@ -140,14 +144,21 @@ alias db="docker build"
 alias dr="docker run"
 alias dn="docker network"
 alias dp="docker pull"
+alias dv="docker volume"
+alias dcu="docker-compose up"
+alias dcd="docker-compose down"
 
-# Google cloud shell
-alias gc="gcloud"
+# go
+alias gor="go run"
+alias gob="go build"
+alias got="gotest"
+export GOPATH="$HOME/.asdf/installs/golang/1.12.7/packages"
+
+# asdf
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+# z.lua
+eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH=$PATH:/usr/local/go/bin  # Export Go path
-export GOPATH=~/go
-export GOBIN=$GOPATH:/bin
-export PATH=~/.local/bin:$PATH # Export AWS path
-
-[[ -s "/home/pmn/.gvm/scripts/gvm" ]] && source "/home/pmn/.gvm/scripts/gvm"

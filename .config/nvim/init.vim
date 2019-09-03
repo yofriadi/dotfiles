@@ -30,6 +30,7 @@ set wildignore=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 set undodir=~/.config/nvim/undodir
 set undofile
+set clipboard+=unnamedplus
 
 """ MAPPINGS
 " Leader is space
@@ -49,8 +50,8 @@ nmap <S-Tab> :bp<CR>
 nmap <leader>n :noh<CR>
 
 " This turns off Vim’s crazy default regex characters and makes searches use normal regexes
-nnoremap / /\v
-vnoremap / /\v
+"nnoremap / /\v
+"vnoremap / /\v
 
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
@@ -150,6 +151,9 @@ augroup end
 nnoremap <leader><leader> <c-^>
 set autowrite
 
+" file type indentation for golang
+autocmd FileType go setlocal shiftwidth=8 tabstop=8
+
 " Sudo saves the file 
 " command W w !sudo tee % > /dev/null
 
@@ -161,7 +165,7 @@ Plug 'tpope/vim-sensible'
 Plug 'SirVer/ultisnips'
 
 " Theming
-Plug 'mhartington/oceanic-next'
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -175,10 +179,17 @@ Plug 'Shougo/deol.nvim'
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'ervandew/supertab'
 
+" Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+ 
 " Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'rhysd/npm-debug-log.vim'
+
+" Typescript
+Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim'
 
 " Buffer
 Plug 'jlanzarotta/bufexplorer'
@@ -199,7 +210,7 @@ Plug 'tpope/vim-obsession'
 Plug 'RRethy/vim-illuminate'
 Plug 'mileszs/ack.vim'
 Plug 'edkolev/tmuxline.vim'
-Plug 'majutsushi/tagbar'
+"Plug 'christoomey/vim-system-copy'
 
 call plug#end()
 
@@ -214,9 +225,7 @@ map <leader>o :BufExplorer<cr>
 let g:deoplete#enable_at_startup = 1
 
 " Theme
-colorscheme OceanicNext
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
+colorscheme gruvbox
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -227,7 +236,7 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tmuxline#enabled = 1
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='oceanicnext'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:tmuxline_preset = 'nightly_fox'
 
@@ -248,14 +257,14 @@ map <leader>x :ALEFix<cr>
 map <leader>f :FZF<cr>
 
 " ack.vim | ag & ack integration
-let g:ackprg = 'ag --vimgrep'
+"let g:ackprg = 'ag --vimgrep'
 
 " Deol
 tnoremap <ESC>   <C-\><C-n>
 map <leader>d :Deol<cr>
 
 " Tagbar
-nmap <leader><S-Tab> :TagbarToggle<CR>
+"nmap <leader><S-Tab> :TagbarToggle<CR>
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -265,8 +274,8 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 " Reserved
-" Plug 'leafgarland/typescript-vim'
-" Plug 'junegunn/rainbow_parentheses.vim'
-" Plug 'terryma/vim-multiple-cursors'
-" Plug 'honza/vim-snippets'
-" Plug 'cdata/vim-tagged-template'
+"Plug 'majutsushi/tagbar'
+"Plug 'honza/vim-snippets'
+"Plug 'cdata/vim-tagged-template'
+"Plug 'terryma/vim-multiple-cursors'
+"Plug 'junegunn/rainbow_parentheses.vim'
