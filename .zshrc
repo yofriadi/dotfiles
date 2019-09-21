@@ -2,13 +2,42 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/yofriadi/.oh-my-zsh"
+# macOS
+export ZSH="/Users/yofri/.oh-my-zsh"
+# Linux
+export ZSH="/home/yofri/.oh-my-zsh"
+
+# antigen still not working
+source /usr/local/share/antigen/antigen.zsh
+
+# Load oh-my-zsh's library
+antigen use oh-my-zsh
+
+# Antigen bundle
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle bobthecow/git-flow-completion
+
+# Load theme
+antigen theme spaceship
+
+# Install
+antigen apply
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="spaceship"
+
+# SPACESHIP_GIT_PREFIX="on"
+# SPACESHIP_KUBECONTEXT_SYMBOL=☸️" "
+# SPACESHIP_GIT_SHOW=false
+SPACESHIP_GIT_BRANCH_SHOW=false
+SPACESHIP_NODE_SHOW=false
+SPACESHIP_KUBECONTEXT_SHOW=false
+SPACESHIP_PACKAGE_SHOW=false
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,7 +97,12 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+zsh-syntax-highlighting
+zsh-autosuggestions
+zsh-completions
+git-flow-completion
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -98,7 +132,14 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export LC_ALL=en_US.UTF-8
+# export HOMEBREW_GITHUB_API_TOKEN=20cf99cd519e35ec932169edb4f669bd802ebe9d
+
+# openvpn need this
+export PATH=$(brew --prefix openvpn)/sbin:$PATH
+
 alias n="nvim"
+alias g="git"
 alias cat="bat"
 
 # exa
@@ -106,35 +147,26 @@ alias ls="exa"
 alias l="exa -l"
 alias lsa="exa -la"
 
-# npm
-alias niy="npm init -y"
-alias ni="npm i"
-alias ns="npm start"
-alias nw="npm run watch"
-alias nl="npm run lint"
-alias nt="npm run test"
-alias ntw="npm run test:watch"
-alias ntd="npm run test:debug"
-alias ntc="npm run test:coverage"
-alias nti="npm run test:integration"
-alias nf="npm run format"
-alias nd="npm run dev"
-alias nb="npm run build"
-alias no="npm outdated"
-alias nu="npm uninstall"
+# git-flow
+alias gfi="git flow init"
+alias gffs="git flow feature start"
+alias gfff="git flow feature finish"
+alias gffp="git flow feature publish"
 
 # yarn
 alias ys="yarn start"
-alias yw="yarn run watch"
-alias yl="yarn run lint"
-alias yt="yarn run test"
-alias ytw="yarn run test:watch"
-alias ytd="yarn run test:debug"
-alias ytc="yarn run test:coverage"
-alias yti="yarn run test:integration"
-alias yf="yarn run format"
-alias yd="yarn run dev"
-alias yb="yarn run build"
+alias yw="yarn watch"
+alias yl="yarn lint"
+alias yt="yarn test"
+alias ylf="yarn lint:fix"
+alias ytw="yarn test:watch"
+alias ytd="yarn test:debug"
+alias ytc="yarn test:coverage"
+alias yti="yarn test:integration"
+alias yp="yarn prettier"
+alias yd="yarn dev"
+alias yb="yarn build"
+export PATH="$(yarn global bin):$PATH"
 
 # docker
 alias d="docker"
@@ -152,13 +184,11 @@ alias dcd="docker-compose down"
 alias gor="go run"
 alias gob="go build"
 alias got="gotest"
-export GOPATH="$HOME/.asdf/installs/golang/1.12.7/packages"
-
-# asdf
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
 
 # z.lua
 eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash

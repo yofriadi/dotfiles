@@ -49,10 +49,6 @@ nmap <S-Tab> :bp<CR>
 " Remove highlight
 nmap <leader>n :noh<CR>
 
-" This turns off Vim’s crazy default regex characters and makes searches use normal regexes
-"nnoremap / /\v
-"vnoremap / /\v
-
 " Move a line of text using ALT+[jk] or Command+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
