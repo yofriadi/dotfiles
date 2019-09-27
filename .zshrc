@@ -133,7 +133,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export LC_ALL=en_US.UTF-8
-# export HOMEBREW_GITHUB_API_TOKEN=20cf99cd519e35ec932169edb4f669bd802ebe9d
 
 # openvpn need this
 export PATH=$(brew --prefix openvpn)/sbin:$PATH
