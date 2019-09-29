@@ -1,32 +1,32 @@
-# Path to your oh-my-zsh installation.
-# export ZSH="/Users/yofri/.oh-my-zsh"
-
-# Set zsh theme
-ZSH_THEME="spaceship"
+export ZSH="$HOME/.oh-my-zsh"
+export PATH="$(yarn global bin):$PATH"
 
 # Uncomment the following line to disable auto-setting terminal title.
 DISABLE_AUTO_TITLE="true"
 
-# Load plugins
-plugins=(
-  zsh-syntax-highlighting
-  zsh-autosuggestions
-  zsh-completions
-)
-
 source $ZSH/oh-my-zsh.sh
+source ~/.zplug/init.zsh
 
-# User configuration
+zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
+zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug load
 
+### User configuration ###
 SPACESHIP_GIT_BRANCH_SHOW=false
 SPACESHIP_NODE_SHOW=false
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_PACKAGE_SHOW=false
 
-export LC_ALL=en_US.UTF-8
-export HOMEBREW_GITHUB_API_TOKEN=20cf99cd519e35ec932169edb4f669bd802ebe9d
-export PATH=$(brew --prefix openvpn)/sbin:$PATH
-export PATH="$(yarn global bin):$PATH"
+# z.lua
+eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
 
 alias n="nvim"
 alias g="git"
@@ -88,11 +88,3 @@ alias dcd="docker-compose down"
 alias gor="go run"
 alias gob="go build"
 alias got="gotest"
-
-# z.lua
-eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
