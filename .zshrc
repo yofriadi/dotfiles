@@ -15,10 +15,9 @@ zplug "zsh-users/zsh-completions"
 zplug load
 
 ### User configuration ###
-SPACESHIP_GIT_BRANCH_SHOW=false
 SPACESHIP_NODE_SHOW=false
 SPACESHIP_KUBECONTEXT_SHOW=false
-SPACESHIP_PACKAGE_SHOW=false
+SPACESHIP_DOCKER_SHOW=false
 
 # z.lua
 eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
@@ -41,11 +40,13 @@ alias gd="git diff"
 alias gp="git push"
 alias gl="git pull"
 alias gr="git reset"
+alias gf="git fetch"
 alias gss="git stash save"
 alias gsl="git stash list"
-alias sp="git stash pop"
-alias co="git checkout"
-alias cm="git commit -m"
+alias gsp="git stash pop"
+alias gsd="git stash drop"
+alias gco="git checkout"
+alias gcm="git commit -m"
 
 # exa
 alias ls="exa"
