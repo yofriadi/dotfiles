@@ -1,13 +1,22 @@
-export LC_ALL=en_US.UTF-8
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export LC_ALL=en_US.UTF-8
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
-export ZPLUG=/usr/local/opt/zplug
 export PATH="$(yarn global bin):$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Uncomment the following line to disable auto-setting terminal title.
 DISABLE_AUTO_TITLE="true"
 
 source $ZSH/oh-my-zsh.sh
-source $ZPLUG/init.zsh
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source ~/.zplug/init.zsh
+else
+  source ~/.zplug/init.zsh
+fi
 
 zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
