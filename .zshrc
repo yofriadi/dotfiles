@@ -1,11 +1,13 @@
+export LC_ALL=en_US.UTF-8
 export ZSH="$HOME/.oh-my-zsh"
+export ZPLUG=/usr/local/opt/zplug
 export PATH="$(yarn global bin):$PATH"
 
 # Uncomment the following line to disable auto-setting terminal title.
 DISABLE_AUTO_TITLE="true"
 
 source $ZSH/oh-my-zsh.sh
-source ~/.zplug/init.zsh
+source $ZPLUG/init.zsh
 
 zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
@@ -41,6 +43,7 @@ alias gp="git push"
 alias gl="git pull"
 alias gr="git reset"
 alias gf="git fetch"
+alias gg="git log"
 alias gss="git stash save"
 alias gsl="git stash list"
 alias gsp="git stash pop"
@@ -82,6 +85,7 @@ alias dr="docker run"
 alias dn="docker network"
 alias dp="docker pull"
 alias dv="docker volume"
+alias de="docker exec"
 alias dcu="docker-compose up"
 alias dcd="docker-compose down"
 
