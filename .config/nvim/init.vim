@@ -30,7 +30,7 @@ set wildignore=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 set undodir=~/.config/nvim/undodir
 set undofile
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 
 """ MAPPINGS
 " Leader is space
