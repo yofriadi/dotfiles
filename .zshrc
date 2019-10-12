@@ -50,6 +50,7 @@ alias gsp="git stash pop"
 alias gsd="git stash drop"
 alias gco="git checkout"
 alias gcm="git commit -m"
+alias gca="git commit --amend -m"
 
 # exa
 alias ls="exa"
@@ -93,3 +94,6 @@ alias dcd="docker-compose down"
 alias gor="go run"
 alias gob="go build"
 alias got="gotest"
+
+# vim
+alias vim="nvim"
