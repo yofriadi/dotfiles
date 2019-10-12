@@ -30,13 +30,13 @@ SPACESHIP_NODE_SHOW=false
 SPACESHIP_KUBECONTEXT_SHOW=false
 SPACESHIP_DOCKER_SHOW=false
 
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
 # z.lua
 eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
 
 alias n="nvim"
 alias g="git"
