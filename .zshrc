@@ -2,6 +2,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export LC_ALL=en_US.UTF-8
   export PATH="$HOME/.local/bin:$PATH"
   export PATH=$(brew --prefix openvpn)/sbin:$PATH
+  export ZPLUG=/usr/local/opt/zplug
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -14,7 +15,7 @@ DISABLE_AUTO_TITLE="true"
 source $ZSH/oh-my-zsh.sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  source ~/.zplug/init.zsh
+  source $ZPLUG/init.zsh
 else
   source ~/.zplug/init.zsh
 fi
