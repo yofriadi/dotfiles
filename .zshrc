@@ -1,6 +1,7 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export LC_ALL=en_US.UTF-8
   export PATH="$HOME/.local/bin:$PATH"
+  export PATH=$(brew --prefix openvpn)/sbin:$PATH
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
