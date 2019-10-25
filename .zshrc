@@ -55,6 +55,7 @@ alias gl="git pull"
 alias gr="git reset"
 alias gf="git fetch"
 alias gg="git log"
+alias gtl="git describe --tags $(git rev-list --tags --max-count=1)"
 alias gss="git stash save"
 alias gsl="git stash list"
 alias gsp="git stash pop"
@@ -69,10 +70,13 @@ alias l="exa -l"
 alias lsa="exa -la"
 
 # git-flow
+alias gfw="git flow"
 alias gfi="git flow init"
 alias gffs="git flow feature start"
 alias gfff="git flow feature finish"
 alias gffp="git flow feature publish"
+alias gfhs="git flow hotfix start"
+alias gfhf="git flow hotfix finish"
 
 # yarn
 alias ys="yarn start"
@@ -105,6 +109,3 @@ alias dcd="docker-compose down"
 alias gor="go run"
 alias gob="go build"
 alias got="gotest"
-
-# vim
-alias vim="nvim"
