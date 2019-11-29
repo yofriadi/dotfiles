@@ -37,7 +37,7 @@ set nobackup " coc.nvim
 set nowritebackup " coc.nvim
 set updatetime=300 " coc.nvim
 set shortmess+=c " coc.nvim
-set signcolumn=yes " coc.nvim
+"set signcolumn=yes " coc.nvim
 
 """ MAPPINGS
 " Leader is space
