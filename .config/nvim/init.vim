@@ -3,7 +3,7 @@ syntax on
 filetype plugin indent on
 
 " https://neovim.io/doc/user/quickref.html
-" some setting may be on by default
+" some settings may be on by default
 set number
 set autoread
 set ruler
@@ -23,7 +23,7 @@ set relativenumber
 set linebreak
 set splitright
 set splitbelow
-set hidden " coc.nvim
+set hidden " coc.nvim, lsp-nvim
 set completeopt=longest,menuone,preview
 set scrolloff=3
 set wildignore=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
@@ -33,10 +33,10 @@ set undofile
 set clipboard+=unnamedplus
 set foldmethod=indent
 set foldlevel=99
-set nobackup " coc.nvim
-set nowritebackup " coc.nvim
-set updatetime=300 " coc.nvim
-set shortmess+=c " coc.nvim
+"set nobackup " coc.nvim
+"set nowritebackup " coc.nvim
+"set updatetime=300 " coc.nvim
+"set shortmess+=c " coc.nvim
 "set signcolumn=yes " coc.nvim
 
 """ MAPPINGS
@@ -154,8 +154,28 @@ endfunction
 nnoremap <leader><leader> <c-^>
 set autowrite
 
+" Golang start
+
 " file type indentation for golang
-autocmd FileType go setlocal shiftwidth=8 tabstop=8
+au FileType go set noexpandtab shiftwidth=8 softtabstop=8 tabstop=8
+
+" syntax highlighting
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_auto_sameids = 1
+let g:go_fmt_command = "goimports"
+let g:go_auto_type_info = 1
+
+" go to definition
+au FileType go nmap <F12> <Plug>(go-def)
+
+" Golang end
 
 " sync open file with NERDTree
 " " Check if NERDTree is open or active
@@ -175,22 +195,31 @@ autocmd FileType go setlocal shiftwidth=8 tabstop=8
 " Highlight currently open buffer in NERDTree
 "autocmd BufEnter * call SyncTree()
 
+" Lsp-nvim
+"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 " COC.nvim
+" Auto-format code and add missing imports
+"autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+"function! s:check_back_space() abort
+"  let col = col('.') - 1
+"  return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
 
 " COC.nvim use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+"inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
@@ -199,31 +228,31 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gy <Plug>(coc-type-definition)
+"nmap <silent> gi <Plug>(coc-implementation)
+"nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+"nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+"function! s:show_documentation()
+"  if (index(['vim','help'], &filetype) >= 0)
+"    execute 'h '.expand('<cword>')
+"  else
+"    call CocAction('doHover')
+"  endif
+"endfunction
 
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+"autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+"nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
 "xmap <leader>f  <Plug>(coc-format-selected)
@@ -266,7 +295,7 @@ nmap <leader>rn <Plug>(coc-rename)
 "command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
 " Show all diagnostics
@@ -297,6 +326,7 @@ Plug 'tpope/vim-sensible'
 
 " Theming
 Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -306,8 +336,13 @@ Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'scrooloose/nerdtree', {'on':  'NERDTreeToggle'}
 
 " Auto completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 Plug 'Shougo/deol.nvim'
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -315,7 +350,6 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 " Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'rhysd/npm-debug-log.vim'
 
 " Typescript
 Plug 'Quramy/tsuquyomi'
@@ -339,6 +373,9 @@ Plug 'tpope/vim-obsession'
 Plug 'RRethy/vim-illuminate'
 Plug 'mileszs/ack.vim'
 Plug 'edkolev/tmuxline.vim'
+"Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'rhysd/conflict-marker.vim'
+Plug 'rhysd/clever-f.vim'
 
 call plug#end()
 
@@ -350,10 +387,10 @@ let g:bufExplorerSortBy='name'
 map <leader>o :BufExplorer<cr>
 
 " Deoplete.
-" let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 " Theme
-colorscheme gruvbox
+colorscheme nord
 
 " NERDTree
 let NERDTreeShowHidden=1
@@ -369,18 +406,28 @@ let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:tmuxline_preset = 'nightly_fox'
 
+let g:airline#extensions#ale#enabled = 1
 " Yankstack
 nmap <c-p> <Plug>yankstack_substitute_older_paste
 nmap <c-n> <Plug>yankstack_substitute_newer_paste
 
-" vim-illuminate
+" Vim-illuminate
 let g:Illuminate_ftblacklist = ['nerdtree']
 let g:Illuminate_delay = 0
 
-" ale auto fix
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
-let g:ale_fix_on_save = 1
-map <leader>x :ALEFix<cr>
+" Vim-go
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+" Ale
+let g:ale_fixers = {
+    \ 'go': ['gopls'],
+    \ 'javascript': ['prettier', 'eslint']
+    \ }
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+"let g:ale_fix_on_save = 1
+"map <leader>x :ALEFix<cr>
 
 " FuzzySearch
 map <leader>f :FZF<cr>
@@ -403,21 +450,29 @@ map <leader>d :Deol<cr>
 " let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 " COC
-let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint', 
-  \ 'coc-prettier', 
-  \ 'coc-json', 
-  \ ]
+" let g:coc_global_extensions = [
+"   \ 'coc-snippets',
+"   \ 'coc-pairs',
+"   \ 'coc-tsserver',
+"   \ 'coc-eslint', 
+"   \ 'coc-prettier', 
+"   \ 'coc-json', 
+"   \ ]
+
+" Lsp-nvim
+let g:LanguageClient_serverCommands = {
+    \ 'go': ['gopls'],
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+    \ }
 
 " Reserved
+"Plug 'morhetz/gruvbox'
 "Plug 'majutsushi/tagbar'
 "Plug 'honza/vim-snippets'
 "Plug 'cdata/vim-tagged-template'
 "Plug 'terryma/vim-multiple-cursors'
 "Plug 'junegunn/rainbow_parentheses.vim'
-"Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 "Plug 'ervandew/supertab'
 "Plug 'SirVer/ultisnips'
+"Plug 'rhysd/npm-debug-log.vim'
