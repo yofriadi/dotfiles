@@ -3,6 +3,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$HOME/.local/bin:$PATH"
   export PATH=$(brew --prefix openvpn)/sbin:$PATH
   export ZPLUG=/usr/local/opt/zplug
+  #nvim --headless -c "call firenvim#install(0, 'export PATH=\"$PATH\"')" -c quit
 fi
 
 export ZSH="$HOME/.oh-my-zsh"
@@ -52,10 +53,11 @@ alias gb="git branch"
 alias gd="git diff"
 alias gp="git push"
 alias gl="git pull"
-alias gr="git reset"
+alias gr="git restore"
 alias gf="git fetch"
 alias gg="git log"
 alias gtl="git tag -l --sort=v:refname | tail -1"
+alias gsa="git stash apply"
 alias gss="git stash save"
 alias gsl="git stash list"
 alias gsp="git stash pop"
@@ -104,6 +106,7 @@ alias dn="docker network"
 alias dp="docker pull"
 alias dv="docker volume"
 alias de="docker exec"
+alias dl="docker logs"
 alias dcu="docker-compose up"
 alias dcd="docker-compose down"
 
