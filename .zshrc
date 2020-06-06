@@ -1,45 +1,88 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# source ~/.zsh/instant.zsh
+# instant-zsh-pre "%n@%m %~%# "
+
+# source ~/.zsh/theme.zsh
+# source ~/.zsh/vi-mode.zsh
+
+source <(sheldon source)
+
+export KEYTIMEOUT=1
+
+MODE_CURSOR_VICMD="blinking block"
+MODE_CURSOR_VIINS="blinking bar"
+MODE_CURSOR_SEARCH="blinking underline"
+
+# FZF-TAB
+# disable sort when completing options of any command
+zstyle ':completion:complete:*:options' sort false
+
+# use input as query string when completing zlua
+zstyle ':fzf-tab:complete:_zlua:*' query-string input
+
+# give a preview when completing `kill`
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
+zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
+
+# (experimental) give a preview of directory when completing cd
+local extract="
+# trim input
+in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
+# get ctxt for current completion
+local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
+"
+zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"exa -1 --color=always \${~ctxt[hpre]}\$in"
+
+FZF_TAB_COMMAND=(
+    fzf
+    --ansi   # Enable ANSI color support, necessary for showing groups
+    --expect='$continuous_trigger' # For continuous completion
+    '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
+    --nth=2,3 --delimiter='\x00'  # Don't search prefix
+    --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
+    --tiebreak=begin -m --bind=tab:down,ctrl-j:accept,change:top,ctrl-space:toggle --cycle
+    '--query=$query'   # $query will be expanded to query string at runtime.
+    '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
+)
+zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
+# END FZF_TAB
+
+autoload -Uz compinit
+compinit
+
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export LC_ALL=en_US.UTF-8
-  export PATH="$HOME/.local/bin:$PATH"
-  export PATH=$(brew --prefix openvpn)/sbin:$PATH
-  export ZPLUG=/usr/local/opt/zplug
-  #nvim --headless -c "call firenvim#install(0, 'export PATH=\"$PATH\"')" -c quit
+  # export PATH="$HOME/.local/bin:$PATH"
+
+  # nvim --headless -c "call firenvim#install(0, 'export PATH=\"$PATH\"')" -c quit
 fi
 
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
 export PATH="$(yarn global bin):$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+#export PATH="$HOME/.local/bin:$PATH"
+export PATH=$(brew --prefix openvpn)/sbin:$PATH
+export HISTCONTROL=ignoredups
 
 # Uncomment the following line to disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-source $ZSH/oh-my-zsh.sh
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  source $ZPLUG/init.zsh
-else
-  source ~/.zplug/init.zsh
-fi
-
-zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
-zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf, use:"*darwin*amd64*"
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug load
-
-### User configuration ###
-SPACESHIP_NODE_SHOW=false
-SPACESHIP_KUBECONTEXT_SHOW=false
-SPACESHIP_DOCKER_SHOW=false
+# DISABLE_AUTO_TITLE="true"
 
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
 # z.lua
-eval "$(lua ~/.z.lua/z.lua --init zsh enhanced once fzf)"
+eval "$(lua ~/.zsh/repositories/github.com/skywind3000/z.lua/z.lua --init zsh enhanced once fzf)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# export FZF_COMPLETION_TRIGGER=''
+# bindkey '^T' fzf-completion
+# bindkey '^I' $fzf_default_completion
 
 alias n="nvim"
 alias g="git"
@@ -114,3 +157,13 @@ alias dcd="docker-compose down"
 alias gor="go run"
 alias gob="go build"
 alias got="gotest"
+
+# eval "$(starship init zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+[ -s "/Users/yofri/.scm_breeze/scm_breeze.sh" ] && source "/Users/yofri/.scm_breeze/scm_breeze.sh"
