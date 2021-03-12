@@ -15,6 +15,7 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
 
+Plug 'tyru/caw.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'troydm/zoomwintab.vim'
@@ -25,6 +26,9 @@ Plug 'RRethy/vim-illuminate'
 Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
+"Plug 'easymotion/vim-easymotion'
+"Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+"Plug 'preservim/nerdcommenter'
 "Plug 'christoomey/vim-tmux-navigator'
 "Plug 'ervandew/supertab'
 "Plug 'prabirshrestha/async.vim'
