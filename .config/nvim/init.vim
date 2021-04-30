@@ -14,7 +14,9 @@ Plug 'arcticicestudio/nord-vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
+"Plug 'sebdah/vim-delve'
 
+Plug 'caenrique/nvim-toggle-terminal'
 Plug 'tyru/caw.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'vim-ctrlspace/vim-ctrlspace'
@@ -54,6 +56,8 @@ set nobackup
 set hidden
 set splitright splitbelow
 set nofoldenable
+set wrapscan
+set shortmess-=S
 set foldmethod=indent
 set undodir=/tmp
 set textwidth=90
@@ -63,6 +67,7 @@ set shiftwidth=2
 set clipboard=unnamedplus
 set grepprg=rg\ --vimgrep  " use rg as default grepper
 set showtabline=0  " vim-ctrlspace
+set autowriteall " nvim-toggle-terminal
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGIN CONFIGURATION
@@ -84,8 +89,11 @@ let g:Illuminate_ftblacklist = ['nerdtree']
 " coc-nvim
 let g:coc_global_extensions = ['coc-json', 'coc-snippets', 'coc-tsserver', 'coc-go']
 
-"vim-go
+" vim-go
 let g:go_doc_keywordprg_enabled = 0
+
+" vim-delve
+"let g:delve_backend = "native"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS
@@ -94,7 +102,7 @@ let mapleader=" "
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-set autowrite
+"set autowrite
 
 colorscheme nord
 hi NonText guifg=bg  " mask ~ on empty lines
@@ -130,6 +138,11 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " coc-go
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 autocmd FileType go nmap gtj :CocCommand go.tags.add json<cr>
+
+" nvim-terminal-toggle
+nnoremap <silent> <C-z> :ToggleTerminal<Enter>
+tnoremap <silent> <C-z> <C-\><C-n>:ToggleTerminal<Enter>
+tnoremap <Esc> <C-\><C-n>
 
 " vim-go
 "let g:go_rename_command = 'gopls'
@@ -189,3 +202,30 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " confirm completeion using enter
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
+"Split teminal on right side
+:set splitright
+" send paragraph under cursor to terminal
+function! Exec_on_term(cmd)
+  if a:cmd=="normal"
+    exec "normal mk\"vyip"
+  else
+    exec "normal gv\"vy"
+  endif
+  if !exists("g:last_terminal_chan_id")
+    vs
+    terminal
+    let g:last_terminal_chan_id = b:terminal_job_id
+    wincmd p
+  endif
+
+  if getreg('"v') =~ "^\n"
+    call chansend(g:last_terminal_chan_id, expand("%:p")."\n")
+  else
+    call chansend(g:last_terminal_chan_id, @v)
+  endif
+  exec "normal `k"
+endfunction
+
+nnoremap <F6> :call Exec_on_term("normal")<CR>
+vnoremap <F6> :<c-u>call Exec_on_term("visual")<CR>
