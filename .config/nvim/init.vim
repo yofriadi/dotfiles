@@ -14,7 +14,6 @@ Plug 'arcticicestudio/nord-vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go', {'do': ':GoUpdateBinaries'}
-"Plug 'sebdah/vim-delve'
 
 Plug 'caenrique/nvim-toggle-terminal'
 Plug 'tyru/caw.vim'
@@ -28,6 +27,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
+"Plug 'sebdah/vim-delve'
 "Plug 'easymotion/vim-easymotion'
 "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "Plug 'preservim/nerdcommenter'
@@ -102,10 +102,20 @@ let mapleader=" "
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-"set autowrite
 
 colorscheme nord
 hi NonText guifg=bg  " mask ~ on empty lines
+
+" ctrl+s to save file
+nnoremap <C-s> :w<CR>
+inoremap <C-s> :w<CR>
+vnoremap <C-s> :w<CR>
+
+" quit buffer
+nnoremap <silent> q :Bclose<CR>
+
+" quit window
+nnoremap <C-q> :q<CR>
 
 " disable hl with 2 esc
 noremap <silent><esc> <esc>:noh<CR><esc>
@@ -113,9 +123,6 @@ noremap <silent><esc> <esc>:noh<CR><esc>
 " move vertically by visual line with j,k
 nnoremap j gj
 nnoremap k gk
-
-" disable hl with 2 esc
-noremap <silent><esc> <esc>:noh<CR><esc>
 
 " use a different register for delete and paste
 nnoremap d "_d
@@ -133,7 +140,7 @@ vnoremap <M-k> :m '<-2<CR>gv=gv
 
 map <C-n> :NERDTreeToggle<CR>
 
-let g:SuperTabDefaultCompletionType = "<c-n>"
+"let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " coc-go
 autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
@@ -142,7 +149,7 @@ autocmd FileType go nmap gtj :CocCommand go.tags.add json<cr>
 " nvim-terminal-toggle
 nnoremap <silent> <C-z> :ToggleTerminal<Enter>
 tnoremap <silent> <C-z> <C-\><C-n>:ToggleTerminal<Enter>
-tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <Esc> <C-\><C-n>  " support vim-mode terminal
 
 " vim-go
 "let g:go_rename_command = 'gopls'
@@ -204,7 +211,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
 "Split teminal on right side
-:set splitright
+set splitright
 " send paragraph under cursor to terminal
 function! Exec_on_term(cmd)
   if a:cmd=="normal"
@@ -227,5 +234,77 @@ function! Exec_on_term(cmd)
   exec "normal `k"
 endfunction
 
-nnoremap <F6> :call Exec_on_term("normal")<CR>
 vnoremap <F6> :<c-u>call Exec_on_term("visual")<CR>
+nnoremap <F6> :call Exec_on_term("normal")<CR>
+
+" Delete buffer while keeping window layout (don't close buffer's windows).
+" Version 2008-11-18 from http://vim.wikia.com/wiki/VimTip165
+if v:version < 700 || exists('loaded_bclose') || &cp
+  finish
+endif
+let loaded_bclose = 1
+if !exists('bclose_multiple')
+  let bclose_multiple = 1
+endif
+
+" Display an error message.
+function! s:Warn(msg)
+  echohl ErrorMsg
+  echomsg a:msg
+  echohl NONE
+endfunction
+
+" Command ':Bclose' executes ':bd' to delete buffer in current window.
+" The window will show the alternate buffer (Ctrl-^) if it exists,
+" or the previous buffer (:bp), or a blank buffer if no previous.
+" Command ':Bclose!' is the same, but executes ':bd!' (discard changes).
+" An optional argument can specify which buffer to close (name or number).
+function! s:Bclose(bang, buffer)
+  if empty(a:buffer)
+    let btarget = bufnr('%')
+  elseif a:buffer =~ '^\d\+$'
+    let btarget = bufnr(str2nr(a:buffer))
+  else
+    let btarget = bufnr(a:buffer)
+  endif
+  if btarget < 0
+    call s:Warn('No matching buffer for '.a:buffer)
+    return
+  endif
+  if empty(a:bang) && getbufvar(btarget, '&modified')
+    call s:Warn('No write since last change for buffer '.btarget.' (use :Bclose!)')
+    return
+  endif
+  " Numbers of windows that view target buffer which we will delete.
+  let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
+  if !g:bclose_multiple && len(wnums) > 1
+    call s:Warn('Buffer is in multiple windows (use ":let bclose_multiple=1")')
+    return
+  endif
+  let wcurrent = winnr()
+  for w in wnums
+    execute w.'wincmd w'
+    let prevbuf = bufnr('#')
+    if prevbuf > 0 && buflisted(prevbuf) && prevbuf != btarget
+      buffer #
+    else
+      bprevious
+    endif
+    if btarget == bufnr('%')
+      " Numbers of listed buffers which are not the target to be deleted.
+      let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
+      " Listed, not target, and not displayed.
+      let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
+      " Take the first buffer, if any (could be more intelligent).
+      let bjump = (bhidden + blisted + [-1])[0]
+      if bjump > 0
+        execute 'buffer '.bjump
+      else
+        execute 'enew'.a:bang
+      endif
+    endif
+  endfor
+  execute 'bdelete'.a:bang.' '.btarget
+  execute wcurrent.'wincmd w'
+endfunction
+command! -bang -complete=buffer -nargs=? Bclose call <SID>Bclose(<q-bang>, <q-args>q)
