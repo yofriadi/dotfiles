@@ -1,0 +1,1 @@
+galaxyline-nvim.lua
