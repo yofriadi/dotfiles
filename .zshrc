@@ -5,165 +5,102 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# source ~/.zsh/instant.zsh
-# instant-zsh-pre "%n@%m %~%# "
+eval "$(sheldon source)"
+eval "$(zoxide init zsh)"
 
-# source ~/.zsh/theme.zsh
-# source ~/.zsh/vi-mode.zsh
+# fix ctrl+r when using with zvm with mcfly
+zvm_after_init() {
+  eval "$(mcfly init zsh)"
+}
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=true
 
-source <(sheldon source)
+# asdf
+. /opt/asdf-vm/asdf.sh
 
-export KEYTIMEOUT=1
+alias tmux="TERM=screen-256color tmux -2"
 
-MODE_CURSOR_VICMD="blinking block"
-MODE_CURSOR_VIINS="blinking bar"
-MODE_CURSOR_SEARCH="blinking underline"
+export EDITOR="nvim"
+export VISUAL=${EDITOR}
 
-# FZF-TAB
-# disable sort when completing options of any command
-zstyle ':completion:complete:*:options' sort false
+# PinHome
+export GOPRIVATE="gitlab.com/pinvest/*"
+export ANDROID_HOME=$HOME/.config/android
+export PATH=$ANDROID_HOME/cmdline-tools/tools/bin/:$PATH
+export PATH=$ANDROID_HOME/emulator/:$PATH
+export PATH=$ANDROID_HOME/platform-tools/:$PATH
 
-# use input as query string when completing zlua
-zstyle ':fzf-tab:complete:_zlua:*' query-string input
+# Correct spelling for commands
+setopt correct
 
-# give a preview when completing `kill`
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm,cmd -w -w"
-zstyle ':fzf-tab:complete:kill:argument-rest' extra-opts '--preview=echo $(<{f})' --preview-window=down:3:wrap
+# Turn off the infernal correctall for filenames
+unsetopt correctall
 
-# (experimental) give a preview of directory when completing cd
-local extract="
-# trim input
-in=\${\${\"\$(<{f})\"%\$'\0'*}#*\$'\0'}
-# get ctxt for current completion
-local -A ctxt=(\"\${(@ps:\2:)CTXT}\")
-"
-zstyle ':fzf-tab:complete:cd*' extra-opts --preview=$extract"exa -1 --color=always \${~ctxt[hpre]}\$in"
+# Set some history options
+#
+# You can customize these by putting a file in ~/.zshrc.d with
+# different settings - those files are loaded later specifically to
+# make overriding these (and things set by plugins) easy without having
+# to maintain a fork.
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
+setopt INC_APPEND_HISTORY
+unsetopt HIST_BEEP
 
-FZF_TAB_COMMAND=(
-    fzf
-    --ansi   # Enable ANSI color support, necessary for showing groups
-    --expect='$continuous_trigger' # For continuous completion
-    '--color=hl:$(( $#headers == 0 ? 108 : 255 ))'
-    --nth=2,3 --delimiter='\x00'  # Don't search prefix
-    --layout=reverse --height='${FZF_TMUX_HEIGHT:=75%}'
-    --tiebreak=begin -m --bind=tab:down,ctrl-j:accept,change:top,ctrl-space:toggle --cycle
-    '--query=$query'   # $query will be expanded to query string at runtime.
-    '--header-lines=$#headers' # $#headers will be expanded to lines of headers at runtime
-)
-zstyle ':fzf-tab:*' command $FZF_TAB_COMMAND
-# END FZF_TAB
+# Share your history across all your terminal windows
+setopt share_history
+#setopt noclobber
 
-autoload -Uz compinit
-compinit
+# Keep a ton of history.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh/.zsh_history
+HIST_STAMPS="dd/mm/yyyy"  # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+export HISTIGNORE="ls:cd:cd:fg -:nvim:pwd:exit:date:* --help"
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export LC_ALL=en_US.UTF-8
-  # export PATH="$HOME/.local/bin:$PATH"
+# Set some options about directories
+setopt pushd_ignore_dups
+#setopt pushd_silent
+setopt AUTO_CD  # If a command is issued that can’t be executed as a normal command,
+                # and the command is the name of a directory, perform the cd command
+                # to that directory.
 
-  # nvim --headless -c "call firenvim#install(0, 'export PATH=\"$PATH\"')" -c quit
-fi
+# Add some completions settings
+setopt ALWAYS_TO_END     # Move cursor to the end of a completed word.
+setopt AUTO_LIST         # Automatically list choices on ambiguous completion.
+setopt AUTO_MENU         # Show completion menu on a successive tab press.
+setopt AUTO_PARAM_SLASH  # If completed parameter is a directory, add a trailing slash.
+setopt COMPLETE_IN_WORD  # Complete from both ends of a word.
+unsetopt MENU_COMPLETE   # Do not autoselect the first completion entry.
 
-# export ZSH="$HOME/.oh-my-zsh"
-export PATH="$(yarn global bin):$PATH"
-#export PATH="$HOME/.local/bin:$PATH"
-export PATH=$(brew --prefix openvpn)/sbin:$PATH
-export HISTCONTROL=ignoredups
+# Miscellaneous settings
+setopt INTERACTIVE_COMMENTS  # Enable comments in interactive shell.
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+setopt extended_glob # Enable more powerful glob features
 
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+# Help the lazy typists again.
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
 
-# z.lua
-eval "$(lua ~/.zsh/repositories/github.com/skywind3000/z.lua/z.lua --init zsh enhanced once fzf)"
+alias l="exa"
+alias ll="exa -l"
+alias la="exa -a"
+alias lla="exa -la"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# export FZF_COMPLETION_TRIGGER=''
-# bindkey '^T' fzf-completion
-# bindkey '^I' $fzf_default_completion
-
-alias n="nvim"
-alias g="git"
-alias cat="bat"
-
-# git
-alias gc="git clone"
-alias gs="git status"
-alias ga="git add"
-alias gb="git branch"
-alias gd="git diff"
-alias gp="git push"
-alias gl="git pull"
-alias gr="git restore"
-alias gf="git fetch"
-alias gg="git log"
-alias gtl="git tag -l --sort=v:refname | tail -1"
-alias gsa="git stash apply"
-alias gss="git stash save"
-alias gsl="git stash list"
-alias gsp="git stash pop"
-alias gsd="git stash drop"
-alias gco="git checkout"
-alias gcm="git commit -m"
-alias gca="git commit --amend -m"
-
-# exa
-alias ls="exa"
-alias l="exa -l"
-alias lsa="exa -la"
-
-# git-flow
-alias gfw="git flow"
-alias gfi="git flow init"
-alias gffs="git flow feature start"
-alias gfff="git flow feature finish"
-alias gffp="git flow feature publish"
-alias gfhs="git flow hotfix start"
-alias gfhf="git flow hotfix finish"
-alias gfrs="git flow release start"
-alias gfrf="git flow release finish"
-
-# yarn
-alias ys="yarn start"
-alias yw="yarn watch"
-alias yl="yarn lint"
-alias yt="yarn test"
-alias ylf="yarn lint:fix"
-alias ytw="yarn test:watch"
-alias ytd="yarn test:debug"
-alias ytc="yarn test:coverage"
-alias yti="yarn test:integration"
-alias yp="yarn prettier"
-alias yd="yarn dev"
-alias yb="yarn build"
-
-# docker
-alias d="docker"
-alias dc="docker container"
-alias di="docker image"
-alias db="docker build"
-alias dr="docker run"
-alias dn="docker network"
-alias dp="docker pull"
-alias dv="docker volume"
-alias de="docker exec"
-alias dl="docker logs"
-alias dcu="docker-compose up"
-alias dcd="docker-compose down"
-
-# go
-alias gor="go run"
-alias gob="go build"
-alias got="gotest"
-
-# eval "$(starship init zsh)"
+# lists zombie processes
+function zombie() {
+  ps aux | awk '{if ($8=="Z") { print $2 }}'
+}
+alias zombies=zombie
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-[ -s "/Users/yofri/.scm_breeze/scm_breeze.sh" ] && source "/Users/yofri/.scm_breeze/scm_breeze.sh"
+[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
