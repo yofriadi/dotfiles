@@ -1,1 +1,1 @@
-cfg.lua
+require("cfgs")
