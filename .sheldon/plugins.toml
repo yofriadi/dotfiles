@@ -14,9 +14,6 @@ shell = "zsh"
 
 [plugins]
 
-[plugins.tpm]
-github = 'tmux-plugins/tpm'
-
 [plugins.powerlevel10k]
 github = 'romkatv/powerlevel10k'
 

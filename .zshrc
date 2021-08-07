@@ -18,7 +18,7 @@ export MCFLY_FUZZY=true
 # asdf
 . /opt/asdf-vm/asdf.sh
 
-alias tmux="TERM=screen-256color tmux -2"
+alias tmux="TERM=screen-256color tmux -2 -f ~/.config/tmux/.tmux.conf"
 
 export EDITOR="nvim"
 export VISUAL=${EDITOR}
@@ -61,9 +61,12 @@ setopt share_history
 # Keep a ton of history.
 HISTSIZE=100000
 SAVEHIST=100000
-HISTFILE=~/.zsh/.zsh_history
+HISTFILE=~/.config/zsh/.zsh_history
 HIST_STAMPS="dd/mm/yyyy"  # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 export HISTIGNORE="ls:cd:cd:fg -:nvim:pwd:exit:date:* --help"
+
+# Define a custom file for compdump
+export ZSH_COMPDUMP="$HOME/.cache/zsh/zcompdump-$HOST-$ZSH_VERSION"
 
 # Set some options about directories
 setopt pushd_ignore_dups
@@ -102,5 +105,5 @@ function zombie() {
 }
 alias zombies=zombie
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.config/p10k.zsh ]] || source ~/.config/p10k.zsh
+# To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
