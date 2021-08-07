@@ -5,7 +5,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# sheldon
+export SHELDON_CONFIG_DIR="$HOME/.config/sheldon"
+export SHELDON_DATA_DIR="$SHELDON_CONFIG_DIR/repos"
+export SHELDON_CONFIG_FILE="$SHELDON_CONFIG_DIR/plugins.toml"
+export SHELDON_LOCK_FILE="$SHELDON_CONFIG_DIR/plugins.lock"
 eval "$(sheldon source)"
+
 eval "$(zoxide init zsh)"
 
 # fix ctrl+r when using with zvm with mcfly
