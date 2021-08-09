@@ -1,0 +1,65 @@
+version = "0.6.4"
+home = "/home/velrayend"
+config_dir = "/home/velrayend/.config/sheldon"
+data_dir = "/home/velrayend/.local/share/sheldon/repos"
+config_file = "/home/velrayend/.config/sheldon/plugins.toml"
+lock_file = "/home/velrayend/.config/sheldon/plugins.lock"
+clone_dir = "/home/velrayend/.local/share/sheldon/repos/repos"
+download_dir = "/home/velrayend/.local/share/sheldon/repos/downloads"
+
+[[plugins]]
+name = "powerlevel10k"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/romkatv/powerlevel10k"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
+apply = ["source"]
+
+[[plugins]]
+name = "zsh-vi-mode"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/jeffreytse/zsh-vi-mode"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/jeffreytse/zsh-vi-mode/zsh-vi-mode.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "fast-syntax-highlighting"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/zdharma/fast-syntax-highlighting"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/zdharma/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "zsh-autopair"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/hlissner/zsh-autopair"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "zsh-completions"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-completions"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-completions/zsh-completions.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "zsh-autosuggestions"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-autosuggestions"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"]
+apply = ["source"]
+
+[[plugins]]
+name = "zsh-expand"
+source_dir = "/home/velrayend/.local/share/sheldon/repos/repos/github.com/MenkeTechnologies/zsh-expand"
+files = ["/home/velrayend/.local/share/sheldon/repos/repos/github.com/MenkeTechnologies/zsh-expand/zsh-expand.plugin.zsh"]
+apply = ["source"]
+[templates.PATH]
+value = "export PATH=\"{{ dir }}:$PATH\""
+each = false
+
+[templates.path]
+value = "path=( \"{{ dir }}\" $path )"
+each = false
+
+[templates.fpath]
+value = "fpath=( \"{{ dir }}\" $fpath )"
+each = false
+
+[templates.source]
+value = "source \"{{ file }}\""
+each = true

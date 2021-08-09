@@ -7,12 +7,13 @@ fi
 
 # sheldon
 export SHELDON_CONFIG_DIR="$HOME/.config/sheldon"
-export SHELDON_DATA_DIR="$SHELDON_CONFIG_DIR/repos"
 export SHELDON_CONFIG_FILE="$SHELDON_CONFIG_DIR/plugins.toml"
 export SHELDON_LOCK_FILE="$SHELDON_CONFIG_DIR/plugins.lock"
+export SHELDON_DATA_DIR="$HOME/.local/share/sheldon/repos"
 eval "$(sheldon source)"
 
-eval "$(zoxide init zsh)"
+export CARGO_HOME=$HOME/.local/share/cargo
+export PATH=$CARGO_HOME/bin
 
 # fix ctrl+r when using with zvm with mcfly
 zvm_after_init() {
@@ -23,6 +24,9 @@ export MCFLY_FUZZY=true
 
 # asdf
 . /opt/asdf-vm/asdf.sh
+#export ASDF_DIR=$HOME/.local/share/asdf-vm
+
+eval "$(zoxide init zsh)"
 
 alias tmux="TERM=screen-256color tmux -2 -f ~/.config/tmux/.tmux.conf"
 
@@ -67,7 +71,7 @@ setopt share_history
 # Keep a ton of history.
 HISTSIZE=100000
 SAVEHIST=100000
-HISTFILE=~/.config/zsh/.zsh_history
+HISTFILE=~/.local/share/zsh/.zsh_history
 HIST_STAMPS="dd/mm/yyyy"  # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 export HISTIGNORE="ls:cd:cd:fg -:nvim:pwd:exit:date:* --help"
 
