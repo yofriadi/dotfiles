@@ -125,16 +125,16 @@ require("packer").startup(function(use)
     use "nvim-lua/popup.nvim"
     use "nvim-lua/plenary.nvim"
 
-    use {
+    --[[ use {
         "crispgm/nvim-go",
         config = function() require("go").setup{} end,
         ft = {"go"},
-        --[[ requires = {
+        requires = {
             {"nvim-lua/popup.nvim", opt = true},
             {"nvim-lua/plenary.nvim", opt = true},
-        }, ]]--
+        },
         -- requires = {"nvim-lua/popup.nvim", "nvim-lua/plenary.nvim"},
-    }
+    } ]]--
 
     --[[ use {
 		"lewis6991/gitsigns.nvim",

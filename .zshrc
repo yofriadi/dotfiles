@@ -5,6 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+export EDITOR="nvim"
+export VISUAL=${EDITOR}
+
 # sheldon
 export SHELDON_CONFIG_DIR="$HOME/.config/sheldon"
 export SHELDON_CONFIG_FILE="$SHELDON_CONFIG_DIR/plugins.toml"
@@ -12,26 +15,27 @@ export SHELDON_LOCK_FILE="$SHELDON_CONFIG_DIR/plugins.lock"
 export SHELDON_DATA_DIR="$HOME/.local/share/sheldon/repos"
 eval "$(sheldon source)"
 
+# cargo
 export CARGO_HOME=$HOME/.local/share/cargo
 export PATH=$CARGO_HOME/bin
+
+# mcfly
+export MCFLY_KEY_SCHEME=vim
+export MCFLY_FUZZY=true
 
 # fix ctrl+r when using with zvm with mcfly
 zvm_after_init() {
   eval "$(mcfly init zsh)"
 }
-export MCFLY_KEY_SCHEME=vim
-export MCFLY_FUZZY=true
 
 # asdf
 . /opt/asdf-vm/asdf.sh
-#export ASDF_DIR=$HOME/.local/share/asdf-vm
 
+# zoxide
 eval "$(zoxide init zsh)"
 
-alias tmux="TERM=screen-256color tmux -2 -f ~/.config/tmux/.tmux.conf"
-
-export EDITOR="nvim"
-export VISUAL=${EDITOR}
+# tmux
+alias tmux="TERM=xterm-256color tmux -2 -f ~/.config/tmux/.tmux.conf"
 
 # PinHome
 export GOPRIVATE="gitlab.com/pinvest/*"
