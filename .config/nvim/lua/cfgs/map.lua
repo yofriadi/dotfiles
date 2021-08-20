@@ -75,7 +75,8 @@ return function()
         {"$", ":HopWord<CR>"}, -- trigger HopWord
         {"q", ":BufDel<CR>"},
         {"<C-q>", ":q!<CR>"},
-        {"<M-x>", ":<Plug>RestNvim<CR>"}, -- trigger RestNvim
+        {"<leader>x", ":<Plug>RestNvim<CR>"}, -- trigger RestNvim
+        {"<leader>xp", ":<Plug>RestNvimPreview<CR>"}, -- trigger RestNvimPreviee
     })
 
     util.keymaps("x", {noremap = true, silent = true}, {

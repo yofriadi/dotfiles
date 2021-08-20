@@ -118,7 +118,11 @@ require("packer").startup(function(use)
 
     use {"hkupty/nvimux", config = require("packs/nvimux")}
 
-    use {"NTBBloodbath/rest.nvim", requires = {"nvim-lua/plenary.nvim"}}
+    use {
+        "NTBBloodbath/rest.nvim",
+        config = require("rest-nvim").setup(),
+        requires = {"nvim-lua/plenary.nvim"},
+    }
 
     use "troydm/zoomwintab.vim"
 
