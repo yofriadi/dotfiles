@@ -51,7 +51,7 @@ require("packer").startup(function(use)
 
     use "ojroques/nvim-bufdel"
 
-    use {"lukas-reineke/indent-blankline.nvim", event = "BufRead", branch = "lua", config = require("packs/indent-blankline")}
+    use {"lukas-reineke/indent-blankline.nvim", event = "BufRead", config = require("packs/indent-blankline")}
 
     use {"glepnir/galaxyline.nvim", branch = "main", config = require("packs/galaxyline-nvim"), requires = "kyazdani42/nvim-web-devicons"}
 
@@ -120,8 +120,15 @@ require("packer").startup(function(use)
 
     use {
         "NTBBloodbath/rest.nvim",
-        config = require("rest-nvim").setup(),
         requires = {"nvim-lua/plenary.nvim"},
+        config = function()
+            require("rest-nvim").setup({
+            -- Open request results in a horizontal split
+            result_split_horizontal = false,
+            -- Skip SSL verification, useful for unknown certificates
+            skip_ssl_verification = false,
+          })
+        end
     }
 
     use "troydm/zoomwintab.vim"

@@ -16,8 +16,8 @@ export SHELDON_DATA_DIR="$HOME/.local/share/sheldon/repos"
 eval "$(sheldon source)"
 
 # cargo
-export CARGO_HOME=$HOME/.local/share/cargo
-export PATH=$CARGO_HOME/bin
+#export CARGO_HOME=$HOME/.local/share/cargo
+#export PATH=$CARGO_HOME/bin
 
 # mcfly
 export MCFLY_KEY_SCHEME=vim
@@ -50,7 +50,7 @@ setopt correct
 # Turn off the infernal correctall for filenames
 unsetopt correctall
 
-# Set some history options
+# Set some istory options
 #
 # You can customize these by putting a file in ~/.zshrc.d with
 # different settings - those files are loaded later specifically to
