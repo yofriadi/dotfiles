@@ -1,15 +1,13 @@
 return function()
-    if not packer_plugins["nvim-treesitter"].loaded then
-        vim.cmd [[packadd nvim-treesitter]]
-    end
+    if not packer_plugins["nvim-treesitter"].loaded then vim.cmd [[packadd nvim-treesitter]] end
 
     require("nvim-autopairs").setup()
     local npairs = require("nvim-autopairs")
     local function imap(lhs, rhs, opts)
-        local options = {noremap = false}
-        if opts then
-            options = vim.tbl_extend("force", options, opts)
-        end
+        local options = {
+            noremap = false,
+        }
+        if opts then options = vim.tbl_extend("force", options, opts) end
         vim.api.nvim_set_keymap("i", lhs, rhs, options)
     end
 
@@ -23,12 +21,7 @@ return function()
                 -- return npairs.esc('<c-y>')
                 return npairs.esc("")
             else
-                vim.defer_fn(
-                    function()
-                        vim.fn["compe#confirm"]("<cr>")
-                    end,
-                    20
-                )
+                vim.defer_fn(function() vim.fn["compe#confirm"]("<cr>") end, 20)
                 return npairs.esc("<c-n>")
             end
         else
@@ -77,7 +70,16 @@ return function()
         end
     end
 
-    vim.api.nvim_set_keymap("i", "<CR>", "v:lua.MUtils.completion_confirm()", {expr = true, noremap = true})
-    imap("<Tab>", "v:lua.MUtils.tab()", {expr = true, noremap = true})
-    imap("<S-Tab>", "v:lua.MUtils.s_tab()", {expr = true, noremap = true})
+    vim.api.nvim_set_keymap("i", "<CR>", "v:lua.MUtils.completion_confirm()", {
+        expr = true,
+        noremap = true,
+    })
+    imap("<Tab>", "v:lua.MUtils.tab()", {
+        expr = true,
+        noremap = true,
+    })
+    imap("<S-Tab>", "v:lua.MUtils.s_tab()", {
+        expr = true,
+        noremap = true,
+    })
 end

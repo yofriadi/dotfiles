@@ -1,7 +1,10 @@
 local util = require("util")
 
 return function()
-    util.keymaps("n", {noremap = true, silent = true}, {
+    util.keymaps("n", {
+        noremap = true,
+        silent = true,
+    }, {
         {"j", "gj"}, -- move top by visual line
         {"k", "gk"}, -- move bottom by visual line
         {"d", "\"_d"}, -- use a different register for delete and paste
@@ -66,20 +69,24 @@ return function()
         {"[e", ":Lspsaga diagnostic_jump_prev<CR>"},
         {"]e", ":Lspsaga diagnostic_jump_next<CR>"},
         {"<leader>cc", ":Lspsaga show_cursor_diagnostics<CR>"}, -- USED BY PLUGIN
-        {"<leader>ff", ":Telescope find_files<CR>"}, -- File search
+        --[[{"<leader>ff", ":Telescope find_files<CR>"}, -- File search
         {"<leader>fg", ":Telescope live_grep<CR>"}, -- Text search
         {"<leader>fb", ":Telescope buffers show_all_buffers=true<CR>"}, -- Buffer search
         {"<leader>fp", ":Telescope project<CR>"}, -- Projects search
-        {"<leader>fc", ":Telescope commands<CR>"}, -- Command search
+        {"<leader>fc", ":Telescope commands<CR>"}, -- Command search ]] --
         {"<C-n>", ":NvimTreeToggle<CR>"}, -- toggle NvimTree
         {"$", ":HopWord<CR>"}, -- trigger HopWord
         {"q", ":BufDel<CR>"},
         {"<C-q>", ":q!<CR>"},
         {"<leader>x", ":<Plug>RestNvim<CR>"}, -- trigger RestNvim
-        {"<leader>xp", ":<Plug>RestNvimPreview<CR>"}, -- trigger RestNvimPreviee
+        {"<leader>xp", ":<Plug>RestNvimPreview<CR>"}, -- trigger RestNvimPreview
+        {"<leader>xl", ":<Plug>RestNvimLast<CR>"}, -- trigger RestNvimLast
     })
 
-    util.keymaps("x", {noremap = true, silent = true}, {
+    util.keymaps("x", {
+        noremap = true,
+        silent = true,
+    }, {
         {"<", "<gv"}, -- Tab left
         {">", ">gv"}, -- Tab right
         -- { '*', ':<C-u>lua require("core.funcs.search").visual_selection("/")<CR>/<C-r>=@/<CR><CR>' }, -- Visual search /
@@ -90,7 +97,9 @@ return function()
         {"<M-/>", ":CommentToggle<CR>"}, -- Comment toggle
     })
 
-    util.keymaps("v", {noremap = true}, {
+    util.keymaps("v", {
+        noremap = true,
+    }, {
         {"d", "\"_d"}, -- use a different register for delete and paste
         {"p", "\"_dP"}, -- use a different register for delete and paste
         {"<M-j>", ":m '>+1<CR>gv=gv"}, -- move a line to bottom
@@ -98,12 +107,17 @@ return function()
         {"ca", ":<C-u>Lspsaga range_code_action<CR>"},
     })
 
-    util.keymaps("i", {noremap = true, silent = true}, {
+    util.keymaps("i", {
+        noremap = true,
+        silent = true,
+    }, {
         {"jk", "<Esc>"}, -- use jk to escape
         {"<C-s>", "<Esc>:w<CR>"}, -- Save
         {"<M-j>", "<Esc>:m .+1<CR>==gi"}, -- move a line to bottom
         {"<M-k>", "<Esc>:m .-2<CR>==gi"}, -- move a line to top
     })
 
-    util.keymaps("t", {noremap = true}, {{"jk", "<C-\\><C-n>"}})
+    util.keymaps("t", {
+        noremap = true,
+    }, {{"jk", "<C-\\><C-n>"}})
 end

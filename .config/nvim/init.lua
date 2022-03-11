@@ -15,5 +15,5 @@ local leader_map = function()
 end
 leader_map()
 
-require('cfg')
+-- require('cfg')
 require('pack')

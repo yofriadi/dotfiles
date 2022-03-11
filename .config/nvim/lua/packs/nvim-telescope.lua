@@ -1,11 +1,44 @@
+local util = require("util")
+
+util.keymaps("n", {
+    noremap = true,
+    silent = true,
+}, {
+    {"<leader>ff", ":Telescope find_files<CR>"},
+    {"<leader>fg", ":Telescope live_grep<CR>"},
+    {"<leader>fb", ":Telescope buffers show_all_buffers=true<CR>"},
+    {"<leader>fp", ":Telescope project<CR>"},
+    {"<leader>fc", ":Telescope commands<CR>"},
+    -- {"<leader>fa", "<cmd>lua require('packs.nvim-telescope').code_actions()<CR>"}
+})
+
+--[[ function code_actions()
+  local opts = {
+    winblend = 15,
+    layout_config = {
+      prompt_position = "top",
+      width = 80,
+      height = 12,
+    },
+    borderchars = {
+      prompt = { "─", "│", " ", "│", "╭", "╮", "│", "│" },
+      results = { "─", "│", "─", "│", "├", "┤", "╯", "╰" },
+      preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+    },
+    border = {},
+    previewer = false,
+    shorten_path = false,
+  }
+
+  local builtin = require "telescope.builtin"
+  local themes = require "telescope.themes"
+  builtin.lsp_code_actions(themes.get_dropdown(opts))
+end ]]--
+
 return function()
-    -- if not packer_plugins["plenary.nvim"].loaded or not packer_plugins["popup.nvim"].loaded then
-    --     vim.cmd [[packadd plenary.nvim]]
-    --     vim.cmd [[packadd popup.nvim]]
-    --     vim.cmd [[packadd telescope-project.nvim]]
-    --     vim.cmd [[packadd telescope-fzy-native.nvim]]
-    --     vim.cmd [[packadd telescope-frecency.nvim]]
-    -- end
+    local previewers = require "telescope.previewers"
+    local sorters = require "telescope.sorters"
+    local actions = require "telescope.actions"
 
     require("telescope").setup {
         defaults = {
@@ -16,7 +49,8 @@ return function()
                 "--with-filename",
                 "--line-number",
                 "--column",
-                "--smart-case"
+                "--smart-case",
+		"--hidden",
             },
             prompt_prefix = " ",
             selection_caret = " ",
@@ -26,35 +60,57 @@ return function()
             sorting_strategy = "ascending",
             layout_strategy = "vertical",
             layout_config = {
-                horizontal = {mirror = false},
-                vertical = {mirror = false},
+                horizontal = { mirror = false },
+                vertical = { mirror = false },
                 width = 0.75,
                 preview_cutoff = 120,
             },
-            file_sorter = require "telescope.sorters".get_fzy_file,
             file_ignore_patterns = {},
-            generic_sorter = require "telescope.sorters".get_generic_fuzzy_sorter,
             winblend = 0,
             border = {},
-            borderchars = {"─", "│", "─", "│", "╭", "╮", "╯", "╰"},
+            borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
             color_devicons = true,
-            use_less = true,
-            path_display = {},
-            set_env = {["COLORTERM"] = "truecolor"},
-            file_previewer = require "telescope.previewers".vim_buffer_cat.new,
-            grep_previewer = require "telescope.previewers".vim_buffer_vimgrep.new,
-            qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
-            buffer_previewer_maker = require "telescope.previewers".buffer_previewer_maker,
+            -- use_less = true,
+	    path_display = { shorten = 5 },
+	    set_env = { ["COLORTERM"] = "truecolor" },
+	    pickers = {
+              find_files = {
+                find_command = { "fd", "--type=file", "--hidden", "--smart-case" },
+              },
+              live_grep = {
+                --@usage don't include the filename in the search results
+                only_sort_text = true,
+              },
+            },
+	    i = {
+              ["<C-n>"] = actions.move_selection_next,
+              ["<C-p>"] = actions.move_selection_previous,
+              ["<C-c>"] = actions.close,
+              ["<C-j>"] = actions.cycle_history_next,
+              ["<C-k>"] = actions.cycle_history_prev,
+              ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+              ["<CR>"] = actions.select_default + actions.center,
+            },
+            n = {
+              ["<C-n>"] = actions.move_selection_next,
+              ["<C-p>"] = actions.move_selection_previous,
+              ["<C-q>"] = actions.smart_send_to_qflist + actions.open_qflist,
+            },
+	    file_previewer = previewers.vim_buffer_cat.new,
+            grep_previewer = previewers.vim_buffer_vimgrep.new,
+            qflist_previewer = previewers.vim_buffer_qflist.new,
+            file_sorter = sorters.get_fuzzy_file,
+            generic_sorter = sorters.get_generic_fuzzy_sorter,
         },
-        --[[ extensions = {
-            fzy_native = {
-                override_generic_sorter = false,
-                override_file_sorter = true,
+        extensions = {
+            fzf = {
+		fuzzy = true,
+		override_generic_sorter = true,
+		override_file_sorter = true,
+		case_mode = "smart_case",
             }
-        } ]]--
+        }
     }
 
-    -- require("telescope").load_extension("project")
-    -- require("telescope").load_extension("fzy_native")
-    -- require('telescope').load_extension('frecency')
+    require('telescope').load_extension('fzf')
 end

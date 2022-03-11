@@ -1,13 +1,38 @@
--- local M = {}
 return function()
+    local M = {}
     local gs = require("gitsigns")
     gs.setup {
         signs = {
-            add = {hl = "GitSignsAdd", text = "▎", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn"},
-            change = {hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn"},
-            delete = {hl = "GitSignsDelete", text = "契", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
-            topdelete = {hl = "GitSignsDelete", text = "契", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
-            changedelete = {hl = "GitSignsChange", text = "▎", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn"},
+            add = {
+                hl = "GitSignsAdd",
+                text = "▎",
+                numhl = "GitSignsAddNr",
+                linehl = "GitSignsAddLn",
+            },
+            change = {
+                hl = "GitSignsChange",
+                text = "▎",
+                numhl = "GitSignsChangeNr",
+                linehl = "GitSignsChangeLn",
+            },
+            delete = {
+                hl = "GitSignsDelete",
+                text = "契",
+                numhl = "GitSignsDeleteNr",
+                linehl = "GitSignsDeleteLn",
+            },
+            topdelete = {
+                hl = "GitSignsDelete",
+                text = "契",
+                numhl = "GitSignsDeleteNr",
+                linehl = "GitSignsDeleteLn",
+            },
+            changedelete = {
+                hl = "GitSignsChange",
+                text = "▎",
+                numhl = "GitSignsChangeNr",
+                linehl = "GitSignsChangeLn",
+            },
         },
         numhl = false,
         linehl = false,
@@ -28,14 +53,16 @@ return function()
             -- ['o ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>',
             -- ['x ih'] = ':<C-U>lua require"gitsigns".text_object()<CR>'
         },
-        watch_index = {interval = 1000},
+        watch_index = {
+            interval = 1000,
+        },
         sign_priority = 6,
         update_debounce = 200,
         status_formatter = nil, -- Use default
         use_decoration_api = false,
     }
 
-    --[[ function M.preview_hunk() gs.preview_hunk() end
+    function M.preview_hunk() gs.preview_hunk() end
     function M.next_hunk() gs.next_hunk() end
     function M.prev_hunk() gs.prev_hunk() end
     function M.stage_hunk() gs.stage_hunk() end
@@ -44,14 +71,14 @@ return function()
     function M.reset_buffer() gs.reset_buffer() end
     function M.blame_line() gs.blame_line() end
 
-    vim.cmd("command! GPreviewHunk lua require(\"packs/gitsigns\").preview_hunk()")
-    vim.cmd("command! GNextHunk lua require(\"packs/gitsigns\").next_hunk()")
-    vim.cmd("command! GPrevHunk lua require(\"packs/gitsigns\").prev_hunk()")
-    vim.cmd("command! GStageHunk lua require(\"packs/gitsigns\").stage_hunk()")
-    vim.cmd("command! GUndoStageHunk lua require(\"packs/gitsigns\").undo_stage_hunk()")
-    vim.cmd("command! GResetHunk lua require(\"packs/gitsigns\").reset_hunk()")
-    vim.cmd("command! GResetBuffer lua require(\"packs/gitsigns\").reset_buffer()")
-    vim.cmd("command! GBlameLine lua require(\"packs/gitsigns\").blame_line()")
+    vim.cmd("command! GitPreviewHunk lua require(\"fn\").preview_hunk()")
+    vim.cmd("command! GitNextHunk lua require(\"fn\").next_hunk()")
+    vim.cmd("command! GitPrevHunk lua require(\"fn\").prev_hunk()")
+    vim.cmd("command! GitStageHunk lua require(\"fn\").stage_hunk()")
+    vim.cmd("command! GitUndoStageHunk lua require(\"fn\").undo_stage_hunk()")
+    vim.cmd("command! GitResetHunk lua require(\"fn\").reset_hunk()")
+    vim.cmd("command! GitResetBuffer lua require(\"fn\").reset_buffer()")
+    vim.cmd("command! GitBlameLine lua require(\"fn\").blame_line()")
 
-    return M ]]
+    return M
 end

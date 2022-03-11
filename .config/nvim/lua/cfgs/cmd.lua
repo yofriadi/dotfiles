@@ -43,17 +43,7 @@ return function()
     vim.cmd("command! DapStepInto lua require(\"dap\").step_into()")
     vim.cmd("command! DapToggleRepl lua require(\"dap\").repl.toggle()")
     vim.cmd("command! DapGetSession lua require(\"dap\").session()") ]]
-    -- GIT signs
-    vim.cmd("command! GitPreviewHunk lua require(\"fn\").preview_hunk()")
-    vim.cmd("command! GitNextHunk lua require(\"fn\").next_hunk()")
-    vim.cmd("command! GitPrevHunk lua require(\"fn\").prev_hunk()")
-    vim.cmd("command! GitStageHunk lua require(\"fn\").stage_hunk()")
-    vim.cmd("command! GitUndoStageHunk lua require(\"fn\").undo_stage_hunk()")
-    vim.cmd("command! GitResetHunk lua require(\"fn\").reset_hunk()")
-    vim.cmd("command! GitResetBuffer lua require(\"fn\").reset_buffer()")
-    vim.cmd("command! GitBlameLine lua require(\"fn\").blame_line()")
-    -- Symbols outline
-    vim.cmd("command! SymbolsOutline lua require(\"symbols-outline\").toggle_outline()")
+
     -- Set path
     vim.cmd("command! SetGlobalPath lua require(\"fn\").set_global_path()")
     vim.cmd("command! SetWindowPath lua require(\"fn\").set_window_path()")

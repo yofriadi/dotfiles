@@ -19,11 +19,16 @@ return function()
         shell = "zsh",
         showbreak = " ↳  ",
         switchbuf = "usetab",
-        list = true,
-        listchars = "eol:↴,tab:▏·,trail:•,extends:→,precedes:←,nbsp:_,space:⋅",
         diffopt = "internal,filler,closeoff,horizontal",
         fillchars = "eob: ,",
     })
 
-    util.opt_local({breakindent = true, breakindentopt = "shift:2,min:20", expandtab = true, foldenable = true, foldlevel = 99, synmaxcol = 180})
+    util.opt_local({
+        breakindent = true,
+        breakindentopt = "shift:2,min:20",
+        expandtab = true,
+        foldenable = true,
+        foldlevel = 99,
+        synmaxcol = 180,
+    })
 end

@@ -15,12 +15,7 @@ return function()
                 function()
                     return {
                         exe = "lua-format",
-                        args = {
-                            "--column-limit=160",
-                            "--extra-sep-at-table-end",
-                            "--single-quote-to-double-quote",
-                            "--chop-down-table",
-                        },
+                        args = {"--column-limit=160", "--extra-sep-at-table-end", "--single-quote-to-double-quote", "--chop-down-table"},
                         stdin = true,
                     }
                 end,
@@ -33,7 +28,7 @@ return function()
                         stdin = true,
                     }
                 end,
-            }
+            },
         },
     })
 end

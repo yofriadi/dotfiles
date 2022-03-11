@@ -1,6 +1,4 @@
 local util = require("util")
--- local gitsigns = require("gitsigns")
-
 local M = {}
 
 -- LSP
@@ -49,14 +47,15 @@ function M.virtual_text_show() util.virtualtext_show() end
 function M.virtual_text_hide() util.virtualtext_hide() end
 
 -- GIT signs
---[[ function M.preview_hunk() gitsigns.preview_hunk() end
+local gitsigns = require("gitsigns")
+function M.preview_hunk() gitsigns.preview_hunk() end
 function M.next_hunk() gitsigns.next_hunk() end
 function M.prev_hunk() gitsigns.prev_hunk() end
 function M.stage_hunk() gitsigns.stage_hunk() end
 function M.undo_stage_hunk() gitsigns.undo_stage_hunk() end
 function M.reset_hunk() gitsigns.reset_hunk() end
 function M.reset_buffer() gitsigns.reset_buffer() end
-function M.blame_line() gitsigns.blame_line() end ]]--
+function M.blame_line() gitsigns.blame_line() end
 
 -- Set path
 function M.set_global_path() util.set_global_path() end

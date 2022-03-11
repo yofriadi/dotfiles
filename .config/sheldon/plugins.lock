@@ -1,52 +1,52 @@
-version = "0.6.4"
-home = "/home/yofriadi"
-config_dir = "/home/yofriadi/.config/sheldon"
-data_dir = "/home/yofriadi/.local/share/sheldon/repos"
-config_file = "/home/yofriadi/.config/sheldon/plugins.toml"
-lock_file = "/home/yofriadi/.config/sheldon/plugins.lock"
-clone_dir = "/home/yofriadi/.local/share/sheldon/repos/repos"
-download_dir = "/home/yofriadi/.local/share/sheldon/repos/downloads"
+version = "0.6.6"
+home = "/Users/yofriadi"
+config_dir = "/Users/yofriadi/.config/sheldon"
+data_dir = "/Users/yofriadi/.local/share/sheldon/repos"
+config_file = "/Users/yofriadi/.config/sheldon/plugins.toml"
+lock_file = "/Users/yofriadi/.config/sheldon/plugins.lock"
+clone_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos"
+download_dir = "/Users/yofriadi/.local/share/sheldon/repos/downloads"
 
 [[plugins]]
 name = "powerlevel10k"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/romkatv/powerlevel10k"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/romkatv/powerlevel10k"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/romkatv/powerlevel10k/powerlevel10k.zsh-theme"]
 apply = ["source"]
 
 [[plugins]]
 name = "zsh-vi-mode"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/jeffreytse/zsh-vi-mode"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/jeffreytse/zsh-vi-mode/zsh-vi-mode.plugin.zsh"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/jeffreytse/zsh-vi-mode"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/jeffreytse/zsh-vi-mode/zsh-vi-mode.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "fast-syntax-highlighting"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/zdharma/fast-syntax-highlighting"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/zdharma/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/zdharma/fast-syntax-highlighting"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/zdharma/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "zsh-autopair"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/hlissner/zsh-autopair"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/hlissner/zsh-autopair"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/hlissner/zsh-autopair/zsh-autopair.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "zsh-completions"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-completions"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-completions/zsh-completions.plugin.zsh"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-completions"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-completions/zsh-completions.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "zsh-autosuggestions"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-autosuggestions"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-autosuggestions"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/zsh-users/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"]
 apply = ["source"]
 
 [[plugins]]
 name = "zsh-expand"
-source_dir = "/home/yofriadi/.local/share/sheldon/repos/repos/github.com/MenkeTechnologies/zsh-expand"
-files = ["/home/yofriadi/.local/share/sheldon/repos/repos/github.com/MenkeTechnologies/zsh-expand/zsh-expand.plugin.zsh"]
+source_dir = "/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/MenkeTechnologies/zsh-expand"
+files = ["/Users/yofriadi/.local/share/sheldon/repos/repos/github.com/MenkeTechnologies/zsh-expand/zsh-expand.plugin.zsh"]
 apply = ["source"]
 [templates.PATH]
 value = "export PATH=\"{{ dir }}:$PATH\""
