@@ -1,7 +1,0 @@
-{
-  "require": {
-    "prefix": "req",
-    "body": ["local ${2} = require'${1}'"],
-    "description": "require module"
-  }
-}
