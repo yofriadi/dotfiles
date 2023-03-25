@@ -1,84 +1,96 @@
 return {
+  "nvim-lua/plenary.nvim",
+  { "AstroNvim/astrotheme", opts = { plugins = { ["dashboard-nvim"] = true } } },
+  { "famiu/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
+  { "max397574/better-escape.nvim", event = "InsertCharPre", opts = { timeout = 300 } },
+  { "NMAC427/guess-indent.nvim", event = "User AstroFile", config = require "plugins.configs.guess-indent" },
+  { "Shatur/neovim-session-manager", event = "BufWritePost", cmd = "SessionManager" },
+  { "s1n7ax/nvim-window-picker", opts = { use_winbar = "smart" } },
   {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "tokyonight",
-    },
+    "mrjones2014/smart-splits.nvim",
+    opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },
   },
   {
-    "williamboman/mason.nvim",
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
     opts = {
-      ensure_installed = {
-        "stylua",
-        "prettier",
-        "shellcheck",
-        "shfmt",
+      check_ts = true,
+      ts_config = { java = false },
+      fast_wrap = {
+        map = "<M-e>",
+        chars = { "{", "[", "(", '"', "'" },
+        pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
+        offset = 0,
+        end_key = "$",
+        keys = "qwertyuiopzxcvbnmasdfghjkl",
+        check_comma = true,
+        highlight = "PmenuSel",
+        highlight_grey = "LineNr",
       },
     },
+    config = require "plugins.configs.nvim-autopairs",
   },
   {
-    "neovim/nvim-lspconfig",
+    "folke/which-key.nvim",
+    event = "VeryLazy",
     opts = {
-      servers = {
-        gopls = {},
-        ["golangci-lint-langserver"] = {},
-      },
+      icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
+      disable = { filetypes = { "TelescopePrompt" } },
     },
+    config = require "plugins.configs.which-key",
   },
   {
-    "nvim-treesitter/nvim-treesitter",
+    "kevinhwang91/nvim-ufo",
+    event = { "User AstroFile", "InsertEnter" },
+    dependencies = { "kevinhwang91/promise-async" },
     opts = {
-      ensure_installed = {
-        "json",
-        "yaml",
-        "lua",
-        "go",
-        "gomod",
-        "javascript",
-        "typescript",
+      preview = {
+        mappings = {
+          scrollB = "<C-b>",
+          scrollF = "<C-f>",
+          scrollU = "<C-u>",
+          scrollD = "<C-d>",
+        },
       },
-      markid = { enable = true },
-    },
-  },
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-    },
-    opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
-
-      local luasnip = require("luasnip")
-      local cmp = require("cmp")
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-            -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-            -- they way you will only jump inside the snippet region
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
+      provider_selector = function(_, filetype, buftype)
+        local function handleFallbackException(bufnr, err, providerName)
+          if type(err) == "string" and err:match "UfoFallbackException" then
+            return require("ufo").getFolds(bufnr, providerName)
           else
-            fallback()
+            return require("promise").reject(err)
           end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
+        end
+
+        return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
+          or function(bufnr)
+            return require("ufo")
+              .getFolds(bufnr, "lsp")
+              :catch(function(err) return handleFallbackException(bufnr, err, "treesitter") end)
+              :catch(function(err) return handleFallbackException(bufnr, err, "indent") end)
           end
-        end, { "i", "s" }),
-      })
+      end,
+    },
+  },
+  {
+    "numToStr/Comment.nvim",
+    keys = { { "gc", mode = { "n", "v" } }, { "gb", mode = { "n", "v" } } },
+    opts = function()
+      local commentstring_avail, commentstring = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+      return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
     end,
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    cmd = { "ToggleTerm", "TermExec" },
+    opts = {
+      size = 10,
+      open_mapping = [[<F7>]],
+      shading_factor = 2,
+      direction = "float",
+      float_opts = {
+        border = "curved",
+        highlights = { border = "Normal", background = "Normal" },
+      },
+    },
   },
 }
