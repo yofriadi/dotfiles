@@ -13,6 +13,8 @@ eval "$(zoxide init zsh)"
 
 export ASDF_DIR="$HOME/.local/share/sheldon/repos/github.com/asdf-vm/asdf"
 
+export PATH="$HOME/.local/bin:$PATH"
+
 # Golang
 export GOPRIVATE="gitlab.com/pinvest/*"
 export GOPATH="$HOME/.local/share/go"
