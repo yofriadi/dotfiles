@@ -1,8 +1,9 @@
-tt.*
-.tests
-doc/tags
-debug
-.repro
-foo.*
-*.log
-data
+!colors/astronvim.lua
+colors/*
+docs
+ginit.vim
+lua/user
+plugin
+ftplugin
+spell
+.luarc.json
