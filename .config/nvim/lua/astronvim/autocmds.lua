@@ -14,18 +14,34 @@ vim.on_key(function(char)
   end
 end, namespace "auto_hlsearch")
 
+autocmd("BufReadPre", {
+  desc = "Disable certain functionality on very large files",
+  group = augroup("large_buf", { clear = true }),
+  callback = function(args)
+    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+    vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.max_file.size)
+      or vim.api.nvim_buf_line_count(args.buf) > vim.g.max_file.lines
+  end,
+})
+
 local bufferline_group = augroup("bufferline", { clear = true })
 autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
   desc = "Update buffers when adding new buffers",
   group = bufferline_group,
   callback = function(args)
+    local buf_utils = require "astronvim.utils.buffer"
     if not vim.t.bufs then vim.t.bufs = {} end
+    if not buf_utils.is_valid(args.buf) then return end
+    if args.buf ~= buf_utils.current_buf then
+      buf_utils.last_buf = buf_utils.is_valid(buf_utils.current_buf) and buf_utils.current_buf or nil
+      buf_utils.current_buf = args.buf
+    end
     local bufs = vim.t.bufs
     if not vim.tbl_contains(bufs, args.buf) then
       table.insert(bufs, args.buf)
       vim.t.bufs = bufs
     end
-    vim.t.bufs = vim.tbl_filter(require("astronvim.utils.buffer").is_valid, vim.t.bufs)
+    vim.t.bufs = vim.tbl_filter(buf_utils.is_valid, vim.t.bufs)
     astroevent "BufsUpdated"
   end,
 })
@@ -33,11 +49,13 @@ autocmd("BufDelete", {
   desc = "Update buffers when deleting buffers",
   group = bufferline_group,
   callback = function(args)
+    local removed
     for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
       local bufs = vim.t[tab].bufs
       if bufs then
         for i, bufnr in ipairs(bufs) do
           if bufnr == args.buf then
+            removed = true
             table.remove(bufs, i)
             vim.t[tab].bufs = bufs
             break
@@ -46,7 +64,7 @@ autocmd("BufDelete", {
       end
     end
     vim.t.bufs = vim.tbl_filter(require("astronvim.utils.buffer").is_valid, vim.t.bufs)
-    astroevent "BufsUpdated"
+    if removed then astroevent "BufsUpdated" end
     vim.cmd.redrawtabline()
   end,
 })
@@ -85,9 +103,8 @@ autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
   group = augroup("q_close_windows", { clear = true }),
   callback = function(event)
-    local filetype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
     local buftype = vim.api.nvim_get_option_value("buftype", { buf = event.buf })
-    if buftype == "nofile" or filetype == "help" then
+    if vim.tbl_contains({ "help", "nofile", "quickfix" }, buftype) then
       vim.keymap.set("n", "q", "<cmd>close<cr>", {
         desc = "Close window",
         buffer = event.buf,
@@ -180,7 +197,10 @@ if is_available "alpha-nvim" then
           end
         end
       end
-      if not should_skip then require("alpha").start(true, require("alpha").default_config) end
+      if not should_skip then
+        require("alpha").start(true, require("alpha").default_config)
+        vim.schedule(function() vim.cmd.doautocmd "FileType" end)
+      end
     end,
   })
 end
@@ -189,12 +209,13 @@ if is_available "resession.nvim" then
   autocmd("VimLeavePre", {
     desc = "Save session on close",
     group = augroup("resession_auto_save", { clear = true }),
-    callback = function(event)
-      local filetype = vim.api.nvim_get_option_value("filetype", { buf = event.buf })
-      if not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype) then
+    callback = function()
+      local buf_utils = require "astronvim.utils.buffer"
+      local autosave = buf_utils.sessions.autosave
+      if autosave and buf_utils.is_valid_session() then
         local save = require("resession").save
-        save "Last Session"
-        save(vim.fn.getcwd(), { dir = "dirsession", notify = false })
+        if autosave.last then save("Last Session", { notify = false }) end
+        if autosave.cwd then save(vim.fn.getcwd(), { dir = "dirsession", notify = false }) end
       end
     end,
   })
@@ -208,7 +229,7 @@ if is_available "neo-tree.nvim" then
       if package.loaded["neo-tree"] then
         vim.api.nvim_del_augroup_by_name "neotree_start"
       else
-        local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
+        local stats = (vim.uv or vim.loop).fs_stat(vim.api.nvim_buf_get_name(0)) -- TODO: REMOVE vim.loop WHEN DROPPING SUPPORT FOR Neovim v0.9
         if stats and stats.type == "directory" then
           vim.api.nvim_del_augroup_by_name "neotree_start"
           require "neo-tree"
@@ -241,13 +262,19 @@ autocmd({ "VimEnter", "ColorScheme" }, {
   end,
 })
 
-autocmd({ "BufReadPost", "BufNewFile" }, {
+autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   desc = "AstroNvim user events for file detection (AstroFile and AstroGitFile)",
   group = augroup("file_user_events", { clear = true }),
   callback = function(args)
     if not (vim.fn.expand "%" == "" or vim.api.nvim_get_option_value("buftype", { buf = args.buf }) == "nofile") then
-      utils.event "File"
-      if utils.cmd('git -C "' .. vim.fn.expand "%:p:h" .. '" rev-parse', false) then utils.event "GitFile" end
+      astroevent "File"
+      if
+        require("astronvim.utils.git").file_worktree()
+        or utils.cmd({ "git", "-C", vim.fn.expand "%:p:h", "rev-parse" }, false)
+      then
+        astroevent "GitFile"
+        vim.api.nvim_del_augroup_by_name "file_user_events"
+      end
     end
   end,
 })
