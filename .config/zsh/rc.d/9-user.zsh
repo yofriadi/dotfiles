@@ -41,3 +41,7 @@ alias hx="helix"
 export BAT_THEME="Nord"
 
 #alias docker="lima nerdctl"
+
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+#For the system Java wrappers to find this JDK, symlink it with
+#sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
