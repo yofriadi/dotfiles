@@ -1,0 +1,112 @@
+local notif = require("utils.notif")
+
+return {
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    cmd = "Neotree",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", lazy = true },
+      { "MunifTanjim/nui.nvim", lazy = true },
+      { "nvim-tree/nvim-web-devicons", lazy = true },
+    },
+    opts = {
+      auto_clean_after_session_restore = true,
+      close_if_last_window = true,
+      sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+      open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+      filesystem = {
+        bind_to_cwd = false,
+        follow_current_file = { enabled = true },
+        use_libuv_file_watcher = true,
+      },
+      window = {
+        mappings = {
+          ["<space>"] = false, -- disable space until we figure out which-key disabling
+          ["[b"] = "prev_source",
+          ["]b"] = "next_source",
+          y = "copy_file_name",
+          Y = "copy_file_path",
+          h = "parent_or_close",
+          l = "child_or_open",
+        },
+      },
+      default_component_configs = {
+        indent = {
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          expander_collapsed = "",
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
+        },
+      },
+      commands = {
+        copy_file_name = function(state)
+          local filepath = state.tree:get_node():get_id()
+          local file = vim.fn.fnamemodify(filepath, ":.")
+          vim.fn.setreg("+", file)
+          notif.info(("Copied: `%s`").format(file), { title = "Clipboard" })
+        end,
+        copy_file_path = function(state)
+          local filepath = state.tree:get_node():get_id()
+          local file = vim.fn.fnamemodify(filepath, ":~")
+          vim.fn.setreg("+", file)
+          notif.info(("Copied: `%s`").format(file), { title = "Clipboard" })
+        end,
+        parent_or_close = function(state)
+          local node = state.tree:get_node()
+          if (node.type == "directory" or node:has_children()) and node:is_expanded() then
+            state.commands.toggle_node(state)
+          else
+            require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+          end
+        end,
+        child_or_open = function(state)
+          local node = state.tree:get_node()
+          if node.type == "directory" or node:has_children() then
+            if not node:is_expanded() then -- if unexpanded, expand
+              state.commands.toggle_node(state)
+            else -- if expanded and has children, seleect the next child
+              require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
+            end
+          else -- if not a directory just open it
+            state.commands.open(state)
+          end
+        end,
+      }
+    },
+    keys = function ()
+      local cmd = require("neo-tree.command")
+      return {
+        {
+          "<Leader>ef",
+          function () cmd.execute({ source = "filesystem", toggle = true }) end,
+          desc = "Toggle file explorer",
+        },
+        {
+          "<Leader>eg",
+          function() cmd.execute({ source = "git_status", toggle = true }) end,
+          desc = "Toggle git explorer",
+        },
+        {
+          "<leader>eb",
+          function() cmd.execute({ source = "buffers", toggle = true }) end,
+          desc = "Toggle buffer explorer",
+        },
+        {
+          "<leader>es",
+          function() cmd.execute({ source = "document_symbols", toggle = true }) end,
+          desc = "Toggle document symbol explorer",
+        },
+      }
+    end,
+    deactivate = function() vim.cmd([[Neotree close]]) end,
+    init = function()
+      if vim.fn.argc(-1) == 1 then
+        local stat = vim.loop.fs_stat(vim.fn.argv(0))
+        if stat and stat.type == "directory" then
+          require("neo-tree")
+        end
+      end
+    end,
+  },
+}
