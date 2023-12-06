@@ -68,7 +68,7 @@
   })
 end)()
 
--- NOTE: here lies all plugin that does not have category
+-- NOTE: here lies all plugin that does not yet categorized
 return {
   {
     "Nexmean/caskey.nvim",

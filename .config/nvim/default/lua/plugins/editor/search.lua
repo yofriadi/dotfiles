@@ -170,44 +170,55 @@ return {
       local tse = require("telescope").extensions
       local tsb = require("telescope.builtin")
       return {
-        { "<leader>s<cr>", function () tsb.resume() end, desc = "Resume previous search" },
-        { "<leader>s/", function () tsb.live_grep() end, desc = "Search words", },
-        { "<leader>s?", function () tsb.live_grep({ hidden = true, no_ignore = true }) end, desc = "Search all words", },
-        { "<leader>sf", function () tsb.find_files() end, desc = "Search files (root dir)", },
-        { "<leader>sF", function () tsb.find_files({ hidden = true, no_ignore = true }) end, desc = "Search all file", },
-        { "<leader>sb", function () tsb.buffers({ sort_mru = true, sort_lastused = true }) end, desc = "Search buffers", },
-        { "<leader>sn", function () tse.notify.notify() end, desc = "Search notifications", },
-        { "<leader>sk", function () tsb.keymaps() end, desc = "Search keymaps", },
-        { "<leader>sc", function () tsb.commands() end, desc = "Search commands", },
-        { "<leader>sC", function () tsb.command_history() end, desc = "Search command history", },
+        { "<Leader>s<CR>", function () tsb.resume() end, desc = "Resume previous search" },
+        { "<Leader>s/", function () tsb.live_grep() end, desc = "Search words", },
+        { "<Leader>s?", function () tsb.live_grep({ hidden = true, no_ignore = true }) end, desc = "Search all words", },
+        { "<Leader>sf", function () tsb.find_files() end, desc = "Search files (root dir)", },
+        { "<Leader>sF", function () tsb.find_files({ hidden = true, no_ignore = true }) end, desc = "Search all file", },
+        { "<Leader>sb", function () tsb.buffers({ sort_mru = true, sort_lastused = true }) end, desc = "Search buffers", },
+        { "<Leader>sn", function () tse.notify.notify() end, desc = "Search notifications", },
+        { "<Leader>sk", function () tsb.keymaps() end, desc = "Search keymaps", },
+        { "<Leader>sc", function () tsb.commands() end, desc = "Search commands", },
+        { "<Leader>sC", function () tsb.command_history() end, desc = "Search command history", },
 
         -- TODO: find out if below is any useful, change if needed
-        { "<leader>s'", function () tsb.marks() end, desc = "Search marks", },
-        { "<leader>sr", function () tsb.registers() end, desc = "Search registers", },
-        { "<leader>sh", function () tsb.help_tags() end, desc = "Search helps", },
-        -- { "<leader>fH", function () tsb.highlights() end, desc = "Search highlights", },
-        { "<leader>sm", function () tsb.man_pages() end, desc = "Search manual pages", },
-        { "<leader>so", function () tsb.oldfiles({ cwd = vim.loop.cwd() }) end, desc = "Search cwd history file", },
-        { "<leader>sO", function () tsb.oldfiles() end, desc = "Search all history file", },
-        { "<leader>sa", function () tsb.autocommands() end, desc = "Search autocommands", },
-
-        -- TODO: set diagnostics below in lsp
-        { "<leader>sd", function () tsb.diagnostics({ bufnr = 0 }) end, desc = "Search document diagnostics", },
-        { "<leader>sD", function () tsb.diagnostics() end, desc = "Search workspace diagnotics", },
-        { "<leader>sv", function () tsb.vim_options() end, desc = "Search Vim options", },
+        { "<Leader>s'", function () tsb.marks() end, desc = "Search marks", },
+        { "<Leader>sR", function () tsb.registers() end, desc = "Search registers", },
+        { "<Leader>sh", function () tsb.help_tags() end, desc = "Search helps", },
+        -- { "<Leader>fH", function () tsb.highlights() end, desc = "Search highlights", },
+        { "<Leader>sm", function () tsb.man_pages() end, desc = "Search manual pages", },
+        { "<Leader>so", function () tsb.oldfiles({ cwd = vim.loop.cwd() }) end, desc = "Search cwd history file", },
+        { "<Leader>sO", function () tsb.oldfiles() end, desc = "Search all history file", },
+        { "<Leader>sa", function () tsb.autocommands() end, desc = "Search autocommands", },
+        { "<Leader>sv", function () tsb.vim_options() end, desc = "Search Vim options", },
         -- TODO: below preview not working
-        { "<leader>sT", function () tsb.colorscheme({ enable_preview = true }) end, desc = "Search theme with preview", },
+        { "<Leader>sT", function () tsb.colorscheme({ enable_preview = true }) end, desc = "Search theme with preview", },
         {
-          "<leader>ss",
+          "<Leader>ss",
           function () tsb.lsp_document_symbols({ symbols = get_kind_filter() }) end,
           desc = "Search document symbol",
         },
         {
-          "<leader>sS",
+          "<Leader>sS",
           function () tsb.lsp_dynamic_workspace_symbols({ symbols = get_kind_filter() }) end,
           desc = "Search workspace symbol",
         },
       }
     end,
+  },
+  {
+    "nvim-pack/nvim-spectre",
+    build = false,
+    cmd = "Spectre",
+    opts = {
+      open_cmd = "noswapfile vnew",
+      -- TODO: make it work with sd
+      --[[ default = {
+        replace = { cmd = "sd" },
+      } ]]
+    },
+    keys = {
+      { "<leader>sr", function() require("spectre").open() end, desc = "Search and replace" },
+    },
   },
 }
