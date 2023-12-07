@@ -242,6 +242,8 @@ return {
           "gofumpt",
           "goimports",
           "golines",
+          "golines",
+          "gomodifytags",
         },
         automatic_installation = false,
         handlers = {},
