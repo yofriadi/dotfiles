@@ -1,9 +1,8 @@
 return {
   {
     "L3MON4D3/LuaSnip",
-    build = (not jit.os:find("Windows"))
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-      or nil,
+    version = "v2.*",
+    build = "make install_jsregexp",
     --[[ dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
@@ -15,18 +14,18 @@ return {
       delete_check_events = "TextChanged",
       region_check_events = "CursorMoved",
     },
-    -- stylua: ignore
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
-      },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    },
+    keys = function ()
+      local ls = require("luasnip")
+      return {
+        {
+          "<Tab>",
+          function() return ls.jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>" end,
+          expr = true, silent = true, mode = "i",
+        },
+        { "<Tab>", function() ls.jump(1) end, mode = "s" },
+        { "<S-Tab>", function() ls.jump(-1) end, mode = { "i", "s" } },
+      }
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -43,7 +42,7 @@ return {
       local cmp = require("cmp")
       local defaults = require("cmp.config.default")()
       local luasnip = require("luasnip")
-      local lspkind = require("lspkind")
+      -- local lspkind = require("lspkind")
 
       local border_opts = {
         border = "rounded",

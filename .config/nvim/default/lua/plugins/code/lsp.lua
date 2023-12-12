@@ -241,7 +241,7 @@ return {
           "stylua",
           "gofumpt",
           "goimports",
-          "golines",
+          "goimports-reviser",
           "golines",
           "gomodifytags",
         },
