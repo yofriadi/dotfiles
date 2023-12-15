@@ -1,4 +1,5 @@
 return {
+  { "sindrets/diffview.nvim" },
   {
     "mrjones2014/smart-splits.nvim",
     keys = {

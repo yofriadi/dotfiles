@@ -1,4 +1,5 @@
 return {
+  {"cpea2506/relative-toggle.nvim"},
   {
     "stevearc/dressing.nvim",
     lazy = true,

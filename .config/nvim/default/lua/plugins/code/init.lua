@@ -1,4 +1,5 @@
 return {
+  {"m-demare/hlargs.nvim"},
   {
     "nat-418/boole.nvim",
     event = "BufRead",
