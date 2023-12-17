@@ -1,5 +1,5 @@
 return {
-  -- this already worked by lsp (lspconfig) itself? 
+  -- this already worked by lsp (lspconfig) itself?
   --[[ {
     "mfussenegger/nvim-lint",
     event = "LazyFile",
@@ -91,22 +91,4 @@ return {
       })
     end,
   }, ]]
-  {
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    event = "LspAttach",
-    keys = {
-      {
-        "<Leader>td",
-        function() vim.diagnostic.config({ virtual_text = not require("lsp_lines").toggle() }) end,
-        desc = "Toggle virtual diagnostic lines",
-      },
-    },
-    config = function()
-      -- disable diagnostic virtual text
-      -- local lsp_utils = require "astronvim.utils.lsp"
-      -- lsp_utils.diagnostics[3].virtual_text = false
-      -- vim.diagnostic.config(lsp_utils.diagnostics[vim.g.diagnostics_mode])
-      require("lsp_lines").setup()
-    end,
-  }
 }
