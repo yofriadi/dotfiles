@@ -42,34 +42,4 @@ return {
       },
     }
   },
-  {
-    "rebelot/heirline.nvim",
-    event = "BufEnter",
-    opts = function()
-      local utils_buffer = require("utils.buffer")
-      local cond = require("config.heirline.condition")
-      local comp = require("config.heirline.component")
-      return {
-        opts = {
-          disable_winbar_cb = function(args)
-            return not utils_buffer.is_valid(args.buf) or cond.buffer_matches({
-              buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-              filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline" },
-            }, args.buf)
-          end,
-        },
-        statusline = {
-          hl = { fg = "fg", bg = "bg" },
-          comp.mode(),
-        },
-        --[[ winbar = {},
-        tabline = {},
-        statuscolumn = {}, ]]
-      }
-    end,
-    config = function (_, opts)
-      local heirline = require("heirline")
-      heirline.setup(opts)
-    end
-  }
 }

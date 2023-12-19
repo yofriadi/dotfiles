@@ -1,7 +1,6 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    
     event = { "LazyFile", "VeryLazy" },
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",

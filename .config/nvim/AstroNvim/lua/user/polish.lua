@@ -1,0 +1,15 @@
+-- return function ()
+--   vim.cmd [[
+--     augroup _filetype
+--       autocmd!
+--       autocmd FileType go setlocal ts=8 sw=8
+--       autocmd FileType json setlocal ts=2 sw=2
+--       autocmd FileType javascript setlocal ts=2 sw=2
+--       autocmd FileType typescript setlocal ts=2 sw=2
+--       autocmd FileType lua setlocal ts=2 sw=2
+--       autocmd FileType sql setlocal ts=4 sw=4
+--       autocmd FileType dart setlocal ts=2 sw=2
+--       autocmd FileType typescriptreact setlocal ts=2 sw=2
+--     augroup end
+--   ]]
+-- end
