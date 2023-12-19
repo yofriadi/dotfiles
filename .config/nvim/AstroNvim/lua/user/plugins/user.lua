@@ -70,35 +70,4 @@ return {
 			lsp_lines.setup()
 		end,
 	},
-	--[[ {
-    "echasnovski/mini.move",
-    version = false,
-    config = function(_, opts) require("mini.move").setup(opts) end,
-    keys = {
-      { "¬", mode = { "n", "v" } },
-      { "˚", mode = { "n", "v" } },
-      { "∆", mode = { "n", "v" } },
-      { "˙", mode = { "n", "v" } },
-    },
-    opts = {
-      mappings = {
-        -- Visual mode
-        left = "˙",
-        right = "¬",
-        down = "∆",
-        up = "˚",
-
-        -- Normal mode
-        line_left = "˙",
-        line_right = "¬",
-        line_down = "∆",
-        line_up = "˚",
-      },
-      -- Options which control moving behavior
-      options = {
-        -- Automatically reindent selection during linewise vertical move
-        reindent_linewise = true,
-      },
-    },
-  }, ]]
 }
