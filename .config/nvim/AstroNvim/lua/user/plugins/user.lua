@@ -22,7 +22,7 @@ return {
 			})
 		end,
 	},
-	{
+	--[[ {
 		"stevearc/conform.nvim",
 		event = "BufWritePre",
 		cmd = "ConformInfo",
@@ -41,33 +41,5 @@ return {
 				},
 			})
 		end,
-	},
-	{
-		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		event = "LspAttach",
-		keys = {
-			{
-				"<Leader>uD",
-				function()
-					vim.diagnostic.config({ virtual_text = not require("lsp_lines").toggle() })
-				end,
-				desc = "Toggle virtual diagnostic lines",
-			},
-		},
-		config = function()
-			local lsp_lines = require("lsp_lines")
-			-- Disable the plugin in Lazy.nvim
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "lazy",
-				callback = function()
-					local previous = not lsp_lines.toggle()
-					if not previous then
-						lsp_lines.toggle()
-					end
-				end,
-			})
-
-			lsp_lines.setup()
-		end,
-	},
+	}, ]]
 }

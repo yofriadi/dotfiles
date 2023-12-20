@@ -1,49 +1,77 @@
--- Mapping data with "desc" stored directly by vim.keymap.set().
---
--- Please use this mappings table to set keyboard mapping since this is the
--- lower level configuration and more robust one. (which-key will
--- automatically pick-up stored data by this setting.)
 return {
-  -- first key is the mode
-  n = {
-    -- second key is the lefthand side of the map
-    -- mappings seen under group name "Buffer"
-    ["<Leader>e"] = false,
-    ["<leader>bn"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-    ["<leader>bd"] = {
-        function() require("astronvim.utils.buffer").close(vim.bufnr, true) end,
-      desc = "Close current buffer",
-    },
-    ["<leader>bD"] = {
-      function()
-        require("astronvim.utils.status").heirline.buffer_picker(
-          function(bufnr) require("astronvim.utils.buffer").close(bufnr) end
-        )
-      end,
-      desc = "Pick to close buffer",
-    },
-    -- tables with the `name` key will be registered with which-key if it's installed
-    -- this is useful for naming menus
-    ["<leader><leader>"] = { "<c-^>", desc = "switch between current and last file opened" },
-    d = { '"_d', desc = "use a different register for delete and paste" },
-    x = { '"_x', desc = "use a different register for cut and paste" },
-    X = "S",
-    L = { function() require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1) end, desc = "Next buffer" },
-    H = { function() require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1)) end, desc = "Previous buffer" },
-  },
-  v = {
-    d = { '"_d', desc = "use a different register for delete and paste" },
-    p = { '"_dP', desc = "use a different register for delete and paste" },
-    X = "S",
-  },
-  t = {
-    -- setting a mapping to false will disable it
-    -- ["<esc>"] = false,
-    jk = [[<C-\><C-n>]],
-    ["<esc><esc>"] = [[<C-\><C-n>]],
-    ["<C-h>"] = [[<C-\><C-n><C-W>h]],
-    ["<C-j>"] = [[<C-\><C-n><C-W>j]],
-    ["<C-k>"] = [[<C-\><C-n><C-W>k]],
-    ["<C-l>"] = [[<C-\><C-n><C-W>l]],
-  },
+	n = {
+		--e = { desc = get_icon("Window", 1, true) .. "Editor" }, -- not working
+		["<Leader>e"] = false,
+		["<Leader><Leader>"] = { "<C-^>", desc = "switch between current and last file opened" },
+		[";"] = { ":", desc = "Faster command key" },
+		X = "S",
+		L = {
+			function()
+				require("astronvim.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
+			end,
+			desc = "Next buffer",
+		},
+		H = {
+			function()
+				require("astronvim.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
+			end,
+			desc = "Previous buffer",
+		},
+
+		-- Window
+		["<C-W>c"] = { "<C-W>c", desc = "Close window", noremap = false },
+		["<C-W>d"] = { "<C-W>c", desc = "Close window", noremap = false }, -- convenient key
+		["<C-W>_"] = { "<C-W>s", desc = "Split window below", noremap = false },
+		["<C-W>|"] = { "<C-W>v", desc = "Split window right", noremap = false },
+		["<C-W>S"] = { "<C-W>v", desc = "Split window right", noremap = false }, -- convenient key
+
+		-- Tab
+		["<Leader><Tab><Tab>"] = { "<Cmd>tabnew<CR>", desc = "New tab" },
+		["<Leader><Tab>c"] = { "<Cmd>tabclose<Cr>", desc = "Close tab" },
+		["<Leader><Tab>d"] = { "<Cmd>tabclose<Cr>", desc = "Close tab" }, -- convenient key
+		["<Leader><Tab>]"] = { "<Cmd>tabnext<Cr>", desc = "Next tab" },
+		["<Leader><Tab>l"] = { "<Cmd>tabnext<Cr>", desc = "Next tab" },
+		["<Leader><Tab>["] = { "<Cmd>tabprevious<Cr>", desc = "Previous tab" },
+		["<Leader><Tab>h"] = { "<Cmd>tabprevious<Cr>", desc = "Previous tab" },
+		["<Leader><Tab>F"] = { "<Cmd>tabfirst<Cr>", desc = "First tab" },
+		["<Leader><Tab>L"] = { "<Cmd>tablast<Cr>", desc = "Last tab" },
+		["<Leader><Tab>a"] = { "<Cmd>tabfirst<Cr>", desc = "First tab" }, -- convenient key
+		["<Leader><Tab>z"] = { "<Cmd>tablast<Cr>", desc = "Last tab" }, -- convenient key
+
+		-- Buffer
+		["<Leader>bn"] = { "<Cmd>tabnew<CR>", desc = "New tab" },
+		["<Leader>bd"] = {
+			function()
+				require("astronvim.utils.buffer").close(vim.bufnr, true)
+			end,
+			desc = "Close current buffer",
+		},
+		["<Leader>bD"] = {
+			function()
+				require("astronvim.utils.status").heirline.buffer_picker(function(bufnr)
+					require("astronvim.utils.buffer").close(bufnr)
+				end)
+			end,
+			desc = "Pick to close buffer",
+		},
+
+		-- Terminal ToggleTerm
+		["<Leader>etf"] = { "<Cmd>ToggleTerm direction=float<CR>", desc = "ToggleTerm float" },
+		["<Leader>eth"] = { "<Cmd>ToggleTerm size=10 direction=horizontal<CR>", desc = "ToggleTerm horizontal split" },
+		["<Leader>etv"] = { "<Cmd>ToggleTerm size=80 direction=vertical<CR>", desc = "ToggleTerm vertical split" },
+		["<leader>et<Tab>"] = { "<cmd>ToggleTerm direction=tab<cr>", desc = "ToggleTerm tab" },
+	},
+	v = {
+		X = "S",
+		["<"] = { "<gv", desc = "Better left indenting" },
+		[">"] = { ">gv", desc = "Better right indenting" },
+	},
+	t = {
+		jk = [[<C-\><C-n>]],
+		["<Esc><Esc>"] = [[<C-\><C-n>]],
+		["<C-h>"] = [[<C-\><C-n><C-w>h]],
+		["<C-j>"] = [[<C-\><C-n><C-w>j]],
+		["<C-k>"] = [[<C-\><C-n><C-w>k]],
+		["<C-l>"] = [[<C-\><C-n><C-w>l]],
+	},
 }

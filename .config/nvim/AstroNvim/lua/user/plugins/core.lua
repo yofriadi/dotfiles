@@ -1,3 +1,6 @@
+local utils = require("astronvim.utils")
+local is_available = utils.is_available
+
 return {
 	-- customize alpha options
 	{
@@ -74,40 +77,93 @@ return {
 	--     }, { mode = "n", prefix = "<leader>" })
 	--   end,
 	-- },
+	{ "stevearc/aerial.nvim", enabled = false },
 	{
 		"mrjones2014/smart-splits.nvim",
-		keys = {
-			{
-				"<c-w>r",
-				function()
-					require("smart-splits").start_resize_mode()
-				end,
-				desc = "Resize mode",
-			},
-		},
+		keys = function()
+			if is_available("smart-splits.nvim") ~= true then
+				return {}
+			end
+
+			return {
+				{
+					"<C-W>r",
+					function()
+						require("smart-splits").start_resize_mode()
+					end,
+					desc = "Resize mode",
+				},
+			}
+		end,
 	},
 	{
 		"echasnovski/mini.bufremove",
-		keys = {
-			{
-				"C",
-				function()
-					local bd = require("mini.bufremove").delete
-					if vim.bo.modified then
-						local choice =
-							vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
-						if choice == 1 then -- Yes
-							vim.cmd.write()
+		keys = function()
+			if is_available("mini.bufremove") ~= true then
+				return {}
+			end
+
+			return {
+				{
+					"C",
+					function()
+						local bd = require("mini.bufremove").delete
+						if vim.bo.modified then
+							local choice =
+								vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
+							if choice == 1 then -- Yes
+								vim.cmd.write()
+								bd(0)
+							elseif choice == 2 then -- No
+								bd(0, true)
+							end
+						else
 							bd(0)
-						elseif choice == 2 then -- No
-							bd(0, true)
 						end
-					else
-						bd(0)
-					end
-				end,
-				desc = "Delete Buffer",
-			},
-		},
+					end,
+					desc = "Delete Buffer",
+				},
+			}
+		end,
+	},
+	{
+		"nvim-telescope/telescope.nvim",
+		keys = function()
+			if is_available("telescope.nvim") ~= true then
+				return {}
+			end
+
+			local tsb = require("telescope.builtin")
+			return {
+				{
+					"<Leader>f?",
+					function()
+						tsb.live_grep({ hidden = true, no_ignore = true })
+					end,
+					desc = "Search all words",
+				},
+				{
+					"<Leader>fv",
+					function()
+						tsb.vim_options()
+					end,
+					desc = "Search Vim options",
+				},
+				{
+					"<Leader>fs",
+					function()
+						tsb.lsp_document_symbols()
+					end,
+					desc = "Search document symbol",
+				},
+				{
+					"<Leader>fS",
+					function()
+						tsb.lsp_dynamic_workspace_symbols()
+					end,
+					desc = "Search workspace symbol",
+				},
+			}
+		end,
 	},
 }

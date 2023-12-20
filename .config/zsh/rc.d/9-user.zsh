@@ -4,28 +4,43 @@
 # User scripts
 #
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 #eval "$(zellij setup --generate-completion zsh)"
 
 zstyle ':hist:*' expand-aliases yes
 
-#source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+. "$HOME/.asdf/asdf.sh"
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-
-export HOMEBREW_NO_ENV_HINTS=true
 export GOPRIVATE="gitlab.com/pinvest/*"
 
-export PNPM_HOME="/Users/ymbp/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+#export PNPM_HOME="/Users/ymbp/Library/pnpm"
+#export PATH="$PNPM_HOME:$PATH"
 
 # Golang
-export GOPATH="$HOME/.local/share/go"
+export GOPATH="$HOME/.local/state/go"
 export GOMODCACHE="$HOME/.cache/go"
-export PATH="$GOPATH/bin:$PATH"
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"
+
+# Bob
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/ypcl/.local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/home/ypcl/.local/bin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/ypcl/.local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ypcl/.local/bin/google-cloud-sdk/completion.zsh.inc'; fi
+
+export CLOUDSDK_PYTHON=python3
+
+# Rust
+#export PATH="$HOME/.asdf/installs/rust/1.71.0/bin:$PATH"
+#export PATH="$HOME/.cargo/bin:$PATH"
+
+alias n='NVIM_APPNAME=nvim/default nvim'
+alias nlv='NVIM_APPNAME=nvim/LazyVim-starter nvim'
+alias nan='NVIM_APPNAME=nvim/AstroNvim nvim'
 
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -36,12 +51,12 @@ alias ll="exa -l"
 alias la="exa -a"
 alias lla="exa -la"
 
-alias cat="bat"
 alias hx="helix"
 export BAT_THEME="Nord"
 
-#alias docker="lima nerdctl"
+# bun completions
+[ -s "/home/ypcl/.bun/_bun" ] && source "/home/ypcl/.bun/_bun"
 
-export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
-#For the system Java wrappers to find this JDK, symlink it with
-#sudo ln -sfn /opt/homebrew/opt/openjdk@11/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-11.jdk
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
