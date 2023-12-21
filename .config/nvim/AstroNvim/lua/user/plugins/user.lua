@@ -23,6 +23,10 @@ return {
 		end,
 	},
 	--[[ {
+		"FabianWirth/search.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+	}, ]]
+	--[[ {
 		"stevearc/conform.nvim",
 		event = "BufWritePre",
 		cmd = "ConformInfo",

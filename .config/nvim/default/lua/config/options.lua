@@ -1,10 +1,12 @@
-vim.opt.viewoptions:remove("curdir") -- disable saving current directory with views
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true }) -- disable search count wrap and startup messages
-vim.opt.backspace:append({ "nostop" }) -- don't stop backspace at insert
+vim.opt.viewoptions:remove "curdir" -- disable saving current directory with views
+vim.opt.shortmess:append { W = true, I = true, c = true, C = true } -- disable search count wrap and startup messages
+vim.opt.backspace:append { "nostop" } -- don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60" -- enable linematch diff algorithm
 
--- Enable LazyVim auto format
--- vim.g.autoformat = true
+vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 
 local options = {
   opt = {
@@ -19,11 +21,11 @@ local options = {
     fillchars = {
       foldopen = "",
       foldclose = "",
-      -- fold = "⸱",
-      fold = " ",
-      foldsep = " ",
+      --fold = "⸱",
+      --fold = " ",
+      --foldsep = " ",
       diff = "╱",
-      eob = " ",  -- disable `~` on nonexistent lines
+      eob = " ", -- disable `~` on nonexistent lines
     },
     foldenable = true, -- enable fold for nvim-ufo
     foldmethod = "expr",
@@ -80,8 +82,8 @@ local options = {
   g = {
     mapleader = " ", -- set leader key
     maplocalleader = " ", -- set default local leader key
-    markdown_recommended_style = 0
-  }
+    markdown_recommended_style = 0,
+  },
 }
 
 for scope, table in pairs(options) do

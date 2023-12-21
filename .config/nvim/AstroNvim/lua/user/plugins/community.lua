@@ -26,7 +26,6 @@ return {
 	{ import = "astrocommunity.indent.mini-indentscope" },
 	{ import = "astrocommunity.lsp.garbage-day-nvim" },
 	--{ import = "astrocommunity.lsp.lsp-inlayhints-nvim" }, -- not working
-	--{ import = "astrocommunity.lsp.lsp-signature-nvim" }, -- conflict with Noice.nvim
 	{ import = "astrocommunity.markdown-and-latex.glow-nvim" },
 	{ import = "astrocommunity.motion.nvim-spider" },
 	{ import = "astrocommunity.motion.mini-ai" },

@@ -16,16 +16,16 @@ return {
         highlight_grey = "LineNr",
       },
     },
-    config = function (_, opts)
+    config = function(_, opts)
       local npairs = require "nvim-autopairs"
       npairs.setup(opts)
 
       if not vim.g.autopairs_enabled then npairs.disable() end
       local cmp_status_ok, cmp = pcall(require, "cmp")
       if cmp_status_ok then
-        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done({ tex = false }))
+        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done { tex = false })
       end
-    end
+    end,
   },
   {
     "RRethy/vim-illuminate",
@@ -41,9 +41,12 @@ return {
       require("illuminate").configure(opts)
 
       local function map(key, dir, buffer)
-        vim.keymap.set("n", key, function()
-          require("illuminate")["goto_" .. dir .. "_reference"](false)
-        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+        vim.keymap.set(
+          "n",
+          key,
+          function() require("illuminate")["goto_" .. dir .. "_reference"](false) end,
+          { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer }
+        )
       end
 
       map("]]", "next")
@@ -63,7 +66,7 @@ return {
       { "[[", desc = "Prev Reference" },
     },
   },
-  {
+  --[[ {
     "nat-418/boole.nvim",
     event = "BufRead",
     config = function ()
@@ -85,5 +88,5 @@ return {
         }
       })
     end
-  },
+  }, ]]
 }
