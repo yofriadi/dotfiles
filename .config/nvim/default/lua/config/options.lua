@@ -23,7 +23,7 @@ local options = {
       foldclose = "",
       --fold = "⸱",
       --fold = " ",
-      --foldsep = " ",
+      foldsep = " ",
       diff = "╱",
       eob = " ", -- disable `~` on nonexistent lines
     },

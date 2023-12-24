@@ -14,7 +14,7 @@
 
 --Remap space as leader key
 vim.api.nvim_set_keymap("", "<Space>", "<nop>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("", ";", ":", { noremap = true })
+--vim.api.nvim_set_keymap("", ";", ":", { noremap = true })
 
 local toggle = require "utils.toggle"
 
@@ -22,9 +22,23 @@ return {
   -- TODO: Noice cmdline does not show immediately
   -- [";"] = { act = ":", noremap = true, desc = "Faster command key", },
   {
+    mode = "n",
+    X = { act = "S" },
+  },
+  {
     mode = { "n", "x" },
-    ["j"] = { act = "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Better move up" },
-    ["k"] = { act = "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Better move down" },
+    j = { act = "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Better move up" },
+    k = { act = "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Better move down" },
+  },
+  {
+    mode = "n",
+    d = { act = '"_d', desc = "Better delete" },
+    x = { act = '"_x', desc = "Better delete" },
+  },
+  {
+    mode = "v",
+    d = { act = '"_d', desc = "Better delete" },
+    p = { act = '"_dP', desc = "Better paste" },
   },
   {
     mode = { "n", "i" },

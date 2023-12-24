@@ -40,12 +40,8 @@ local function get_kind_filter(buf)
     },
   }
 
-  if kind_filter == false then
-    return
-  end
-  if kind_filter[ft] == false then
-    return
-  end
+  if kind_filter == false then return end
+  if kind_filter[ft] == false then return end
   ---@diagnostic disable-next-line: return-type-mismatch
   return type(kind_filter) == "table" and type(kind_filter.default) == "table" and kind_filter.default or nil
 end
@@ -56,31 +52,32 @@ return {
     version = "*",
     event = "VeryLazy",
     config = function()
-      require("wf").setup({ theme = "space" })
+      require("wf").setup { theme = "space" }
 
-      local which_key = require("wf.builtin.which_key")
-      local register = require("wf.builtin.register")
-      local bookmark = require("wf.builtin.bookmark")
-      local buffer = require("wf.builtin.buffer")
-      local mark = require("wf.builtin.mark")
+      local which_key = require "wf.builtin.which_key"
+      local register = require "wf.builtin.register"
+      local bookmark = require "wf.builtin.bookmark"
+      local buffer = require "wf.builtin.buffer"
+      local mark = require "wf.builtin.mark"
 
-      require("caskey").setup({
+      require("caskey").setup {
         ["<leader>"] = {
-          act = which_key({ text_insert_in_advance = "<Leader>" }),
+          act = which_key { text_insert_in_advance = "<Leader>" },
           desc = "[wf.nvim] which-key /",
           mode = "n",
         },
         ["<c-w>:"] = { act = register(), desc = "[wf.nvim] register", mode = "n" },
         ["<c-w>b"] = { act = buffer(), desc = "[wf.nvim] buffer", mode = "n" },
         ["'"] = { act = mark(), desc = "[wf.nvim] mark", mode = "n" },
-        ["<c-w>m"] = { act = bookmark({
+        ["<c-w>m"] = {
+          act = bookmark {
             nvim = "~/.config/nvim/default",
             zsh = "~/.config/zsh/.zshrc",
-          }),
+          },
           desc = "[wf.nvim] bookmark",
           mode = "n",
         },
-      })
+      }
     end,
   },
   {
@@ -91,17 +88,75 @@ return {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
-        enabled = vim.fn.executable("make") == 1,
+        enabled = vim.fn.executable "make" == 1,
+      },
+      {
+        "LukasPietzschmann/telescope-tabs",
+        keys = {
+          { "<Leader>s<Tab>", "<Cmd>Telescope telescope-tabs list_tabs<CR>", desc = "Search Tabs" },
+        },
+      },
+      {
+        "FabianWirth/search.nvim",
+        keys = {
+          { "<Leader>sf", function() require("search").open() end, desc = "Search files" },
+        },
+        config = function()
+          local utils = require "utils"
+          local tsb = require "telescope.builtin"
+          local tse = require("telescope").extensions
+          local tabs = {
+            {
+              "Files",
+              function(opts)
+                opts = opts or {}
+                if vim.fn.isdirectory ".git" == 1 then
+                  tsb.git_files(opts)
+                else
+                  tsb.find_files(opts)
+                end
+              end,
+            },
+            {
+              "Grep",
+              function() tsb.live_grep() end,
+            },
+            {
+              "Tabs",
+              function() return require("telescope-tabs").list_tabs() end,
+            },
+            {
+              "Buffers",
+              function() return tsb.buffers { sort_mru = true, sort_lastused = true } end,
+            },
+            {
+              "Undos",
+              function() return tse.undo.undo() end,
+            },
+            { -- depends on yanky.nvim
+              "Yanks",
+              function() require("telescope").extensions.yank_history.yank_history {} end,
+            },
+          }
+
+          return require("search").setup { tabs = tabs }
+        end,
+      },
+      {
+        "debugloop/telescope-undo.nvim",
+        keys = {
+          { "<Leader>su", "<Cmd>Telescope undo<CR>", desc = "Search Undo history" },
+        },
       },
     },
-    config = function (opts)
-      local telescope = require("telescope")
-      local utils = require("utils")
+    config = function(opts)
+      local telescope = require "telescope"
+      local utils = require "utils"
       telescope.setup(opts)
-      utils.conditional_func(telescope.load_extension, utils.is_available("fzf"))
+      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo")
     end,
     opts = function()
-      local actions = require("telescope.actions")
+      local actions = require "telescope.actions"
 
       --[[ local open_with_trouble = function(...)
         return require("trouble.providers.telescope").open_with_trouble(...)
@@ -141,9 +196,7 @@ return {
             table.insert(wins, 1, vim.api.nvim_get_current_win())
             for _, win in ipairs(wins) do
               local buf = vim.api.nvim_win_get_buf(win)
-              if vim.bo[buf].buftype == "" then
-                return win
-              end
+              if vim.bo[buf].buftype == "" then return win end
             end
             return 0
           end,
@@ -166,41 +219,57 @@ return {
         },
       }
     end,
-    keys = function ()
+    keys = function()
+      local tsb = require "telescope.builtin"
       local tse = require("telescope").extensions
-      local tsb = require("telescope.builtin")
       return {
-        { "<Leader>s<CR>", function () tsb.resume() end, desc = "Resume previous search" },
-        { "<Leader>s/", function () tsb.live_grep() end, desc = "Search words", },
-        { "<Leader>s?", function () tsb.live_grep({ hidden = true, no_ignore = true }) end, desc = "Search all words", },
-        { "<Leader>sf", function () tsb.find_files() end, desc = "Search files (root dir)", },
-        { "<Leader>sF", function () tsb.find_files({ hidden = true, no_ignore = true }) end, desc = "Search all file", },
-        { "<Leader>sb", function () tsb.buffers({ sort_mru = true, sort_lastused = true }) end, desc = "Search buffers", },
-        { "<Leader>sn", function () tse.notify.notify() end, desc = "Search notifications", },
-        { "<Leader>sk", function () tsb.keymaps() end, desc = "Search keymaps", },
-        { "<Leader>sc", function () tsb.commands() end, desc = "Search commands", },
-        { "<Leader>sC", function () tsb.command_history() end, desc = "Search command history", },
+        { "<Leader>s<CR>", function() tsb.resume() end, desc = "Resume previous search" },
+        { "<Leader>s/", function() tsb.live_grep() end, desc = "Search words" },
+        {
+          "<Leader>s?",
+          function() tsb.live_grep { hidden = true, no_ignore = true } end,
+          desc = "Search all words",
+        },
+        --{ "<Leader>sf", function() tsb.find_files() end, desc = "Search files (root dir)" },
+        {
+          "<Leader>sF",
+          function() tsb.find_files { hidden = true, no_ignore = true } end,
+          desc = "Search all file",
+        },
+        {
+          "<Leader>sb",
+          function() tsb.buffers { sort_mru = true, sort_lastused = true } end,
+          desc = "Search buffers",
+        },
+        { "<Leader>sn", function() tse.notify.notify() end, desc = "Search notifications" },
+        { "<Leader>sk", function() tsb.keymaps() end, desc = "Search keymaps" },
+        { "<Leader>sc", function() tsb.commands() end, desc = "Search commands" },
+        { "<Leader>sC", function() tsb.command_history() end, desc = "Search command history" },
 
         -- TODO: find out if below is any useful, change if needed
-        { "<Leader>s'", function () tsb.marks() end, desc = "Search marks", },
-        { "<Leader>sR", function () tsb.registers() end, desc = "Search registers", },
-        { "<Leader>sh", function () tsb.help_tags() end, desc = "Search helps", },
+        { "<Leader>s'", function() tsb.marks() end, desc = "Search marks" },
+        { "<Leader>sR", function() tsb.registers() end, desc = "Search registers" },
+        { "<Leader>sh", function() tsb.help_tags() end, desc = "Search helps" },
         -- { "<Leader>fH", function () tsb.highlights() end, desc = "Search highlights", },
-        { "<Leader>sm", function () tsb.man_pages() end, desc = "Search manual pages", },
-        { "<Leader>so", function () tsb.oldfiles({ cwd = vim.loop.cwd() }) end, desc = "Search cwd history file", },
-        { "<Leader>sO", function () tsb.oldfiles() end, desc = "Search all history file", },
-        { "<Leader>sa", function () tsb.autocommands() end, desc = "Search autocommands", },
-        { "<Leader>sv", function () tsb.vim_options() end, desc = "Search Vim options", },
+        { "<Leader>sm", function() tsb.man_pages() end, desc = "Search manual pages" },
+        { "<Leader>so", function() tsb.oldfiles { cwd = vim.loop.cwd() } end, desc = "Search cwd history file" },
+        { "<Leader>sO", function() tsb.oldfiles() end, desc = "Search all history file" },
+        { "<Leader>sa", function() tsb.autocommands() end, desc = "Search autocommands" },
+        { "<Leader>sv", function() tsb.vim_options() end, desc = "Search Vim options" },
         -- TODO: below preview not working
-        { "<Leader>sT", function () tsb.colorscheme({ enable_preview = true }) end, desc = "Search theme with preview", },
+        {
+          "<Leader>sT",
+          function() tsb.colorscheme { enable_preview = true } end,
+          desc = "Search theme with preview",
+        },
         {
           "<Leader>ss",
-          function () tsb.lsp_document_symbols({ symbols = get_kind_filter() }) end,
+          function() tsb.lsp_document_symbols { symbols = get_kind_filter() } end,
           desc = "Search document symbol",
         },
         {
           "<Leader>sS",
-          function () tsb.lsp_dynamic_workspace_symbols({ symbols = get_kind_filter() }) end,
+          function() tsb.lsp_dynamic_workspace_symbols { symbols = get_kind_filter() } end,
           desc = "Search workspace symbol",
         },
       }
@@ -218,7 +287,7 @@ return {
       } ]]
     },
     keys = {
-      { "<leader>sr", function() require("spectre").open() end, desc = "Search and replace" },
+      { "<leader>eS", function() require("spectre").open() end, desc = "Search and replace" },
     },
   },
 }

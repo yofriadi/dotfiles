@@ -43,7 +43,7 @@ return {
     },
     keys = {
       { "<leader>en", function() require("noice").cmd "history" end, desc = "Noice History" },
-      -- { "<leader>tN", function() require("noice").cmd("dismiss") end, desc = "Noice dismiss All" }, -- NOTE: look if the same as toggle vim-notify
+      { "<leader>tn", function() require("noice").cmd "dismiss" end, desc = "Noice dismiss All" },
       {
         "<c-f>",
         function()
@@ -70,13 +70,13 @@ return {
       {
         "rcarriga/nvim-notify",
         init = function() require("utils").load_plugin_with_func("nvim-notify", vim, "notify") end,
-        keys = {
+        --[[ keys = {
           {
             "<leader>tn",
             function() require("notify").dismiss { silent = true, pending = true } end,
             desc = "Dismiss all Notifications",
           },
-        },
+        }, ]]
         opts = {
           timeout = 3000,
           max_height = function() return math.floor(vim.o.lines * 0.75) end,
@@ -115,16 +115,8 @@ return {
           require("statuscol").setup {
             relculright = true,
             segments = {
-              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-              {
-                sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
-                click = "v:lua.ScSa",
-              },
-              { text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
-              {
-                sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-                click = "v:lua.ScSa",
-              },
+              { text = { builtin.foldfunc } },
+              { text = { builtin.lnumfunc } },
               { text = { "%s" }, click = "v:lua.ScSa" },
             },
           }

@@ -1,4 +1,4 @@
-local notif = require("utils.notif")
+local notif = require "utils.notif"
 
 return {
   {
@@ -13,6 +13,7 @@ return {
     opts = {
       auto_clean_after_session_restore = true,
       close_if_last_window = true,
+      enable_normal_mode_for_inputs = true,
       sources = { "filesystem", "buffers", "git_status", "document_symbols" },
       open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
       filesystem = {
@@ -23,8 +24,8 @@ return {
       window = {
         mappings = {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
-          ["[b"] = "prev_source",
-          ["]b"] = "next_source",
+          p = "prev_source",
+          n = "next_source",
           y = "copy_file_name",
           Y = "copy_file_path",
           h = "parent_or_close",
@@ -33,10 +34,29 @@ return {
       },
       default_component_configs = {
         indent = {
+          padding = 0,
           with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "",
-          expander_expanded = "",
-          expander_highlight = "NeoTreeExpander",
+        },
+        icon = {
+          folder_closed = "󰉋",
+          folder_open = "󰝰",
+          folder_empty = "",
+        },
+        name = {
+          trailing_slash = true,
+        },
+        git_status = {
+          symbols = {
+            added = "󰐗",
+            modified = "󰻂",
+            deleted = "󰅙",
+            renamed = "󰰟",
+            untracked = "󰋗",
+            ignored = "󰍶",
+            unstaged = "",
+            staged = "󰗠",
+            conflict = "󰀨",
+          },
         },
       },
       commands = {
@@ -72,41 +92,44 @@ return {
             state.commands.open(state)
           end
         end,
-      }
+      },
     },
-    keys = function ()
-      local cmd = require("neo-tree.command")
+    keys = function()
+      local cmd = require "neo-tree.command"
       return {
         {
           "<Leader>ef",
-          function () cmd.execute({ source = "filesystem", toggle = true }) end,
+          function() cmd.execute { source = "filesystem", toggle = true } end,
           desc = "Toggle file explorer",
         },
         {
           "<Leader>eg",
-          function() cmd.execute({ source = "git_status", toggle = true }) end,
+          function() cmd.execute { source = "git_status", toggle = true } end,
           desc = "Toggle git explorer",
         },
         {
           "<leader>eb",
-          function() cmd.execute({ source = "buffers", toggle = true }) end,
+          function() cmd.execute { source = "buffers", toggle = true } end,
           desc = "Toggle buffer explorer",
         },
         {
           "<leader>es",
-          function() cmd.execute({ source = "document_symbols", toggle = true }) end,
+          function() cmd.execute { source = "document_symbols", toggle = true } end,
           desc = "Toggle document symbol explorer",
         },
       }
     end,
-    deactivate = function() vim.cmd([[Neotree close]]) end,
+    deactivate = function() vim.cmd [[Neotree close]] end,
     init = function()
       if vim.fn.argc(-1) == 1 then
         local stat = vim.loop.fs_stat(vim.fn.argv(0))
-        if stat and stat.type == "directory" then
-          require("neo-tree")
-        end
+        if stat and stat.type == "directory" then require "neo-tree" end
       end
     end,
+  },
+  {
+    "lewis6991/satellite.nvim",
+    event = "LazyFile",
+    opts = { excluded_filetypes = { "prompt", "TelescopePrompt", "noice", "notify", "neo-tree" } },
   },
 }

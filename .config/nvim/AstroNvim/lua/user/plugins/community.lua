@@ -49,7 +49,7 @@ return {
 	{ import = "astrocommunity.scrolling.satellite-nvim" },
 	--{ import = "astrocommunity.scrolling.nvim-scrollbar" },
 	{ import = "astrocommunity.search.nvim-hlslens" },
-	{ import = "astrocommunity.split-and-window.minimap-vim" },
+	--{ import = "astrocommunity.split-and-window.minimap-vim" },
 	{ import = "astrocommunity.syntax.hlargs-nvim" },
 	--{ import = "astrocommunity.utility.neodim" },
 	{ import = "astrocommunity.workflow.hardtime-nvim" },

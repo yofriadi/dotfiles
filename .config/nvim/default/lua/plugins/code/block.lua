@@ -54,4 +54,23 @@ return {
       })
     end,
   },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "LazyFile",
+    enabled = true,
+    opts = { mode = "cursor", max_lines = 3 },
+  },
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    event = "LazyFile",
+    main = "rainbow-delimiters.setup",
+  },
+  {
+    "Wansmer/treesj",
+    keys = { { "gs", "<Cmd>TSJToggle<CR>", desc = "Toggle Treesitter Join" } },
+    cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
+    opts = { use_default_keymaps = false },
+  },
+  --"danymat/neogen",
 }

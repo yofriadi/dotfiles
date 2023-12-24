@@ -148,6 +148,7 @@ M.on_attach = function()
 end
 
 return {
+  "zeioth/garbage-day.nvim",
   {
     "neovim/nvim-lspconfig",
     event = "LazyFile",
@@ -224,7 +225,28 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
+      {
+        "nvimtools/none-ls.nvim",
+        config = function()
+          local null_ls = require "null-ls"
+          null_ls.setup {
+            sources = {
+              -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+              --null_ls.builtins.formatting.stylua,
+
+              -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+              null_ls.builtins.diagnostics.golangci_lint,
+
+              -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/completion
+              null_ls.builtins.completion.spell,
+
+              -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/code_actions
+              null_ls.builtins.code_actions.gomodifytags,
+              null_ls.builtins.code_actions.impl,
+            },
+          }
+        end,
+      },
     },
     config = function()
       require("mason-null-ls").setup {
