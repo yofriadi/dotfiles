@@ -51,34 +51,33 @@ return {
     "Cassin01/wf.nvim",
     version = "*",
     event = "VeryLazy",
-    config = function()
-      require("wf").setup { theme = "space" }
-
+    keys = {
+      { "<leader>eS", function() require("spectre").open() end, desc = "Search and replace" },
+    },
+    keys = function()
       local which_key = require "wf.builtin.which_key"
       local register = require "wf.builtin.register"
       local bookmark = require "wf.builtin.bookmark"
-      local buffer = require "wf.builtin.buffer"
       local mark = require "wf.builtin.mark"
-
-      require("caskey").setup {
-        ["<leader>"] = {
-          act = which_key { text_insert_in_advance = "<Leader>" },
+      return {
+        {
+          "<Leader>",
+          which_key { text_insert_in_advance = "<Leader>" },
           desc = "[wf.nvim] which-key /",
-          mode = "n",
         },
-        ["<c-w>:"] = { act = register(), desc = "[wf.nvim] register", mode = "n" },
-        ["<c-w>b"] = { act = buffer(), desc = "[wf.nvim] buffer", mode = "n" },
-        ["'"] = { act = mark(), desc = "[wf.nvim] mark", mode = "n" },
-        ["<c-w>m"] = {
-          act = bookmark {
+        { "<C-W>:", register(), desc = "[wf.nvim] register" },
+        { "'", mark(), desc = "[wf.nvim] mark" },
+        {
+          "<C-W>m",
+          bookmark {
             nvim = "~/.config/nvim/default",
             zsh = "~/.config/zsh/.zshrc",
           },
           desc = "[wf.nvim] bookmark",
-          mode = "n",
         },
       }
     end,
+    config = function() require("wf").setup { theme = "space" } end,
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -102,7 +101,6 @@ return {
           { "<Leader>sf", function() require("search").open() end, desc = "Search files" },
         },
         config = function()
-          local utils = require "utils"
           local tsb = require "telescope.builtin"
           local tse = require("telescope").extensions
           local tabs = {

@@ -3,10 +3,10 @@ vim.opt.shortmess:append { W = true, I = true, c = true, C = true } -- disable s
 vim.opt.backspace:append { "nostop" } -- don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60" -- enable linematch diff algorithm
 
-vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+vim.fn.sign_define("DiagnosticSignError", { text = "x", texthl = "DiagnosticSignError" }) -- 
+vim.fn.sign_define("DiagnosticSignWarn", { text = "!", texthl = "DiagnosticSignWarn" }) -- 
+vim.fn.sign_define("DiagnosticSignInfo", { text = "i", texthl = "DiagnosticSignInfo" }) -- 
+vim.fn.sign_define("DiagnosticSignHint", { text = "?", texthl = "DiagnosticSignHint" }) -- 󰌵
 
 local options = {
   opt = {

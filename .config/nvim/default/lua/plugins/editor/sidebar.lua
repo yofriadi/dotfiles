@@ -47,15 +47,15 @@ return {
         },
         git_status = {
           symbols = {
-            added = "󰐗",
-            modified = "󰻂",
-            deleted = "󰅙",
-            renamed = "󰰟",
-            untracked = "󰋗",
-            ignored = "󰍶",
-            unstaged = "",
-            staged = "󰗠",
-            conflict = "󰀨",
+            added = "A", -- 󰐗
+            modified = "M", -- 󰻂
+            deleted = "D", -- 󰅙
+            renamed = "R", -- 󰰟
+            untracked = "?", -- 󰋗
+            ignored = "-", -- 󰍶
+            unstaged = "U", -- 
+            staged = "S", -- 󰗠
+            conflict = "!", -- 󰀨
           },
         },
       },

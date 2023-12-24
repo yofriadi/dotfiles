@@ -24,7 +24,7 @@ return {
         header = vim.split(logo, "\n"),
         -- stylua: ignore
         center = {
-          { action = "Telescope find_files",                                     desc = " Find file",       icon = " ", key = "f" },
+          { action = function () require("search").open() end,                   desc = " Find file",       icon = " ", key = "f" },
           { action = "ene | startinsert",                                        desc = " New file",        icon = " ", key = "n" },
           { action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
           { action = "Telescope live_grep",                                      desc = " Find text",       icon = " ", key = "g" },
@@ -52,9 +52,7 @@ return {
       vim.cmd.close()
       vim.api.nvim_create_autocmd("User", {
         pattern = "DashboardLoaded",
-        callback = function()
-          require("lazy").show()
-        end,
+        callback = function() require("lazy").show() end,
       })
     end
 

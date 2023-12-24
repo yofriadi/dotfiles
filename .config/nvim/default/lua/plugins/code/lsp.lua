@@ -1,13 +1,13 @@
 local M = {}
 M.signs = {
-  { name = "DiagnosticSignError", text = "", texthl = "DiagnosticSignError" },
-  { name = "DiagnosticSignWarn", text = "", texthl = "DiagnosticSignWarn" },
-  { name = "DiagnosticSignHint", text = "󰌵", texthl = "DiagnosticSignHint" },
-  { name = "DiagnosticSignInfo", text = "󰋼", texthl = "DiagnosticSignInfo" },
+  { name = "DiagnosticSignError", text = "x", texthl = "DiagnosticSignError" }, -- 
+  { name = "DiagnosticSignWarn", text = "!", texthl = "DiagnosticSignWarn" }, -- 
+  { name = "DiagnosticSignHint", text = "?", texthl = "DiagnosticSignHint" }, -- 󰌵
+  { name = "DiagnosticSignInfo", text = "i", texthl = "DiagnosticSignInfo" }, -- 󰋼
   { name = "DapStopped", text = "󰁕", texthl = "DiagnosticWarn" },
-  { name = "DapBreakpoint", text = "", texthl = "DiagnosticInfo" },
-  { name = "DapBreakpointRejected", text = "", texthl = "DiagnosticError" },
-  { name = "DapBreakpointCondition", text = "", texthl = "DiagnosticInfo" },
+  { name = "DapBreakpoint", text = "B", texthl = "DiagnosticInfo" }, -- 
+  { name = "DapBreakpointRejected", text = "R", texthl = "DiagnosticError" }, -- 
+  { name = "DapBreakpointCondition", text = "C", texthl = "DiagnosticInfo" }, -- 
   { name = "DapLogPoint", text = ".>", texthl = "DiagnosticInfo" },
 }
 M.servers = {
@@ -34,6 +34,9 @@ M.servers = {
     },
   },
   gopls = {},
+  dockerls = {},
+  docker_compose_language_service = {},
+  marksman = {},
 }
 M.on_attach = function()
   vim.api.nvim_create_autocmd("LspAttach", {
@@ -254,7 +257,8 @@ return {
           -- linter
           "luacheck",
           "golangci_lint",
-          "staticcheck",
+          "staticcheck", -- golang
+          "hadolint", -- docker
 
           -- formatter
           "stylua",
@@ -263,6 +267,7 @@ return {
           "goimports-reviser",
           "golines",
           "gomodifytags",
+          "prettierd",
         },
         automatic_installation = false,
         handlers = {},

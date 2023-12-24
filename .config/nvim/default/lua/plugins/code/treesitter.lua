@@ -88,6 +88,7 @@ return {
         "yaml",
         "rust",
         "http", -- rest.nvim
+        "dockerfile",
       },
       incremental_selection = {
         enable = true,

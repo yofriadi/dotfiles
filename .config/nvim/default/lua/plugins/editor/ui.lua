@@ -70,7 +70,8 @@ return {
       {
         "rcarriga/nvim-notify",
         init = function() require("utils").load_plugin_with_func("nvim-notify", vim, "notify") end,
-        --[[ keys = {
+        --[[ duplicate Noice dismiss
+        keys = {
           {
             "<leader>tn",
             function() require("notify").dismiss { silent = true, pending = true } end,
@@ -117,7 +118,7 @@ return {
             segments = {
               { text = { builtin.foldfunc } },
               { text = { builtin.lnumfunc } },
-              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { "%s" } },
             },
           }
         end,
