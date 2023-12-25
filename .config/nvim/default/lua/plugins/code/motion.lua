@@ -22,12 +22,21 @@ return {
   },
   {
     "chrisgrieser/nvim-spider",
-    keys = {
-      { "w", "<cmd>lua require('spider').motion('w')<CR>", mode = { "n", "x", "o" }, desc = "Next word" },
-      { "e", "<cmd>lua require('spider').motion('e')<CR>", mode = { "n", "x", "o" }, desc = "Next end of word" },
-      { "b", "<cmd>lua require('spider').motion('b')<CR>", mode = { "n", "x", "o" }, desc = "Previous word" },
-      { "ge", "<cmd>lua require('spider').motion('ge')<CR>", mode = { "n", "x", "o" }, desc = "Previous end of word" },
-    },
+    keys = function()
+      local motion = require("spider").motion
+      local mode = { "n", "x", "o" }
+      return {
+        { "w", function() motion "w" end, mode = mode, desc = "Next word" },
+        { "e", function() motion "e" end, mode = mode, desc = "Next end of word" },
+        { "b", function() motion "b" end, mode = mode, desc = "Previous word" },
+        { "ge", function() motion "ge" end, mode = mode, desc = "Previous end of word" },
+      }
+    end,
+    config = function()
+      require("spider").setup {
+        skipInsignificantPunctuation = false,
+      }
+    end,
   },
   {
     "echasnovski/mini.surround",

@@ -14,44 +14,30 @@
 
 --Remap space as leader key
 vim.api.nvim_set_keymap("", "<Space>", "<nop>", { noremap = true, silent = true })
---vim.api.nvim_set_keymap("", ";", ":", { noremap = true })
 
+local cmd = vim.cmd
 local toggle = require "utils.toggle"
-
 return {
-  -- TODO: Noice cmdline does not show immediately
-  -- [";"] = { act = ":", noremap = true, desc = "Faster command key", },
   {
     mode = "n",
     X = { act = "S" },
-  },
-  {
-    mode = { "n", "x" },
-    j = { act = "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Better move up" },
-    k = { act = "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Better move down" },
-  },
-  {
-    mode = "n",
     d = { act = '"_d', desc = "Better delete" },
     x = { act = '"_x', desc = "Better delete" },
+    ["<Esc>"] = { act = "<Cmd>noh<CR><Esc>", desc = "Escape and clear hlsearch" },
+    ["<C-q>"] = { act = "<Cmd>qa!<CR>", desc = "Force quit" },
+    ["<C-s>"] = { act = "<Cmd>w<CR>", desc = "Save file" },
   },
   {
     mode = "v",
     d = { act = '"_d', desc = "Better delete" },
     p = { act = '"_dP', desc = "Better paste" },
+    ["<Tab>"] = { act = ">gv", desc = "Better right indenting" },
+    ["<S-Tab>"] = { act = "<gv", desc = "Better left indenting" },
   },
   {
-    mode = { "n", "i" },
-    ["<Esc>"] = { act = "<Cmd>noh<CR><Esc>", desc = "Escape and clear hlsearch" },
-  },
-  {
-    mode = { "n", "i", "x", "s" },
-    ["<C-S>"] = { act = "<cmd>w<cr><esc>", desc = "Save file" },
-  },
-  {
-    mode = { "v" },
-    ["<"] = { act = "<gv", desc = "Better left indenting" },
-    [">"] = { act = ">gv", desc = "Better right indenting" },
+    mode = { "n", "x" },
+    j = { act = "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Better move up" },
+    k = { act = "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Better move down" },
   },
 
   { -- Option toggle
@@ -71,41 +57,23 @@ return {
   { -- Buffer
     mode = { "n" },
     ["<Leader><leader>"] = { act = "<Cmd>e #<CR>", desc = "Switch to alternate buffer" },
-    ["<S-H>"] = { act = "<Cmd>bprevious<CR>", desc = "To previous buffer" },
-    ["<S-L>"] = { act = "<Cmd>bnext<CR>", desc = "To next buffer" },
-    -- ["[b"] = { act = "<Cmd>bprevious<CR>", desc = "To previous buffer", },
-    -- ["]b"] = { act = "<Cmd>bnext<CR>", desc = "To next buffer", },
-    ["<b"] = {
-      act = function() require("utils.buffer").move(vim.v.count > 0 and vim.v.count or 1) end,
-      desc = "Move buffer to the left",
-    },
-    [">b"] = {
-      act = function() require("utils.buffer").move(-(vim.v.count > 0 and vim.v.count or 1)) end,
-      desc = "Move buffer to the left",
-    },
+    ["<S-H>"] = { act = cmd.bprevious, desc = "To previous buffer" },
+    ["<S-L>"] = { act = cmd.bnext, desc = "To next buffer" },
   },
 
   { -- Window
     mode = { "n" },
-    ["<C-W>c"] = { act = "<C-W>c", desc = "Close window", noremap = false },
-    ["<C-W>d"] = { act = "<C-W>c", desc = "Close window", noremap = false }, -- convenient key
-    ["<C-W>_"] = { act = "<C-W>s", desc = "Split window below", noremap = false },
-    ["<C-W>|"] = { act = "<C-W>v", desc = "Split window right", noremap = false },
-    ["<C-W>S"] = { act = "<C-W>v", desc = "Split window right", noremap = false }, -- convenient key
+    ["_"] = { act = cmd.vsplit, desc = "Split window below" },
+    ["|"] = { act = cmd.split, desc = "Split window right" },
   },
 
   { -- Tab
     mode = { "n" },
-    ["<Tab><Tab>"] = { act = "<Cmd>tabnew<CR>", desc = "New tab" },
-    ["<Tab>c"] = { act = "<Cmd>tabclose<CR>", desc = "Close tab" },
-    --["<Tab>d"] = { act = "<Cmd>tabclose<CR>", desc = "Close tab" },
-    ["<Tab>]"] = { act = "<Cmd>tabnext<CR>", desc = "Next tab" },
-    ["<Tab>l"] = { act = "<Cmd>tabnext<CR>", desc = "Next tab" },
-    ["<Tab>["] = { act = "<Cmd>tabprevious<CR>", desc = "Previous tab" },
-    ["<Tab>h"] = { act = "<Cmd>tabprevious<CR>", desc = "Previous tab" },
-    ["<Tab>a"] = { act = "<Cmd>tabfirst<CR>", desc = "First tab" },
-    ["<Tab>z"] = { act = "<Cmd>tablast<CR>", desc = "Last tab" },
-    --["<Tab>F"] = { act = "<Cmd>tabfirst<CR>", desc = "First tab" },
-    --["<Tab>L"] = { act = "<Cmd>tablast<CR>", desc = "Last tab" },
+    ["<Tab><Tab>"] = { act = cmd.tabnew, desc = "New tab" },
+    ["<Tab>q"] = { act = cmd.tabclose, desc = "Close tab" },
+    ["<Tab>l"] = { act = cmd.tabnext, desc = "Next tab" },
+    ["<Tab>h"] = { act = cmd.tabprevious, desc = "Previous tab" },
+    ["<Tab>a"] = { act = cmd.tabfirst, desc = "First tab" },
+    ["<Tab>z"] = { act = cmd.tablast, desc = "Last tab" },
   },
 }

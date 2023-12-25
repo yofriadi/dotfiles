@@ -52,7 +52,7 @@ return {
 	--{ import = "astrocommunity.split-and-window.minimap-vim" },
 	{ import = "astrocommunity.syntax.hlargs-nvim" },
 	--{ import = "astrocommunity.utility.neodim" },
-	{ import = "astrocommunity.workflow.hardtime-nvim" },
+	--{ import = "astrocommunity.workflow.hardtime-nvim" },
 
 	{ import = "astrocommunity.git.blame-nvim" },
 	{
@@ -190,7 +190,7 @@ return {
 					"<Cmd>TroubleToggle workspace_diagnostics<CR>",
 					desc = "Workspace Diagnostics (Trouble)",
 				},
-				{ "<Leader>eL", "<Cmd>TroubleToggle loclist<CR>",  desc = "Location List (Trouble)" },
+				{ "<Leader>eL", "<Cmd>TroubleToggle loclist<CR>", desc = "Location List (Trouble)" },
 				{ "<Leader>eQ", "<Cmd>TroubleToggle quickfix<CR>", desc = "Quickfix List (Trouble)" },
 				{
 					"[q",
@@ -244,7 +244,7 @@ return {
 					end,
 					desc = "Previous todo comment",
 				},
-				{ "<Leader>et", "<cmd>TodoTrouble<cr>",   desc = "Todo Trouble" },
+				{ "<Leader>et", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
 				{ "<Leader>fT", "<cmd>TodoTelescope<cr>", desc = "Search todo" },
 			}
 		end,

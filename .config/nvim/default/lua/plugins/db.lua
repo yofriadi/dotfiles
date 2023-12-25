@@ -5,7 +5,7 @@ return {
     build = function() require("dbee").install() end,
     config = function() require("dbee").setup() end,
     keys = {
-      { "<Leader>d", function() require("dbee").toggle() end, desc = "Database toggle" },
+      { "<Leader>D", function() require("dbee").toggle() end, desc = "Database toggle" },
     },
   },
 }

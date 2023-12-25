@@ -20,7 +20,7 @@ autocmd({ "VimResized" }, {
   group = augroup("resize_splits", { clear = true }),
   callback = function()
     local current_tab = vim.fn.tabpagenr()
-    vim.cmd("tabdo wincmd =")
+    vim.cmd "tabdo wincmd ="
     vim.cmd("tabnext " .. current_tab)
   end,
 })
@@ -32,15 +32,11 @@ autocmd("BufReadPost", {
   callback = function(event)
     local exclude = { "gitcommit" }
     local buf = event.buf
-    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
-      return
-    end
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then return end
     vim.b[buf].lazyvim_last_loc = true
     local mark = vim.api.nvim_buf_get_mark(buf, '"')
     local lcount = vim.api.nvim_buf_line_count(buf)
-    if mark[1] > 0 and mark[1] <= lcount then
-      pcall(vim.api.nvim_win_set_cursor, 0, mark)
-    end
+    if mark[1] > 0 and mark[1] <= lcount then pcall(vim.api.nvim_win_set_cursor, 0, mark) end
   end,
 })
 
@@ -64,6 +60,7 @@ autocmd("FileType", {
     "neotest-output-panel",
     "quickfix",
     "nofile",
+    --"minimap",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -89,9 +86,7 @@ autocmd({ "BufWritePre" }, {
   desc = "Auto create dir when saving a file, in case some intermediate directory does not exist",
   group = augroup("auto_create_dir", { clear = true }),
   callback = function(event)
-    if event.match:match("^%w%w+://") then
-      return
-    end
+    if event.match:match "^%w%w+://" then return end
     local file = vim.loop.fs_realpath(event.match) or event.match
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
@@ -107,7 +102,6 @@ autocmd("BufReadPre", {
       or vim.api.nvim_buf_line_count(args.buf) > vim.g.max_file.lines
   end,
 }) --]]
-
 
 -- local ts = augroup("terminal_settings", { clear = true })
 autocmd("TermOpen", {
@@ -334,3 +328,16 @@ if is_available "neo-tree.nvim" then
   })
 --]]
 -- there is another autocmd in AstroNvim file
+
+vim.cmd [[
+  augroup _filetype
+    autocmd!
+    autocmd FileType go setlocal ts=4 sw=4
+    autocmd FileType sql setlocal ts=4 sw=4
+    autocmd FileType lua setlocal ts=2 sw=2
+    autocmd FileType json setlocal ts=2 sw=2
+    autocmd FileType javascript setlocal ts=2 sw=2
+    autocmd FileType typescript setlocal ts=2 sw=2
+    autocmd FileType typescriptreact setlocal ts=2 sw=2
+  augroup end
+]]

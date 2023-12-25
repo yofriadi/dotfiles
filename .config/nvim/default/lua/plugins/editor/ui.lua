@@ -128,12 +128,19 @@ return {
     opts = {
       provider_selector = function() return { "treesitter", "indent" } end,
     },
-
     init = function()
       vim.keymap.set("n", "zR", function() require("ufo").openAllFolds() end)
       vim.keymap.set("n", "zM", function() require("ufo").closeAllFolds() end)
     end,
+    keys = function()
+      local ufo = require "ufo"
+      return {
+        { "zR", function() ufo.openAllFolds() end, desc = "Fold open all" },
+        { "zM", function() ufo.closeAllFolds() end, desc = "Fold close all" },
+        { "zr", function() ufo.openFoldsExceptKinds() end, desc = "Fold less" },
+        { "zm", function() ufo.closeFoldsWith() end, desc = "Fold more" },
+        { "zp", function() ufo.peekFoldedLinesUnderCursor() end, desc = "Fold peek" },
+      }
+    end,
   },
-  -- when moving cursor preview did not close
-  --{ "anuvyklack/fold-preview.nvim", dependencies = "anuvyklack/keymap-amend.nvim", config = true },
 }

@@ -2,30 +2,11 @@ return {
   {
     "mrjones2014/smart-splits.nvim",
     keys = {
-      { "<c-h>", function() require("smart-splits").move_cursor_left() end, desc = "Move to window left" },
-      { "<c-j>", function() require("smart-splits").move_cursor_down() end, desc = "Move to window below" },
-      { "<c-k>", function() require("smart-splits").move_cursor_up() end, desc = "Move to window above" },
-      { "<c-l>", function() require("smart-splits").move_cursor_right() end, desc = "Move to window right" },
-      { "<c-w>r", function() require("smart-splits").start_resize_mode() end, desc = "Resize mode" },
-      { "<c-w>+", function() require("smart-splits").resize_up() end, mode = { "n", "i" }, desc = "Resize split up" },
-      {
-        "<c-w>-",
-        function() require("smart-splits").resize_down() end,
-        mode = { "n", "i" },
-        desc = "Resize split down",
-      },
-      {
-        "<c-w><",
-        function() require("smart-splits").resize_right() end,
-        mode = { "n", "i" },
-        desc = "Resize split left",
-      },
-      {
-        "<c-w>>",
-        function() require("smart-splits").resize_left() end,
-        mode = { "n", "i" },
-        desc = "Resize split right",
-      },
+      { "<C-h>", function() require("smart-splits").move_cursor_left() end, desc = "Move to window left" },
+      { "<C-j>", function() require("smart-splits").move_cursor_down() end, desc = "Move to window below" },
+      { "<C-k>", function() require("smart-splits").move_cursor_up() end, desc = "Move to window above" },
+      { "<C-l>", function() require("smart-splits").move_cursor_right() end, desc = "Move to window right" },
+      { "<C-W>r", function() require("smart-splits").start_resize_mode() end, desc = "Resize mode" },
     },
     opts = {
       ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" },

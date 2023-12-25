@@ -51,9 +51,6 @@ return {
     "Cassin01/wf.nvim",
     version = "*",
     event = "VeryLazy",
-    keys = {
-      { "<leader>eS", function() require("spectre").open() end, desc = "Search and replace" },
-    },
     keys = function()
       local which_key = require "wf.builtin.which_key"
       local register = require "wf.builtin.register"
@@ -102,42 +99,14 @@ return {
         },
         config = function()
           local tsb = require "telescope.builtin"
-          local tse = require("telescope").extensions
-          local tabs = {
-            {
-              "Files",
-              function(opts)
-                opts = opts or {}
-                if vim.fn.isdirectory ".git" == 1 then
-                  tsb.git_files(opts)
-                else
-                  tsb.find_files(opts)
-                end
-              end,
-            },
-            {
-              "Grep",
-              function() tsb.live_grep() end,
-            },
-            {
-              "Tabs",
-              function() return require("telescope-tabs").list_tabs() end,
-            },
-            {
-              "Buffers",
-              function() return tsb.buffers { sort_mru = true, sort_lastused = true } end,
-            },
-            {
-              "Undos",
-              function() return tse.undo.undo() end,
-            },
-            { -- depends on yanky.nvim
-              "Yanks",
-              function() require("telescope").extensions.yank_history.yank_history {} end,
+          return require("search").setup {
+            tabs = {
+              { "Files", tsb.find_files },
+              { "Grep", tsb.live_grep },
+              { "Tabs", require("telescope-tabs").list_tabs },
+              { "Buffers", function() return tsb.buffers { sort_mru = true, sort_lastused = true } end },
             },
           }
-
-          return require("search").setup { tabs = tabs }
         end,
       },
       {
@@ -228,7 +197,6 @@ return {
           function() tsb.live_grep { hidden = true, no_ignore = true } end,
           desc = "Search all words",
         },
-        --{ "<Leader>sf", function() tsb.find_files() end, desc = "Search files (root dir)" },
         {
           "<Leader>sF",
           function() tsb.find_files { hidden = true, no_ignore = true } end,
@@ -243,6 +211,16 @@ return {
         { "<Leader>sk", function() tsb.keymaps() end, desc = "Search keymaps" },
         { "<Leader>sc", function() tsb.commands() end, desc = "Search commands" },
         { "<Leader>sC", function() tsb.command_history() end, desc = "Search command history" },
+
+        -- Git
+        { "<Leader>sgb", function() tsb.git_branches { use_file_path = true } end, desc = "Search git branches" },
+        { "<Leader>sgc", function() tsb.git_commits { use_file_path = true } end, desc = "Search git commits in file" },
+        {
+          "<Leader>sgC",
+          function() tsb.git_bcommits { use_file_path = true } end,
+          desc = "Search git commits in repo",
+        },
+        { "<Leader>sgs", function() tsb.git_status { use_file_path = true } end, desc = "Search git status" },
 
         -- TODO: find out if below is any useful, change if needed
         { "<Leader>s'", function() tsb.marks() end, desc = "Search marks" },

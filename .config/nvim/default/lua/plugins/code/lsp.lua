@@ -1,15 +1,15 @@
 local M = {}
-M.signs = {
-  { name = "DiagnosticSignError", text = "x", texthl = "DiagnosticSignError" }, -- 
-  { name = "DiagnosticSignWarn", text = "!", texthl = "DiagnosticSignWarn" }, -- 
-  { name = "DiagnosticSignHint", text = "?", texthl = "DiagnosticSignHint" }, -- 󰌵
-  { name = "DiagnosticSignInfo", text = "i", texthl = "DiagnosticSignInfo" }, -- 󰋼
+--[[ M.signs = {
+  { name = "DiagnosticSignError", text = "", texthl = "DiagnosticSignError" },
+  { name = "DiagnosticSignWarn", text = "", texthl = "DiagnosticSignWarn" },
+  { name = "DiagnosticSignHint", text = "󰌵", texthl = "DiagnosticSignHint" },
+  { name = "DiagnosticSignInfo", text = "󰋼", texthl = "DiagnosticSignInfo" },
   { name = "DapStopped", text = "󰁕", texthl = "DiagnosticWarn" },
-  { name = "DapBreakpoint", text = "B", texthl = "DiagnosticInfo" }, -- 
-  { name = "DapBreakpointRejected", text = "R", texthl = "DiagnosticError" }, -- 
-  { name = "DapBreakpointCondition", text = "C", texthl = "DiagnosticInfo" }, -- 
+  { name = "DapBreakpoint", text = "󰻂", texthl = "DiagnosticInfo" },
+  { name = "DapBreakpointRejected", text = "", texthl = "DiagnosticError" },
+  { name = "DapBreakpointCondition", text = "", texthl = "DiagnosticInfo" },
   { name = "DapLogPoint", text = ".>", texthl = "DiagnosticInfo" },
-}
+} ]]
 M.servers = {
   jsonls = {},
   yamlls = {},
@@ -207,7 +207,7 @@ return {
         update_in_insert = false,
         virtual_text = false,
         severity_sort = true,
-        signs = { active = M.signs },
+        --signs = { active = M.signs },
         float = {
           focused = false,
           style = "minimal",
