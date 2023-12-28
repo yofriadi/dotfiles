@@ -3,28 +3,17 @@ return {
     "L3MON4D3/LuaSnip",
     version = "v2.*",
     build = "make install_jsregexp",
-    dependencies = {
+    --[[ dependencies = {
       "rafamadriz/friendly-snippets",
       config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
-    },
+    }, ]]
     opts = {
       history = true,
       delete_check_events = "TextChanged",
       region_check_events = "CursorMoved",
     },
-    keys = function()
-      local ls = require "luasnip"
-      return {
-        {
-          "<Tab>",
-          function() return ls.jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>" end,
-          expr = true,
-          silent = true,
-          mode = "i",
-        },
-        { "<Tab>", function() ls.jump(1) end, mode = "s" },
-        { "<S-Tab>", function() ls.jump(-1) end, mode = { "i", "s" } },
-      }
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load { paths = "~/dotfiles/.config/nvim/snippets/" }
     end,
   },
   {
@@ -40,65 +29,47 @@ return {
     opts = function()
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require "cmp"
-      local defaults = require "cmp.config.default"()
       local luasnip = require "luasnip"
-      -- local lspkind = require("lspkind")
 
-      local border_opts = {
-        border = "rounded",
-        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
-      }
-
-      local function has_words_before()
-        local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
-      end
       return {
-        -- TODO: setup when nvim-dap installed
-        --[[ enabled = function()
-          local dap_prompt = utils.is_available "cmp-dap" -- add interoperability with cmp-dap
-            and vim.tbl_contains(
-              { "dap-repl", "dapui_watches", "dapui_hover" },
-              vim.api.nvim_get_option_value("filetype", { buf = 0 })
-            )
-          if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" and not dap_prompt then return false end
-          return vim.g.cmp_enabled
-        end, ]]
         completion = { completeopt = "menu,menuone,noinsert" },
         snippet = {
           expand = function(args) require("luasnip").lsp_expand(args.body) end,
         },
         preselect = cmp.PreselectMode.None,
-        duplicates = {
-          nvim_lsp = 1,
-          luasnip = 1,
-          cmp_tabnine = 1,
-          buffer = 1,
-          path = 1,
-        },
-        confirm_opts = {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = false,
-        },
         window = {
-          completion = cmp.config.window.bordered(border_opts),
-          documentation = cmp.config.window.bordered(border_opts),
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert {
+          ["<C-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+          ["<C-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
           ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
           ["<C-y>"] = cmp.config.disable,
           ["<C-e>"] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
-          ["<CR>"] = cmp.mapping.confirm { select = false },
+          ["<CR>"] = cmp.mapping.confirm { select = true },
+          ["<S-CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+          ["<C-l>"] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<C-h>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-            else
               fallback()
             end
           end, { "i", "s" }),
@@ -121,19 +92,29 @@ return {
         }),
         formatting = {
           fields = { "kind", "abbr", "menu" },
-          format = nil,
-          --[[ format = lspkind.cmp_format(function()
-            local spec = require("lazy.core.config").spec.plugins["lspkind.nvim"]
+          format = (function()
+            local lspkind_status_ok, lspkind = pcall(require, "lspkind")
+            local lazy_config_avail, lazy_config = pcall(require, "lazy.core.config")
+            local lazy_plugin_avail, lazy_plugin = pcall(require, "lazy.core.plugin")
             local opts = {}
-            if spec then opts = require("lazy.core.plugin").values(spec, "opts") end
-            return opts
-          end) ]]
+            if lazy_config_avail and lazy_plugin_avail then
+              local spec = lazy_config.spec.plugins["lspkind.nvim"]
+              if spec then opts = lazy_plugin.values(spec, "opts") end
+            end
+            return lspkind_status_ok and lspkind.cmp_format(opts) or nil
+          end)(),
         },
         experimental = {
           ghost_text = { hl_group = "CmpGhostText" },
         },
-        sorting = defaults.sorting,
+        sorting = require "cmp.config.default"().sorting,
       }
+    end,
+    config = function(_, opts)
+      for _, source in ipairs(opts.sources) do
+        source.group_index = source.group_index or 1
+      end
+      require("cmp").setup(opts)
     end,
   },
 }

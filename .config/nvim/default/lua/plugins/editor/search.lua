@@ -212,6 +212,41 @@ return {
         { "<Leader>sc", function() tsb.commands() end, desc = "Search commands" },
         { "<Leader>sC", function() tsb.command_history() end, desc = "Search command history" },
 
+        -- LSP
+        {
+          "<Leader>lr",
+          function() tsb.lsp_references { jump_type = "never" } end,
+          desc = "LSP Search references of current symbol",
+        },
+        {
+          "<Leader>lD",
+          function() tsb.lsp_definitions { jump_type = "never", reuse_win = true } end,
+          desc = "Definition of current symbol",
+        },
+        {
+          "<Leader>li",
+          function() tsb.lsp_implementations { reuse_win = true } end,
+          desc = "Implementation of current symbol",
+        },
+        { "<Leader>sd", function() tsb.diagnostics { bufnr = 0 } end, desc = "Search document diagnostics" },
+        { "<Leader>sD", function() tsb.diagnostics() end, desc = "Search workspace diagnostics" },
+        --[[
+        { "<leader>lq", vim.lsp.buf.workspace_symbol, desc = "Search symbols" },
+        {
+          "<leader>lQ",
+          function()
+            vim.ui.input({ prompt = "Symbol Query: (leave empty for word under cursor)" },
+              function(query)
+                if query then
+                  if query == "" then query = vim.fn.expand "<cword>" end
+                  tsb.lsp_workspace_symbols({ query = query, prompt_title = ("Find word (%s)"):format(query) })
+                end
+              end
+            )
+          end,
+          desc = "Search symbols",
+        } ]]
+
         -- Git
         { "<Leader>sgb", function() tsb.git_branches { use_file_path = true } end, desc = "Search git branches" },
         { "<Leader>sgc", function() tsb.git_commits { use_file_path = true } end, desc = "Search git commits in file" },
