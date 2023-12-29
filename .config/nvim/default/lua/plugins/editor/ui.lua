@@ -103,7 +103,6 @@ return {
   {
     "tiagovla/scope.nvim",
     event = "VeryLazy",
-    opts = {},
   },
   {
     "kevinhwang91/nvim-ufo",
@@ -116,9 +115,17 @@ return {
           require("statuscol").setup {
             relculright = true,
             segments = {
+              { sign = { name = { ".*" }, namespace = { "gitsigns" }, colwidth = 1 } },
               { text = { builtin.foldfunc } },
+              --[[ {
+                sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+              }, ]]
+              --{ text = { "%s" } },
               { text = { builtin.lnumfunc } },
-              { text = { "%s" } },
+              { sign = { name = { ".*" }, namespace = { "diagnostic" }, colwidth = 2 } },
+              --[[ {
+                sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+              }, ]]
             },
           }
         end,
