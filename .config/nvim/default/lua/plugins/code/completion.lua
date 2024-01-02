@@ -3,18 +3,12 @@ return {
     "L3MON4D3/LuaSnip",
     version = "v2.*",
     build = "make install_jsregexp",
-    --[[ dependencies = {
-      "rafamadriz/friendly-snippets",
-      config = function() require("luasnip.loaders.from_vscode").lazy_load() end,
-    }, ]]
     opts = {
       history = true,
       delete_check_events = "TextChanged",
       region_check_events = "CursorMoved",
     },
-    config = function()
-      require("luasnip.loaders.from_vscode").lazy_load { paths = "~/dotfiles/.config/nvim/snippets/" }
-    end,
+    config = function() require("luasnip.loaders.from_vscode").lazy_load { paths = "~/.config/nvim/snippets/" } end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -50,7 +44,7 @@ return {
           ["<C-y>"] = cmp.config.disable,
           ["<C-e>"] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
           ["<CR>"] = cmp.mapping.confirm { select = true },
-          ["<S-CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
+          --["<S-CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true }, -- ??
           ["<C-l>"] = cmp.mapping(function(fallback)
             if luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
@@ -65,7 +59,7 @@ return {
               fallback()
             end
           end, { "i", "s" }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
+          --[[ ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
@@ -81,7 +75,7 @@ return {
             else
               fallback()
             end
-          end, { "i", "s" }),
+          end, { "i", "s" }), ]]
         },
         sources = cmp.config.sources({
           { name = "nvim_lsp" },

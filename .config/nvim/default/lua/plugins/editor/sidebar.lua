@@ -109,12 +109,12 @@ return {
           desc = "Toggle git explorer",
         },
         {
-          "<leader>eb",
+          "<Leader>eb",
           function() cmd.execute { source = "buffers", toggle = true } end,
           desc = "Toggle buffer explorer",
         },
         {
-          "<leader>es",
+          "<Leader>es",
           function() cmd.execute { source = "document_symbols", toggle = true } end,
           desc = "Toggle document symbol explorer",
         },

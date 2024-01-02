@@ -8,7 +8,6 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    vscode = true,
     keys = function()
       local flash = require "flash"
       return {

@@ -1,0 +1,212 @@
+{
+  "import": {
+    "prefix": "im",
+    "body": "import \"${1:package}\"",
+    "description": "Import module"
+  },
+  "imports": {
+    "prefix": "ims",
+    "body": "import (\n\t\"${1:package}\"\n)",
+    "description": "Import block"
+  },
+  "constant": {
+    "prefix": "co",
+    "body": "const ${1:name} = ${2:value}",
+    "description": "Constant variable"
+  },
+  "constants": {
+    "prefix": "cos",
+    "body": "const (\n\t${1:name} = ${2:value}\n)",
+    "description": "Constant block"
+  },
+  "struct": {
+    "prefix": [
+      "tys",
+      "struct"
+    ],
+    "body": "type ${1:name} struct {\n\t$0\n}",
+    "description": "Struct declaration"
+  },
+  "interface": {
+    "prefix": [
+      "tyi",
+      "interface"
+    ],
+    "body": "type ${1:name} interface {\n\t$0\n}",
+    "description": "Interface declaration"
+  },
+  "function": {
+    "prefix": [
+      "fu",
+      "fun",
+      "func"
+    ],
+    "body": "func $1($2) $3 {\n\t$0\n}",
+    "description": "Function declaration"
+  },
+  "variable": {
+    "prefix": "var",
+    "body": "var ${1:name} ${2:type}",
+    "description": "Variable"
+  },
+  "variables": {
+    "prefix": "vars",
+    "body": "var (\n\t${1:name} ${2:type} = ${3:value}\n)",
+    "description": "Variable block"
+  },
+  "switch": {
+    "prefix": [
+      "sw",
+      "switch"
+    ],
+    "body": "switch ${1:expression} {\ncase ${2:condition}:\n\t$0\n}",
+    "description": "Switch statement"
+  },
+  "case": {
+    "prefix": "case",
+    "body": "case ${1:condition}:\n$0",
+    "description": "Snippet for case clause"
+  },
+  "select": {
+    "prefix": "sel",
+    "body": "select {\ncase ${1:condition}:\n\t$0\n}",
+    "description": "Select statement"
+  },
+  "for": {
+    "prefix": "for",
+    "body": "for ${1}{\n\t$0\n}",
+    "description": "For loop"
+  },
+  "for i": {
+    "prefix": "fori",
+    "body": "for ${1:i} := ${2:0}; $1 < ${3:count}; $1${4:++} {\n\t$0\n}",
+    "description": "For loop i"
+  },
+  "for range": {
+    "prefix": [
+      "forr",
+      "range"
+    ],
+    "body": "for ${1:_, }${2:v} := range ${3:v} {\n\t$0\n}",
+    "description": "For range"
+  },
+  "map": {
+    "prefix": "map",
+    "body": "map[${1:type}]${2:type}",
+    "description": "Map"
+  },
+  "empty interface": {
+    "prefix": "i{}",
+    "body": "interface{}",
+    "description": "Empty interface"
+  },
+  "if": {
+    "prefix": "if",
+    "body": "if ${1:condition} {\n\t$0\n}",
+    "description": "If statement"
+  },
+  "else": {
+    "prefix": "el",
+    "body": "else {\n\t$0\n}",
+    "description": "Else branch"
+  },
+  "else if": {
+    "prefix": "ei",
+    "body": "else if {\n\t$0\n}",
+    "description": "Else if branch"
+  },
+  "if else": {
+    "prefix": "ife",
+    "body": "if ${1:condition} {\n\t$2\n} else {\n\t$0\n}",
+    "description": "If else statement"
+  },
+  "if elseif else": {
+    "prefix": "ieie",
+    "body": "if ${1:condition} {\n\t$2\n} else if {\n\t$0\n} else {\n\t$0\n}",
+    "description": "If else statement"
+  },
+  "if err not nil": {
+    "prefix": "irr",
+    "body": "if err != nil {\n\t${1:return ${2:nil, }${3:err}}\n}",
+    "description": "If err not nil"
+  },
+  "if ok": {
+    "prefix": "ok",
+    "body": "if ${1:value}, ok := ${2:map}[${3:key}]; ok {\n\t$4\n}"
+  },
+  "make(...)": {
+    "prefix": "make",
+    "body": "make(${1:type}, ${2:0})",
+    "description": "Make statement"
+  },
+  "new(...)": {
+    "prefix": "new",
+    "body": "new(${1:type})",
+    "description": "New statement"
+  },
+  "panic(...)": {
+    "prefix": "pn",
+    "body": "panic(\"$0\")",
+    "description": "Panic statement"
+  },
+  "fmt.Println": {
+    "prefix": "fp",
+    "body": "fmt.Println(\"$1\")",
+    "description": "fmt.Println()"
+  },
+  "fmt.Printf": {
+    "prefix": "ff",
+    "body": "fmt.Printf(\"$1\", ${2:var})",
+    "description": "fmt.Printf()"
+  },
+  "log.Println": {
+    "prefix": "lp",
+    "body": "log.Println(\"$1\")",
+    "description": "log.Println()"
+  },
+  "log.Printf": {
+    "prefix": "lf",
+    "body": "log.Printf(\"$1\", ${2:var})",
+    "description": "log.Printf()"
+  },
+  "log variable": {
+    "prefix": "lv",
+    "body": "log.Printf(\"${1:var}: %#+v\\\\n\", ${1:var})",
+    "description": "log.Printf() with variable content"
+  },
+  "goroutine anonymous function": {
+    "prefix": "go",
+    "body": "go func($1) {\n\t$0\n}($2)",
+    "description": "Anonymous goroutine declaration"
+  },
+  "goroutine function": {
+    "prefix": [
+      "gf",
+      "gof"
+    ],
+    "body": "go ${1:func}($0)",
+    "description": "Goroutine declaration"
+  },
+  "defer": {
+    "prefix": [
+      "df",
+      "def",
+      "defer"
+    ],
+    "body": "defer ${1:func}($0)",
+    "description": "Defer statement"
+  },
+  "channel": {
+    "prefix": [
+      "ch",
+      "chan"
+    ],
+    "body": "chan ${1:type}",
+    "description": "Channel statement"
+  },
+  "json tag": {
+    "prefix": "json",
+    "body": "`json:\"$1\"`",
+    "description": "Struct json tag"
+  }
+}

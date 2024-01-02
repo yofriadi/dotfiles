@@ -1,6 +1,6 @@
 return {
   -- this already worked by lsp (lspconfig) itself?
-  --[[ {
+  {
     "mfussenegger/nvim-lint",
     event = "LazyFile",
     opts = {
@@ -8,7 +8,9 @@ return {
       events = { "BufWritePost", "BufReadPost", "InsertLeave" },
       linters_by_ft = {
         lua = { "luacheck" },
-        -- go = { "golangcilint" },
+        go = { "golangcilint" },
+        dockerfile = { "hadolint" },
+        markdown = { "markdownlint" },
         -- Use the "*" filetype to run linters on all filetypes.
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
@@ -31,7 +33,7 @@ return {
     config = function(_, opts)
       local M = {}
 
-      local lint = require("lint")
+      local lint = require "lint"
       for name, linter in pairs(opts.linters) do
         if type(linter) == "table" and type(lint.linters[name]) == "table" then
           lint.linters[name] = vim.tbl_deep_extend("force", lint.linters[name], linter)
@@ -58,12 +60,10 @@ return {
         -- * otherwise will split filetype by "." and add all those linters
         -- * this differs from conform.nvim which only uses the first filetype that has a formatter
         local names = lint._resolve_linter_by_ft(vim.bo.filetype)
-        local notif = require("utils.notif")
+        local notif = require "utils.notif"
 
         -- Add fallback linters.
-        if #names == 0 then
-          vim.list_extend(names, lint.linters_by_ft["_"] or {})
-        end
+        if #names == 0 then vim.list_extend(names, lint.linters_by_ft["_"] or {}) end
 
         -- Add global linters.
         vim.list_extend(names, lint.linters_by_ft["*"] or {})
@@ -73,16 +73,12 @@ return {
         ctx.dirname = vim.fn.fnamemodify(ctx.filename, ":h")
         names = vim.tbl_filter(function(name)
           local linter = lint.linters[name]
-          if not linter then
-            notif.warn("Linter not found: " .. name, { title = "nvim-lint" })
-          end
+          if not linter then notif.warn("Linter not found: " .. name, { title = "nvim-lint" }) end
           return linter and not (type(linter) == "table" and linter.condition and not linter.condition(ctx))
         end, names)
 
         -- Run linters.
-        if #names > 0 then
-          lint.try_lint(names)
-        end
+        if #names > 0 then lint.try_lint(names) end
       end
 
       vim.api.nvim_create_autocmd(opts.events, {
@@ -90,5 +86,5 @@ return {
         callback = M.debounce(100, M.lint),
       })
     end,
-  }, ]]
+  },
 }

@@ -2,7 +2,7 @@ return {
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    opts = { style = "day" },
+    opts = { style = "storm" },
   },
   --[[ {
     "levouh/tint.nvim",

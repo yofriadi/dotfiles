@@ -298,7 +298,7 @@ return {
       } ]]
     },
     keys = {
-      { "<leader>eS", function() require("spectre").open() end, desc = "Search and replace" },
+      { "<leader>er", function() require("spectre").open() end, desc = "Search and replace" },
     },
   },
 }

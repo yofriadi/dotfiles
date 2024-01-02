@@ -115,17 +115,11 @@ return {
           require("statuscol").setup {
             relculright = true,
             segments = {
-              { sign = { name = { ".*" }, namespace = { "gitsigns" }, colwidth = 1 } },
+              { sign = { name = { ".*" }, namespace = { "gitsigns" }, colwidth = 1, auto = true } },
               { text = { builtin.foldfunc } },
-              --[[ {
-                sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
-              }, ]]
-              --{ text = { "%s" } },
               { text = { builtin.lnumfunc } },
-              { sign = { name = { ".*" }, namespace = { "diagnostic" }, colwidth = 2 } },
-              --[[ {
-                sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-              }, ]]
+              { sign = { name = { ".*" }, namespace = { "diagnostic" }, colwidth = 2 }, auto = true },
+              --{ text = { "%s" } },
             },
           }
         end,
@@ -149,5 +143,13 @@ return {
         { "zp", function() ufo.peekFoldedLinesUnderCursor() end, desc = "Fold peek" },
       }
     end,
+  },
+  {
+    "Bekaboo/dropbar.nvim",
+    event = "UIEnter",
+    dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
+    keys = {
+      { "<Leader>eS", function() require("dropbar.api").pick() end, desc = "Breadcrumbs" },
+    },
   },
 }
