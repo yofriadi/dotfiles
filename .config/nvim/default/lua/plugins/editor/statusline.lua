@@ -201,6 +201,25 @@ return {
       lualine_require.require = require
       vim.o.laststatus = vim.g.lualine_laststatus
 
+      local mode_map = {
+        ["NORMAL"] = "N",
+        ["O-PENDING"] = "N?",
+        ["INSERT"] = "I",
+        ["VISUAL"] = "V",
+        ["V-BLOCK"] = "VB",
+        ["V-LINE"] = "VL",
+        ["V-REPLACE"] = "VR",
+        ["REPLACE"] = "R",
+        ["COMMAND"] = "!",
+        ["SHELL"] = "SH",
+        ["TERMINAL"] = "T",
+        ["EX"] = "X",
+        ["S-BLOCK"] = "SB",
+        ["S-LINE"] = "SL",
+        ["SELECT"] = "S",
+        ["CONFIRM"] = "Y?",
+        ["MORE"] = "M",
+      }
       return {
         options = {
           theme = "auto",
@@ -211,9 +230,7 @@ return {
           lualine_a = {
             {
               "mode",
-              fmt = function(mode)
-                return table.concat(vim.tbl_map(function(word) return word:sub(1, 1) end, vim.split(mode, " ")))
-              end,
+              fmt = function(mode) return mode_map[mode] or mode end,
             },
           },
           lualine_b = { "branch" },

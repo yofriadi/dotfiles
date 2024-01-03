@@ -39,9 +39,8 @@ return {
     },
   },
   {
-    "kevinhwang91/nvim-hlslens",
-    event = "BufRead",
-    --init = function() vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"]) end,
-    config = function() require("hlslens").setup() end,
+    "kawre/neotab.nvim",
+    event = "InsertEnter",
+    opts = {},
   },
 }

@@ -116,9 +116,10 @@ return {
           require("statuscol").setup {
             relculright = true,
             segments = {
-              { sign = { name = { ".*" }, namespace = { "gitsigns" }, colwidth = 1, auto = true } },
+              { sign = { name = { ".*" }, namespace = { "todo" }, colwidth = 1, auto = true } }, -- must before gitsigns
               { text = { builtin.foldfunc } },
               { text = { builtin.lnumfunc } },
+              { sign = { name = { ".*" }, namespace = { "gitsigns" }, colwidth = 1, auto = true } },
               { sign = { name = { ".*" }, namespace = { "diagnostic" }, colwidth = 2 }, auto = true },
               --{ text = { "%s" } },
             },

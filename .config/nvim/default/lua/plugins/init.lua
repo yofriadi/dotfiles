@@ -69,6 +69,10 @@ end)()
 -- NOTE: here lies all plugin that does not yet categorized
 return {
   {
+    "tris203/hawtkeys.nvim",
+    config = true,
+  },
+  {
     "TobinPalmer/Tip.nvim",
     event = "VimEnter",
     dependencies = { "nvim-lua/plenary.nvim", lazy = true },

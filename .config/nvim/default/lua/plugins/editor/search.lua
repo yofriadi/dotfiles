@@ -48,6 +48,12 @@ end
 
 return {
   {
+    "kevinhwang91/nvim-hlslens",
+    event = "BufRead",
+    --init = function() vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"]) end,
+    config = function() require("hlslens").setup() end,
+  },
+  {
     "Cassin01/wf.nvim",
     version = "*",
     event = "VeryLazy",
@@ -101,7 +107,7 @@ return {
           local tsb = require "telescope.builtin"
           return require("search").setup {
             tabs = {
-              { "Files", tsb.find_files },
+              { "Files", function() require("telescope").extensions.frecency.frecency { workspace = "CWD" } end },
               { "Grep", tsb.live_grep },
               { "Tabs", require("telescope-tabs").list_tabs },
               { "Buffers", function() return tsb.buffers { sort_mru = true, sort_lastused = true } end },
@@ -115,12 +121,16 @@ return {
           { "<Leader>su", "<Cmd>Telescope undo<CR>", desc = "Search Undo history" },
         },
       },
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        --config = function() require("telescope").load_extension "frecency" end,
+      },
     },
     config = function(opts)
       local telescope = require "telescope"
       local utils = require "utils"
       telescope.setup(opts)
-      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo")
+      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo", "frecency")
     end,
     opts = function()
       local actions = require "telescope.actions"
