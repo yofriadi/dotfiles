@@ -103,6 +103,7 @@ return {
   {
     "tiagovla/scope.nvim",
     event = "VeryLazy",
+    opts = {},
   },
   {
     "kevinhwang91/nvim-ufo",
