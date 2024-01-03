@@ -43,7 +43,7 @@ local ns = vim.api.nvim_create_namespace "my_diagnostics"
 --set_diagnostics_severity(vim.diagnostic.severity.ERROR)
 ----- Show only errors and warnings.
 --set_diagnostics_severity(vim.diagnostic.severity.WARN)
-local function set_minimum_diagnostics_severity(severity)
+local function set_diagnostics_severity(severity)
   --[[
   vim.diagnostic.*() invokes all handlers, virtual_text is one of them.
 
@@ -99,27 +99,27 @@ return {
       },
       {
         "<Leader>tde",
-        function() set_minimum_diagnostics_severity(1) end,
+        function() set_diagnostics_severity(1) end,
         desc = "Set minimum diagnostics severity level to ERROR",
       },
-      "<Leader>tdw",
       {
-        function() set_minimum_diagnostics_severity(2) end,
+        "<Leader>tdw",
+        function() set_diagnostics_severity(2) end,
         desc = "Set minimum diagnostics severity level to WARN",
       },
       {
         "<Leader>tdi",
-        function() set_minimum_diagnostics_severity(3) end,
+        function() set_diagnostics_severity(3) end,
         desc = "Set minimum diagnostics severity level to INFO",
       },
       {
         "<Leader>tdh",
-        function() set_minimum_diagnostics_severity(4) end,
+        function() set_diagnostics_severity(4) end,
         desc = "Set minimum diagnostics severity level to HINT",
       },
       {
         "<Leader>tda",
-        function() set_minimum_diagnostics_severity(10) end,
+        function() set_diagnostics_severity(10) end,
         desc = "Set minimum diagnostics severity level to ALL",
       },
     },
