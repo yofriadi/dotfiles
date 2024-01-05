@@ -43,7 +43,6 @@ return {
     },
     keys = {
       { "<leader>en", function() require("noice").cmd "history" end, desc = "Noice History" },
-      { "<leader>tn", function() require("noice").cmd "dismiss" end, desc = "Noice dismiss All" },
       {
         "<c-f>",
         function()
@@ -70,14 +69,6 @@ return {
       {
         "rcarriga/nvim-notify",
         init = function() require("utils").load_plugin_with_func("nvim-notify", vim, "notify") end,
-        --[[ duplicate Noice dismiss
-        keys = {
-          {
-            "<leader>tn",
-            function() require("notify").dismiss { silent = true, pending = true } end,
-            desc = "Dismiss all Notifications",
-          },
-        }, ]]
         opts = {
           timeout = 3000,
           max_height = function() return math.floor(vim.o.lines * 0.75) end,
@@ -111,17 +102,53 @@ return {
       "kevinhwang91/promise-async",
       {
         "luukvbaal/statuscol.nvim",
+        keys = {
+          {
+            "<Leader>tf",
+            function()
+              if vim.wo.foldcolumn == "1" then
+                vim.opt.foldcolumn = "0"
+              else
+                vim.opt.foldcolumn = "1"
+              end
+            end,
+            desc = "Toggle fold status",
+          },
+        },
         config = function()
           local builtin = require "statuscol.builtin"
           require("statuscol").setup {
             relculright = true,
             segments = {
-              { sign = { name = { ".*" }, namespace = { "todo" }, colwidth = 1, auto = true } }, -- must before gitsigns
-              { text = { builtin.foldfunc } },
-              { text = { builtin.lnumfunc } },
-              { sign = { name = { ".*" }, namespace = { "gitsigns" }, colwidth = 1, auto = true } },
-              { sign = { name = { ".*" }, namespace = { "diagnostic" }, colwidth = 2 }, auto = true },
-              --{ text = { "%s" } },
+              { sign = { namespace = { "gitsigns" }, colwidth = 1, auto = true } },
+              { text = { builtin.foldfunc, " " } },
+              {
+                text = { builtin.lnumfunc },
+                condition = { builtin.not_empty, true, builtin.not_empty },
+              },
+              -- TODO: I want to to achieve todo, dap, diagnostic to be as one config
+              -- so it only occupied 1 column if all have in 3 different lines
+              -- but also shows all 3 if occured in one line
+              {
+                sign = {
+                  name = { ".*" },
+                  namespace = { "todo", "Dap*" },
+                  colwidth = 2,
+                  auto = true,
+                },
+              },
+              {
+                sign = {
+                  namespace = { "diagnostic" },
+                  colwidth = 2,
+                  auto = true,
+                },
+              },
+              { -- all other sign
+                sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+                click = "v:lua.ScSa",
+              },
+              --{ text = { "%s" } }, show all sign in 1 column
             },
           }
         end,
@@ -153,5 +180,15 @@ return {
     keys = {
       { "<Leader>eS", function() require("dropbar.api").pick() end, desc = "Breadcrumbs" },
     },
+    opts = {
+      keymaps = {
+        ["<BS>"] = "<C-w>q", -- TODO: not working
+      },
+    },
   },
+  --[[ {
+    "b0o/incline.nvim",
+    event = "UIEnter",
+    opts = {},
+  }, ]]
 }

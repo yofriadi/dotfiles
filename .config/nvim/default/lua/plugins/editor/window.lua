@@ -14,6 +14,19 @@ return {
     },
   },
   {
+    "dseum/window.nvim",
+    lazy = false,
+    config = true,
+    keys = function()
+      local window = require "window"
+      return {
+        { "<C-w>q", window.close_buf, desc = "Close window" },
+        { "_", function() window.split_win "h" end, desc = "Split window below" },
+        { "|", function() window.split_win "v" end, desc = "Split window right" },
+      }
+    end,
+  },
+  {
     "Pocco81/true-zen.nvim",
     opts = function(_, opts)
       local utils = require "utils"

@@ -3,12 +3,6 @@ vim.opt.shortmess:append { W = true, I = true, c = true, C = true } -- disable s
 vim.opt.backspace:append { "nostop" } -- don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60" -- enable linematch diff algorithm
 
-vim.fn.sign_define("DapStopped", { text = "󰁕", texthl = "DiagnosticWarn" })
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticInfo" })
-vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError" })
-vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticInfo" })
-vim.fn.sign_define("DapLogPoint", { text = "", texthl = "DiagnosticInfo" })
-
 local options = {
   opt = {
     breakindent = true, -- wrap indent to match  line start

@@ -96,16 +96,16 @@ return {
         "dockerfile",
       },
       incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
+        enable = false,
+        --[[ keymaps = {
+          init_selection = "<CR>",
+          node_incremental = "<CR>",
+          scope_incremental = "<S-CR>",
+          node_decremental = "<BS>",
+        }, ]]
       },
       textobjects = {
-        select = {
+        --[[ select = {
           enable = true,
           lookahead = true,
           keymaps = {
@@ -122,7 +122,7 @@ return {
             ["aa"] = { query = "@parameter.outer", desc = "around argument" },
             ["ia"] = { query = "@parameter.inner", desc = "inside argument" },
           },
-        },
+        }, ]]
         move = {
           enable = true,
           set_jumps = true,
@@ -172,6 +172,37 @@ return {
         end, opts.ensure_installed)
       end
       require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
+  {
+    "Jxstxs/conceal.nvim",
+    dependencies = { "nvim-treesitter" },
+    config = function()
+      local conceal = require "conceal"
+      conceal.setup {
+        ["c"] = { enabled = false },
+        ["python"] = { enabled = false },
+        ["lua"] = {
+          enabled = true,
+          keywords = {
+            ["local"] = { conceal = "~" },
+            ["return"] = { conceal = "󱞱" },
+            ["function"] = { conceal = "󰊕" },
+            ["if"] = { conceal = "?" },
+            ["else"] = { conceal = "!" },
+            ["elseif"] = { conceal = "¿" },
+            ["for"] = { conceal = "" },
+            ["then"] = { conceal = "↙" },
+            ["and"] = { conceal = "󰣡" },
+            ["end"] = { conceal = "" },
+            ["require"] = { conceal = "" },
+            ["do"] = { conceal = "󱞭" },
+            ["vim.cmd"] = { conceal = "" },
+            --[""] = { conceal = "" },
+          },
+        },
+      }
+      conceal.generate_conceals()
     end,
   },
 }

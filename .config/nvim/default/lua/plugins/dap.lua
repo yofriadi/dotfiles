@@ -1,6 +1,18 @@
 return {
   "mfussenegger/nvim-dap",
   lazy = true,
+  config = function()
+    local signs = {
+      Stopped = { icon = "󰁕", hl = "DiagnosticWarn" },
+      Breakpoint = { icon = "", hl = "DiagnosticInfo" },
+      BreakpointRejected = { icon = "", hl = "DiagnosticError" },
+      BreakpointCondition = { icon = "", hl = "DiagnosticInfo" },
+      LogPoint = { icon = "", hl = "DiagnosticInfo" },
+    }
+    for name, dap in pairs(signs) do
+      vim.fn.sign_define("Dap" .. name, { text = dap.icon, texthl = dap.hl })
+    end
+  end,
   keys = function()
     local dap = require "dap"
     return {

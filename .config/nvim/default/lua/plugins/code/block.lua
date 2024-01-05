@@ -34,7 +34,7 @@ return {
       require("ibl").setup {
         indent = { char = " " },
         current_indent = { char = "▏", enabled = true, show_start = false, highlight = highlight },
-        scope = { char = "▎", highlight = highlight },
+        scope = { char = "▍", highlight = highlight },
         exclude = {
           buftypes = {
             "nofile",

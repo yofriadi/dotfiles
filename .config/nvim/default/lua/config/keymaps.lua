@@ -13,17 +13,21 @@
 -- vim.keymap.set()
 
 --Remap space as leader key
-vim.api.nvim_set_keymap("", "<Space>", "<nop>", { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("", "<Space>", "<nop>", { noremap = true, silent = true })
 
 local cmd = vim.cmd
 local toggle = require "utils.toggle"
 return {
   {
     mode = "n",
+    ["<CR>"] = { act = ":", silent = false },
     X = { act = "S" },
     d = { act = '"_d', desc = "Better delete" },
     x = { act = '"_x', desc = "Better delete" },
-    ["<Esc>"] = { act = "<Cmd>noh<CR><Esc>", desc = "Escape and clear hlsearch" },
+    ["<Esc>"] = {
+      act = "<Cmd>noh<CR><Cmd>Noice dismiss<CR><Esc>",
+      desc = "Escape and clear hlsearch and Dismiss notification",
+    },
     ["<C-q>"] = { act = "<Cmd>qa!<CR>", desc = "Force quit" },
     ["<C-s>"] = { act = "<Cmd>w<CR>", desc = "Save file" },
   },
@@ -44,13 +48,20 @@ return {
     mode = { "n" },
     ["<Leader>ts"] = { act = function() toggle.option "spell" end, desc = "Toggle spelling" },
     ["<Leader>tw"] = { act = function() toggle.option "wrap" end, desc = "Toggle word wrap" },
-    ["<Leader>tc"] = {
+    ["<Leader>tcl"] = {
       act = function()
-        local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
-        toggle.option("conceallevel", false, { 0, conceallevel })
+        local cl = vim.o.conceallevel > 0 and vim.o.conceallevel or 2
+        toggle.option("conceallevel", false, { 0, cl })
       end,
-      desc = "Toggle conceal",
+      desc = "Toggle conceal level",
     },
+    --[[ ["<Leader>tcc"] = {
+      act = function()
+        local cc = vim.o.concealcursor ~= "" and vim.o.concealcursor or "n"
+        toggle.option("concealcursor", false, { "", cc })
+      end,
+      desc = "Toggle conceal cursor",
+    }, ]]
     ["<leader>th"] = { act = function() vim.lsp.inlay_hint(0, nil) end, desc = "Toggle Inlay Hints" },
   },
 
@@ -61,11 +72,11 @@ return {
     ["<S-L>"] = { act = cmd.bnext, desc = "To next buffer" },
   },
 
-  { -- Window
+  --[[ { -- Window
     mode = { "n" },
     ["_"] = { act = cmd.vsplit, desc = "Split window below" },
     ["|"] = { act = cmd.split, desc = "Split window right" },
-  },
+  }, ]]
 
   { -- Tab
     mode = { "n" },

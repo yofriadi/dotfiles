@@ -128,6 +128,28 @@ return {
       end
     end,
   },
+  {
+    "lewis6991/satellite.nvim",
+    event = "LazyFile",
+    opts = {
+      handlers = {
+        cursor = {
+          symbols = { "-" },
+        },
+        gitsigns = {
+          signs = {
+            add = "▕",
+            change = "▕",
+            delete = "▁",
+            topdelete = "▔",
+            changedelete = { text = "▕" },
+            untracked = { text = "▕" },
+          },
+        },
+      },
+      excluded_filetypes = { "prompt", "TelescopePrompt", "noice", "notify", "neo-tree" },
+    },
+  },
   --[[ {
     "wfxr/minimap.vim",
     event = "LazyFile",
@@ -159,9 +181,4 @@ return {
       }
     end,
   }, ]]
-  {
-    "lewis6991/satellite.nvim",
-    event = "LazyFile",
-    opts = { excluded_filetypes = { "prompt", "TelescopePrompt", "noice", "notify", "neo-tree" } },
-  },
 }
