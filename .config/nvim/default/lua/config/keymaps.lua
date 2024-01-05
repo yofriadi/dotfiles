@@ -21,6 +21,7 @@ return {
   {
     mode = "n",
     ["<CR>"] = { act = ":", silent = false },
+    ["<C-Space>"] = { act = "q" },
     X = { act = "S" },
     d = { act = '"_d', desc = "Better delete" },
     x = { act = '"_x', desc = "Better delete" },

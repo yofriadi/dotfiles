@@ -68,6 +68,15 @@ end)()
 
 -- NOTE: here lies all plugin that does not yet categorized
 return {
+  --[[ {
+    "00sapo/visual.nvim",
+    event = "VeryLazy",
+    opts = { treesitter_textobjects = true },
+    dependencies = { "nvim-treesitter", "nvim-treesitter-textobjects" },
+    keys = {
+      { "<Leader>tv", "<Cmd>VisualEnable<CR>", desc = "Enable Kakoune mode" },
+    },
+  }, ]]
   {
     "tris203/hawtkeys.nvim",
     config = true,

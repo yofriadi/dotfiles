@@ -88,6 +88,7 @@
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
   "true-zen.nvim": { "branch": "main", "commit": "2b9e210e0d1a735e1fa85ec22190115dffd963aa" },
   "vim-illuminate": { "branch": "master", "commit": "3bd2ab64b5d63b29e05691e624927e5ebbf0fb86" },
+  "visual.nvim": { "branch": "main", "commit": "5eeb220b86cac7ff7041daf565ccf45f296bd107" },
   "wf.nvim": { "branch": "main", "commit": "d7de32119e933ddd4c006324475d487c87b8d80b" },
   "window.nvim": { "branch": "main", "commit": "2232e264a82992a3a5f063586732fe574bb8a076" },
   "yanky.nvim": { "branch": "main", "commit": "6bb9ffd3cad4c9876bda54e19d0659de28a4f84f" }
