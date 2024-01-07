@@ -38,8 +38,8 @@ autocmd("BufReadPost", {
 })
 
 autocmd("FileType", {
-  desc = "Close some filetypes with <BS>",
-  group = augroup("close_with_bs", { clear = true }),
+  desc = "Close some filetypes with <Esc>",
+  group = augroup("close_with_esc", { clear = true }),
   pattern = {
     "PlenaryTestPopup",
     "help",
@@ -57,11 +57,12 @@ autocmd("FileType", {
     "neotest-output-panel",
     "quickfix",
     "nofile",
+    "neo-tree",
     --"minimap",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "<BS>", "<Cmd>close<CR>", {
+    vim.keymap.set("n", "<Esc>", "<Cmd>close<CR>", {
       buffer = event.buf,
       silent = true,
       nowait = true,

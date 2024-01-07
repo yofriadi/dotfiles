@@ -78,6 +78,10 @@ return {
     },
   }, ]]
   {
+    "LunarVim/bigfile.nvim",
+    opts = {},
+  },
+  {
     "tris203/hawtkeys.nvim",
     config = true,
   },

@@ -26,7 +26,7 @@ return {
       local luasnip = require "luasnip"
 
       return {
-        completion = { completeopt = "menu,menuone,noinsert" },
+        completion = { completeopt = "menu,menuone,noinsert,noselect" },
         snippet = {
           expand = function(args) require("luasnip").lsp_expand(args.body) end,
         },
@@ -36,16 +36,16 @@ return {
           documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert {
-          ["<C-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-          ["<C-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+          --["<C-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+          --["<C-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
           ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
           ["<C-y>"] = cmp.config.disable,
           ["<C-e>"] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
-          ["<CR>"] = cmp.mapping.confirm { select = true },
-          --["<S-CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true }, -- ??
-          ["<C-l>"] = cmp.mapping(function(fallback)
+          ["<CR>"] = cmp.mapping.confirm(),
+          ["<S-CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace },
+          --[[ ["<C-l>"] = cmp.mapping(function(fallback)
             if luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
             else
@@ -58,8 +58,8 @@ return {
             else
               fallback()
             end
-          end, { "i", "s" }),
-          --[[ ["<Tab>"] = cmp.mapping(function(fallback)
+          end, { "i", "s" }), ]]
+          ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
             elseif luasnip.expand_or_jumpable() then
@@ -75,7 +75,7 @@ return {
             else
               fallback()
             end
-          end, { "i", "s" }), ]]
+          end, { "i", "s" }),
         },
         sources = cmp.config.sources({
           { name = "nvim_lsp" },

@@ -25,7 +25,7 @@ return {
         width = 30,
         mappings = {
           ["<Space>"] = false, -- disable space until we figure out which-key disabling
-          ["<BS>"] = "quit",
+          ["<Esc>"] = "quit",
           --J = "navigate_down",  not exist
           K = "navigate_up",
           p = "prev_source",

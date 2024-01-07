@@ -70,6 +70,47 @@ return {
     event = "LazyFile",
     opts = {},
   },
+  {
+    "dnlhc/glance.nvim",
+    keys = {
+      { "gd", "<Cmd>Glance definitions<CR>", desc = "LSP definition of current symbol" },
+      { "gr", "<Cmd>Glance references<CR>", desc = "LSP references of current symbol" },
+      { "gD", "<Cmd>Glance type_definitions<CR>", desc = "LSP type definition of current symbol" },
+      { "gM", "<Cmd>Glance implementations<CR>", desc = "LSP implementations of current symbol" },
+    },
+    opts = function()
+      local actions = require("glance").actions
+      return {
+        mappings = {
+          list = {
+            ["<BS>"] = actions.close,
+          },
+          preview = {
+            ["<BS>"] = actions.close,
+          },
+        },
+        indent_lines = {
+          icon = "▏",
+        },
+        hooks = {
+          before_open = function(results, open, jump)
+            local uri = vim.uri_from_bufnr(0)
+            if #results == 1 then
+              local target_uri = results[1].uri or results[1].targetUri
+
+              if target_uri == uri then
+                jump(results[1])
+              else
+                open(results)
+              end
+            else
+              open(results)
+            end
+          end,
+        },
+      }
+    end,
+  },
   --[[ {
     "nat-418/boole.nvim",
     event = "BufRead",

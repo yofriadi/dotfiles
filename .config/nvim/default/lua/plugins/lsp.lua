@@ -179,10 +179,10 @@ return {
           require("caskey").setup {
             ["<Leader>lR"] = { act = lsp.buf.rename, buffer = buf, desc = "Rename current symbol" },
             K = { act = lsp.buf.hover, buffer = buf, desc = "LSP hover symbol details" },
-            gd = { act = lsp.buf.definition, buffer = buf, desc = "LSP definition of current symbol" },
-            gD = { act = lsp.buf.type_definition, buffer = buf, desc = "Definition of current type" },
+            --gd = { act = lsp.buf.definition, buffer = buf, desc = "LSP definition of current symbol" },
+            --gD = { act = lsp.buf.type_definition, buffer = buf, desc = "Definition of current type" },
             -- gD{ act = lsp.buf.declaration, buffer = buf, desc = "LSP declaration of current symbol" },
-            gr = { act = lsp.buf.references, buffer = buf, desc = "LSP references of current symbol" },
+            --gr = { act = lsp.buf.references, buffer = buf, desc = "LSP references of current symbol" },
             ["[d"] = { act = vim.diagnostic.goto_prev, buffer = buf, desc = "LSP previous diagnostic" },
             ["]d"] = { act = vim.diagnostic.goto_next, buffer = buf, desc = "LSP next diagnostic" },
             ["<Leader>ld"] = { act = vim.diagnostic.open_float, buffer = buf, desc = "LSP hover diagnostics" },
