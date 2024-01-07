@@ -4,7 +4,7 @@ return {
     version = "*",
     keys = {
       {
-        "q",
+        "<BS>",
         function()
           local bd = require("mini.bufremove").delete
           if vim.bo.modified then

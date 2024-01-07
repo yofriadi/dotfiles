@@ -38,14 +38,14 @@ autocmd("BufReadPost", {
 })
 
 autocmd("FileType", {
-  desc = "Close some filetypes with <q>",
-  group = augroup("close_with_q", { clear = true }),
+  desc = "Close some filetypes with <BS>",
+  group = augroup("close_with_bs", { clear = true }),
   pattern = {
     "PlenaryTestPopup",
     "help",
     "lspinfo",
     "man",
-    "notify",
+    --"notify",
     "qf",
     "query",
     "spectre_panel",
@@ -61,7 +61,7 @@ autocmd("FileType", {
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
-    vim.keymap.set("n", "q", "<cmd>close<cr>", {
+    vim.keymap.set("n", "<BS>", "<Cmd>close<CR>", {
       buffer = event.buf,
       silent = true,
       nowait = true,

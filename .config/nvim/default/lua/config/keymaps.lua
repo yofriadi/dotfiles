@@ -21,7 +21,6 @@ return {
   {
     mode = "n",
     ["<CR>"] = { act = ":", silent = false },
-    ["<C-Space>"] = { act = "q" },
     X = { act = "S" },
     d = { act = '"_d', desc = "Better delete" },
     x = { act = '"_x', desc = "Better delete" },
@@ -31,6 +30,10 @@ return {
     },
     ["<C-q>"] = { act = "<Cmd>qa!<CR>", desc = "Force quit" },
     ["<C-s>"] = { act = "<Cmd>w<CR>", desc = "Save file" },
+  },
+  {
+    mode = "i",
+    ["<C-h>"] = { act = "<C-w>" }, -- delete word backward
   },
   {
     mode = "v",
@@ -71,6 +74,36 @@ return {
     ["<Leader><leader>"] = { act = "<Cmd>e #<CR>", desc = "Switch to alternate buffer" },
     ["<S-H>"] = { act = cmd.bprevious, desc = "To previous buffer" },
     ["<S-L>"] = { act = cmd.bnext, desc = "To next buffer" },
+    ["<Leader><BS>"] = {
+      act = function()
+        local id = vim.api.nvim_create_augroup("startup", {
+          clear = false,
+        })
+        local persistbuffer = function(bufnr)
+          bufnr = bufnr or vim.api.nvim_get_current_buf()
+          vim.fn.setbufvar(bufnr, "bufpersist", 1)
+        end
+        vim.api.nvim_create_autocmd({ "BufRead" }, {
+          group = id,
+          pattern = { "*" },
+          callback = function()
+            vim.api.nvim_create_autocmd({ "InsertEnter", "BufModifiedSet" }, {
+              buffer = 0,
+              once = true,
+              callback = function() persistbuffer() end,
+            })
+          end,
+        })
+        local curbufnr = vim.api.nvim_get_current_buf()
+        local buflist = vim.api.nvim_list_bufs()
+        for _, bufnr in ipairs(buflist) do
+          if vim.bo[bufnr].buflisted and bufnr ~= curbufnr and (vim.fn.getbufvar(bufnr, "bufpersist") ~= 1) then
+            vim.cmd("bd " .. tostring(bufnr))
+          end
+        end
+      end,
+      desc = "Close unused buffers",
+    },
   },
 
   --[[ { -- Window
@@ -82,7 +115,7 @@ return {
   { -- Tab
     mode = { "n" },
     ["<Tab><Tab>"] = { act = cmd.tabnew, desc = "New tab" },
-    ["<Tab>q"] = { act = cmd.tabclose, desc = "Close tab" },
+    ["<Tab><BS>"] = { act = cmd.tabclose, desc = "Close tab" },
     ["<Tab>l"] = { act = cmd.tabnext, desc = "Next tab" },
     ["<Tab>h"] = { act = cmd.tabprevious, desc = "Previous tab" },
     ["<Tab>a"] = { act = cmd.tabfirst, desc = "First tab" },

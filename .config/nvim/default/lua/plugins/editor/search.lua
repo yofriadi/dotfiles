@@ -101,16 +101,16 @@ return {
       {
         "FabianWirth/search.nvim",
         keys = {
-          { "<Leader>sf", function() require("search").open() end, desc = "Search files" },
+          { "<Leader>ss", function() require("search").open() end, desc = "Search files with tabs option" },
         },
         config = function()
           local tsb = require "telescope.builtin"
           return require("search").setup {
             tabs = {
-              { "Files", function() require("telescope").extensions.frecency.frecency { workspace = "CWD" } end },
+              { "Frecency", function() require("telescope").extensions.frecency.frecency { workspace = "CWD" } end },
               { "Grep", tsb.live_grep },
-              { "Tabs", require("telescope-tabs").list_tabs },
               { "Buffers", function() return tsb.buffers { sort_mru = true, sort_lastused = true } end },
+              { "Tabs", require("telescope-tabs").list_tabs },
             },
           }
         end,
@@ -121,16 +121,13 @@ return {
           { "<Leader>su", "<Cmd>Telescope undo<CR>", desc = "Search Undo history" },
         },
       },
-      {
-        "nvim-telescope/telescope-frecency.nvim",
-        --config = function() require("telescope").load_extension "frecency" end,
-      },
+      "nvim-telescope/telescope-frecency.nvim",
     },
     config = function(opts)
       local telescope = require "telescope"
       local utils = require "utils"
       telescope.setup(opts)
-      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo", "frecency")
+      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo", "frecency", "macros")
     end,
     opts = function()
       local actions = require "telescope.actions"
@@ -283,7 +280,7 @@ return {
           function() tsb.colorscheme { enable_preview = true } end,
           desc = "Search theme with preview",
         },
-        {
+        --[[ {
           "<Leader>ss",
           function() tsb.lsp_document_symbols { symbols = get_kind_filter() } end,
           desc = "Search document symbol",
@@ -292,7 +289,7 @@ return {
           "<Leader>sS",
           function() tsb.lsp_dynamic_workspace_symbols { symbols = get_kind_filter() } end,
           desc = "Search workspace symbol",
-        },
+        }, ]]
       }
     end,
   },

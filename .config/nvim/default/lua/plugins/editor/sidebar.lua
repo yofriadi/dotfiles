@@ -24,7 +24,10 @@ return {
       window = {
         width = 30,
         mappings = {
-          ["<space>"] = false, -- disable space until we figure out which-key disabling
+          ["<Space>"] = false, -- disable space until we figure out which-key disabling
+          ["<BS>"] = "quit",
+          --J = "navigate_down",  not exist
+          K = "navigate_up",
           p = "prev_source",
           n = "next_source",
           y = "copy_file_name",

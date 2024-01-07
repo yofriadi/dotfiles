@@ -250,16 +250,17 @@ return {
           },
           lualine_x = {},
           lualine_y = {
+            { require("NeoComposer.ui").status_recording },
             {
               function() return require("noice").api.status.command.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
               color = M.fg "Statement",
             },
-            {
+            --[[ { hide macro status, because already handled by NeoComposer.nvim
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
               color = M.fg "Constant",
-            },
+            }, ]]
             {
               function() return "  " .. require("dap").status() end,
               cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
