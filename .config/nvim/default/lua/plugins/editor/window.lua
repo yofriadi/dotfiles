@@ -6,7 +6,7 @@ return {
       { "<C-j>", function() require("smart-splits").move_cursor_down() end, desc = "Move to window below" },
       { "<C-k>", function() require("smart-splits").move_cursor_up() end, desc = "Move to window above" },
       { "<C-l>", function() require("smart-splits").move_cursor_right() end, desc = "Move to window right" },
-      { "<C-W>r", function() require("smart-splits").start_resize_mode() end, desc = "Resize mode" },
+      { "<C-W>r", function() require("smart-splits").start_resize_mode() end, desc = "Window resize mode" },
     },
     opts = {
       ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" },
@@ -21,10 +21,27 @@ return {
       local window = require "window"
       return {
         { "<C-w>q", window.close_buf, desc = "Close window" },
-        { "_", function() window.split_win "h" end, desc = "Split window below" },
-        { "|", function() window.split_win "v" end, desc = "Split window right" },
+        { "_", function() window.split_win { default_buffer = false } end, desc = "Split window below" },
+        {
+          "|",
+          function() window.split_win { orientation = "v", default_buffer = false } end,
+          desc = "Split window right",
+        },
       }
     end,
+  },
+  {
+    "sindrets/winshift.nvim",
+    opts = {},
+    keys = {
+      { "<C-W>R", "<Cmd>WinShift<CR>", desc = "Window shift mode" },
+      { "<C-W>X", "<Cmd>WinShift swap<CR>", desc = "Window swap" },
+      -- { "<C-M-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
+      -- { "<C-S-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
+      -- { "<C-M-J>", "<Cmd>WinShift down<CR>", desc = "Window swap below" },
+      -- { "<C-M-K>", "<Cmd>WinShift up<CR>", desc = "Window swap above" },
+      -- { "<C-M-L>", "<Cmd>WinShift right<CR>", desc = "Window swap right" },
+    },
   },
   {
     "Pocco81/true-zen.nvim",

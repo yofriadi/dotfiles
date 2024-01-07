@@ -153,6 +153,17 @@ return {
       excluded_filetypes = { "prompt", "TelescopePrompt", "noice", "notify", "neo-tree" },
     },
   },
+  {
+    "gorbit99/codewindow.nvim",
+    opts = {},
+    keys = function()
+      local cw = require "codewindow"
+      return {
+        { "<Leader>tmm", cw.toggle_minimap, desc = "Toggle minimap" },
+        { "<Leader>tmf", cw.toggle_focus, desc = "Toggle minimap focus" },
+      }
+    end,
+  },
   --[[ {
     "wfxr/minimap.vim",
     event = "LazyFile",

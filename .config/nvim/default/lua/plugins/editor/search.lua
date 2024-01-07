@@ -104,13 +104,16 @@ return {
           { "<Leader>ss", function() require("search").open() end, desc = "Search files with tabs option" },
         },
         config = function()
+          local t = require "telescope"
           local tsb = require "telescope.builtin"
           return require("search").setup {
             tabs = {
-              { "Frecency", function() require("telescope").extensions.frecency.frecency { workspace = "CWD" } end },
+              { "Frecency", function() t.extensions.frecency.frecency { workspace = "CWD" } end },
               { "Grep", tsb.live_grep },
               { "Buffers", function() return tsb.buffers { sort_mru = true, sort_lastused = true } end },
               { "Tabs", require("telescope-tabs").list_tabs },
+              { "Macros", t.extensions.macros.macros },
+              { "Env", t.extensions.env.env },
             },
           }
         end,
@@ -122,12 +125,13 @@ return {
         },
       },
       "nvim-telescope/telescope-frecency.nvim",
+      "LinArcX/telescope-env.nvim",
     },
     config = function(opts)
       local telescope = require "telescope"
       local utils = require "utils"
       telescope.setup(opts)
-      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo", "frecency", "macros")
+      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo", "frecency", "macros", "env")
     end,
     opts = function()
       local actions = require "telescope.actions"
@@ -293,19 +297,53 @@ return {
       }
     end,
   },
+  -- {
+  --   "nvim-pack/nvim-spectre",
+  --   build = false,
+  --   cmd = "Spectre",
+  --   opts = {
+  --     open_cmd = "noswapfile vnew",
+  --     -- TODO: make it work with sd
+  --     --[[ default = {
+  --       replace = { cmd = "sd" },
+  --     } ]]
+  --   },
+  --   keys = {
+  --     { "<leader>er", function() require("spectre").open() end, desc = "Search and replace" },
+  --   },
+  -- },
   {
-    "nvim-pack/nvim-spectre",
-    build = false,
-    cmd = "Spectre",
-    opts = {
-      open_cmd = "noswapfile vnew",
-      -- TODO: make it work with sd
-      --[[ default = {
-        replace = { cmd = "sd" },
-      } ]]
-    },
-    keys = {
-      { "<leader>er", function() require("spectre").open() end, desc = "Search and replace" },
-    },
+    "cshuaimin/ssr.nvim",
+    --module = "ssr",
+    --[[ keys = {
+      { "<leader>er", require("ssr").open, mode = { "n", "x" }, desc = "Search and replace" },
+    }, ]]
+    config = function()
+      local ssr = require "ssr"
+      ssr.setup {
+        keymaps = {
+          close = "<Esc>",
+        },
+      }
+      vim.keymap.set({ "n", "x" }, "<leader>sr", ssr.open)
+    end,
+    -- Calling setup is optional.
+    --[[ config = function()
+      require("ssr").setup {
+        border = "rounded",
+        min_width = 50,
+        min_height = 5,
+        max_width = 120,
+        max_height = 25,
+        adjust_window = true,
+        keymaps = {
+          close = "q",
+          next_match = "n",
+          prev_match = "N",
+          replace_confirm = "<cr>",
+          replace_all = "<leader><cr>",
+        },
+      }
+    end, ]]
   },
 }

@@ -300,4 +300,5 @@ return {
       }
     end,
   },
+  --'WhoIsSethDaniel/mason-tool-installer.nvim'
 }

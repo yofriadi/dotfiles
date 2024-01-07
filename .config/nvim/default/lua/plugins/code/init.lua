@@ -1,5 +1,4 @@
 return {
-  { "m-demare/hlargs.nvim" },
   {
     "williamboman/mason.nvim",
     cmd = {

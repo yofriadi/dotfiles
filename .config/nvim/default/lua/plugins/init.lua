@@ -76,14 +76,19 @@ return {
     keys = {
       { "<Leader>tv", "<Cmd>VisualEnable<CR>", desc = "Enable Kakoune mode" },
     },
-  }, ]]
+  } ]]
   {
-    "LunarVim/bigfile.nvim",
-    opts = {},
+    "mrjones2014/legendary.nvim",
+    priority = 10000,
+    lazy = false,
+    dependencies = { "kkharji/sqlite.lua" },
   },
+  { "anuvyklack/help-vsplit.nvim", opts = {} },
+  { "LunarVim/bigfile.nvim", opts = {} },
   {
-    "tris203/hawtkeys.nvim",
-    config = true,
+    "NStefan002/speedtyper.nvim",
+    cmd = "Speedtyper",
+    opts = {},
   },
   {
     "TobinPalmer/Tip.nvim",
@@ -150,6 +155,12 @@ return {
     config = function(_, opts) require("lspkind").init(opts) end,
   },
   { "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+  {
+    "FluxxField/bionic-reading.nvim",
+    keys = {
+      { "<Leader>tb", "<Cmd>BRToggle<CR>", desc = "Toggle bionic reading" },
+    },
+  },
   --[[ {
     "epwalsh/pomo.nvim",
     version = "*",

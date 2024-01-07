@@ -48,4 +48,5 @@ return {
     event = "InsertEnter",
     opts = {},
   },
+  { "lukas-reineke/virt-column.nvim", opts = {} },
 }
