@@ -60,6 +60,12 @@ return {
             key = "l",
           },
           {
+            action = "Mason",
+            desc = " Mason",
+            icon = " ",
+            key = "m",
+          },
+          {
             action = "q",
             desc = " Quit",
             icon = " ",
