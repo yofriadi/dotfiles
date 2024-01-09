@@ -58,6 +58,7 @@ autocmd("FileType", {
     "quickfix",
     "nofile",
     "neo-tree",
+    "Trouble",
     --"minimap",
   },
   callback = function(event)

@@ -10,6 +10,29 @@ return {
     },
   },
   {
+    "rcarriga/nvim-notify",
+    init = function() require("utils").load_plugin_with_func("nvim-notify", vim, "notify") end,
+    opts = {
+      timeout = 3000,
+      max_height = function() return math.floor(vim.o.lines * 0.75) end,
+      max_width = function() return math.floor(vim.o.columns * 0.75) end,
+      on_open = function(win)
+        vim.api.nvim_win_set_config(win, { zindex = 100 })
+        if not vim.g.ui_notifications_enabled then vim.api.nvim_win_close(win, true) end
+        if not package.loaded["nvim-treesitter"] then pcall(require, "nvim-treesitter") end
+        vim.wo[win].conceallevel = 3
+        local buf = vim.api.nvim_win_get_buf(win)
+        if not pcall(vim.treesitter.start, buf, "markdown") then vim.bo[buf].syntax = "markdown" end
+        vim.wo[win].spell = false
+      end,
+    },
+    config = function()
+      local notify = require "notify"
+      notify.setup()
+      vim.notify = notify
+    end,
+  },
+  {
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = {
@@ -66,29 +89,7 @@ return {
     },
     dependencies = {
       { "MunifTanjim/nui.nvim", lazy = true },
-      {
-        "rcarriga/nvim-notify",
-        init = function() require("utils").load_plugin_with_func("nvim-notify", vim, "notify") end,
-        opts = {
-          timeout = 3000,
-          max_height = function() return math.floor(vim.o.lines * 0.75) end,
-          max_width = function() return math.floor(vim.o.columns * 0.75) end,
-          on_open = function(win)
-            vim.api.nvim_win_set_config(win, { zindex = 100 })
-            if not vim.g.ui_notifications_enabled then vim.api.nvim_win_close(win, true) end
-            if not package.loaded["nvim-treesitter"] then pcall(require, "nvim-treesitter") end
-            vim.wo[win].conceallevel = 3
-            local buf = vim.api.nvim_win_get_buf(win)
-            if not pcall(vim.treesitter.start, buf, "markdown") then vim.bo[buf].syntax = "markdown" end
-            vim.wo[win].spell = false
-          end,
-        },
-        config = function()
-          local notify = require "notify"
-          notify.setup()
-          vim.notify = notify
-        end,
-      },
+      { "nvim-notify" },
     },
   },
   {
@@ -97,79 +98,117 @@ return {
     opts = {},
   },
   {
+    "luukvbaal/statuscol.nvim",
+    keys = {
+      {
+        "<Leader>tf",
+        function()
+          if vim.wo.foldcolumn == "1" then
+            vim.opt.foldcolumn = "0"
+          else
+            vim.opt.foldcolumn = "1"
+          end
+        end,
+        desc = "Toggle fold status",
+      },
+    },
+    config = function()
+      local builtin = require "statuscol.builtin"
+      require("statuscol").setup {
+        relculright = true,
+        segments = {
+          { sign = { namespace = { "gitsigns" }, colwidth = 1, auto = true } },
+          { text = { builtin.foldfunc, " " } },
+          {
+            text = { builtin.lnumfunc },
+            condition = { builtin.not_empty, true, builtin.not_empty },
+          },
+          -- TODO: I want to to achieve todo, dap, diagnostic to be as one config
+          -- so it only occupied 1 column if all have in 3 different lines
+          -- but also shows all 3 if occured in one line
+          {
+            sign = {
+              name = { ".*" },
+              namespace = { "todo", "Dap*" },
+              colwidth = 2,
+              auto = true,
+            },
+          },
+          {
+            sign = {
+              namespace = { "diagnostic" },
+              colwidth = 2,
+              auto = true,
+            },
+          },
+          { -- all other sign
+            sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+            click = "v:lua.ScSa",
+          },
+          --{ text = { "%s" } }, show all sign in 1 column
+        },
+      }
+    end,
+  },
+  { -- TODO: check how to show next line if fold only show 1 char
     "kevinhwang91/nvim-ufo",
     dependencies = {
       "kevinhwang91/promise-async",
-      {
-        "luukvbaal/statuscol.nvim",
-        keys = {
-          {
-            "<Leader>tf",
-            function()
-              if vim.wo.foldcolumn == "1" then
-                vim.opt.foldcolumn = "0"
-              else
-                vim.opt.foldcolumn = "1"
-              end
-            end,
-            desc = "Toggle fold status",
-          },
-        },
-        config = function()
-          local builtin = require "statuscol.builtin"
-          require("statuscol").setup {
-            relculright = true,
-            segments = {
-              { sign = { namespace = { "gitsigns" }, colwidth = 1, auto = true } },
-              { text = { builtin.foldfunc, " " } },
-              {
-                text = { builtin.lnumfunc },
-                condition = { builtin.not_empty, true, builtin.not_empty },
-              },
-              -- TODO: I want to to achieve todo, dap, diagnostic to be as one config
-              -- so it only occupied 1 column if all have in 3 different lines
-              -- but also shows all 3 if occured in one line
-              {
-                sign = {
-                  name = { ".*" },
-                  namespace = { "todo", "Dap*" },
-                  colwidth = 2,
-                  auto = true,
-                },
-              },
-              {
-                sign = {
-                  namespace = { "diagnostic" },
-                  colwidth = 2,
-                  auto = true,
-                },
-              },
-              { -- all other sign
-                sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-                click = "v:lua.ScSa",
-              },
-              --{ text = { "%s" } }, show all sign in 1 column
-            },
-          }
-        end,
-      },
+      "statuscol.nvim",
     },
     event = "BufReadPost",
-    opts = {
-      provider_selector = function() return { "treesitter", "indent" } end,
-    },
-    init = function()
-      vim.keymap.set("n", "zR", function() require("ufo").openAllFolds() end)
-      vim.keymap.set("n", "zM", function() require("ufo").closeAllFolds() end)
+    opts = function()
+      local handler = function(virtText, lnum, endLnum, width, truncate)
+        local newVirtText = {}
+        local suffix = (" 󰁂 %d "):format(endLnum - lnum)
+        local sufWidth = vim.fn.strdisplaywidth(suffix)
+        local targetWidth = width - sufWidth
+        local curWidth = 0
+        for _, chunk in ipairs(virtText) do
+          local chunkText = chunk[1]
+          local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+          if targetWidth > curWidth + chunkWidth then
+            table.insert(newVirtText, chunk)
+          else
+            chunkText = truncate(chunkText, targetWidth - curWidth)
+            local hlGroup = chunk[2]
+            table.insert(newVirtText, { chunkText, hlGroup })
+            chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            -- str width returned from truncate() may less than 2nd argument, need padding
+            if curWidth + chunkWidth < targetWidth then
+              suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+            end
+            break
+          end
+          curWidth = curWidth + chunkWidth
+        end
+        table.insert(newVirtText, { suffix, "MoreMsg" })
+        return newVirtText
+      end
+      return {
+        fold_virt_text_handler = handler,
+        provider_selector = function() return { "treesitter", "indent" } end,
+        preview = {
+          mappings = {
+            scrollB = "<C-b>",
+            scrollF = "<C-f>",
+            scrollU = "<C-u>",
+            scrollD = "<C-d>",
+            switch = "<C-w>",
+            jumpTop = "[",
+            jumpBot = "]",
+          },
+        },
+      }
     end,
     keys = function()
       local ufo = require "ufo"
       return {
-        { "zR", function() ufo.openAllFolds() end, desc = "Fold open all" },
-        { "zM", function() ufo.closeAllFolds() end, desc = "Fold close all" },
-        { "zr", function() ufo.openFoldsExceptKinds() end, desc = "Fold less" },
-        { "zm", function() ufo.closeFoldsWith() end, desc = "Fold more" },
-        { "zp", function() ufo.peekFoldedLinesUnderCursor() end, desc = "Fold peek" },
+        { "zR", ufo.openAllFolds, desc = "Fold open all" },
+        { "zM", ufo.closeAllFolds, desc = "Fold close all" },
+        { "zr", ufo.openFoldsExceptKinds, desc = "Fold less" },
+        { "zm", ufo.closeFoldsWith, desc = "Fold more" },
+        { "K", ufo.peekFoldedLinesUnderCursor, desc = "Fold peek" },
       }
     end,
   },

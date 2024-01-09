@@ -102,16 +102,7 @@ return {
       { "gM", "<Cmd>Glance implementations<CR>", desc = "LSP implementations of current symbol" },
     },
     opts = function()
-      local actions = require("glance").actions
       return {
-        mappings = {
-          list = {
-            ["<BS>"] = actions.close,
-          },
-          preview = {
-            ["<BS>"] = actions.close,
-          },
-        },
         indent_lines = {
           icon = "▏",
         },

@@ -58,8 +58,8 @@ return {
       "TSUpdateSync",
     },
     keys = {
-      { "<c-space>", desc = "Increment selection" },
-      { "<bs>", desc = "Decrement selection", mode = "x" },
+      { "<C-Space>", desc = "Increment selection" },
+      { "<BS>", desc = "Decrement selection", mode = "x" },
     },
     opts = {
       highlight = { enable = true },

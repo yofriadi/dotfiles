@@ -22,7 +22,6 @@ local function get_kind_filter(buf)
     },
     markdown = false,
     help = false,
-    -- you can specify a different filter for each filetype
     lua = {
       "Class",
       "Constructor",
@@ -50,7 +49,6 @@ return {
   {
     "kevinhwang91/nvim-hlslens",
     event = "BufRead",
-    --init = function() vim.on_key(nil, vim.api.nvim_get_namespaces()["auto_hlsearch"]) end,
     config = function() require("hlslens").setup() end,
   },
   {
@@ -68,7 +66,7 @@ return {
           which_key { text_insert_in_advance = "<Leader>" },
           desc = "[wf.nvim] which-key /",
         },
-        { "<C-W>:", register(), desc = "[wf.nvim] register" },
+        { "<C-W><CR>", register(), desc = "[wf.nvim] register" },
         { "'", mark(), desc = "[wf.nvim] mark" },
         {
           "<C-W>m",
@@ -110,6 +108,7 @@ return {
             tabs = {
               { "Frecency", function() t.extensions.frecency.frecency { workspace = "CWD" } end },
               { "Grep", tsb.live_grep },
+              { "Undo", t.extensions.undo.undo },
               { "Buffers", function() return tsb.buffers { sort_mru = true, sort_lastused = true } end },
               { "Tabs", require("telescope-tabs").list_tabs },
               { "Macros", t.extensions.macros.macros },
