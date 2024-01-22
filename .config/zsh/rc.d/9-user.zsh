@@ -10,7 +10,7 @@ eval "$(atuin init zsh)"
 
 zstyle ':hist:*' expand-aliases yes
 
-. "$HOME/.asdf/asdf.sh"
+. "/opt/asdf-vm/asdf.sh"
 
 export GOPRIVATE="gitlab.com/pinvest/*"
 
@@ -46,10 +46,10 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-alias l="exa"
-alias ll="exa -l"
-alias la="exa -a"
-alias lla="exa -la"
+alias l="eza"
+alias ll="eza -l"
+alias la="eza -a"
+alias lla="eza -la"
 
 alias hx="helix"
 export BAT_THEME="Nord"
