@@ -21,7 +21,17 @@ return {
   {
     mode = "n",
     ["<CR>"] = { act = ":", silent = false },
-    X = { act = "S" },
+    ["<S-CR>"] = { act = "@:", silent = false },
+    --["<C-CR>"] = { act = "@:", silent = false },
+    ["<A-CR>"] = { act = "@:", silent = false },
+    ["<C-S-CR>"] = { act = "@:", silent = false },
+
+    --["<S-Space>"] = { act = "@:", silent = false },
+    --["<C-Space>"] = { act = "@:", silent = false },
+    --["<A-Space>"] = { act = "@:", silent = false },
+    --["<C-S-Space>"] = { act = "@:", silent = false },
+
+    X = { act = "<C-a>" },
     d = { act = '"_d', desc = "Better delete" },
     x = { act = '"_x', desc = "Better delete" },
     ["<Esc>"] = {

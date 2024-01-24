@@ -130,14 +130,14 @@ return {
             sign = {
               name = { ".*" },
               namespace = { "todo", "Dap*" },
-              colwidth = 2,
+              colwidth = 1,
               auto = true,
             },
           },
           {
             sign = {
               namespace = { "diagnostic" },
-              colwidth = 2,
+              colwidth = 1,
               auto = true,
             },
           },
@@ -208,7 +208,8 @@ return {
         { "zM", ufo.closeAllFolds, desc = "Fold close all" },
         { "zr", ufo.openFoldsExceptKinds, desc = "Fold less" },
         { "zm", ufo.closeFoldsWith, desc = "Fold more" },
-        { "K", ufo.peekFoldedLinesUnderCursor, desc = "Fold peek" },
+        { "zp", ufo.peekFoldedLinesUnderCursor, desc = "Fold peek" },
+        --{ "K", ufo.peekFoldedLinesUnderCursor, desc = "Fold peek" },
       }
     end,
   },

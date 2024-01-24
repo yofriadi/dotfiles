@@ -185,7 +185,7 @@ return {
             --gr = { act = lsp.buf.references, buffer = buf, desc = "LSP references of current symbol" },
             ["[d"] = { act = vim.diagnostic.goto_prev, buffer = buf, desc = "LSP previous diagnostic" },
             ["]d"] = { act = vim.diagnostic.goto_next, buffer = buf, desc = "LSP next diagnostic" },
-            ["<Leader>ld"] = { act = vim.diagnostic.open_float, buffer = buf, desc = "LSP hover diagnostics" },
+            ["<Leader>ld"] = { act = vim.diagnostic.open_float(), buffer = buf, desc = "LSP hover diagnostics" },
             ["<Leader>la"] = { act = lsp.buf.code_action, buffer = buf, desc = "LSP code action" },
             ["<Leader>lA"] = {
               act = function()

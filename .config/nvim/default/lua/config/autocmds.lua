@@ -7,6 +7,15 @@ autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   command = "checktime",
 })
 
+autocmd("BufWritePre", {
+  desc = "Automatically create parent directories if they don't exist when saving a file",
+  group = augroup("create_dir", { clear = true }),
+  callback = function(args)
+    if args.match:match "^%w%w+://" then return end
+    vim.fn.mkdir(vim.fn.fnamemodify(vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
+  end,
+})
+
 autocmd("TextYankPost", {
   desc = "Highlight on yank",
   group = augroup("highlight_yank", { clear = true }),
@@ -59,6 +68,7 @@ autocmd("FileType", {
     "nofile",
     "neo-tree",
     "Trouble",
+    "toggleterm",
     --"minimap",
   },
   callback = function(event)

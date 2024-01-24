@@ -49,7 +49,7 @@ return {
           ["<Tab>"] = cmp.mapping(function()
             if cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
+            elseif luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             else
               require("neotab").tabout()

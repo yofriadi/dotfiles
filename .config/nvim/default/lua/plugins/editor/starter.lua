@@ -24,7 +24,6 @@ return {
       },
       config = {
         header = vim.split(logo, "\n"),
-        -- stylua: ignore
         center = {
           {
             action = "ene | startinsert",
@@ -33,26 +32,17 @@ return {
             key = "n",
           },
           {
-            action = function () require("telescope").extensions.frecency.frecency { workspace = "CWD" } end,
-            desc = " Find files",
+            action = require("search").open,
+            desc = " Search",
             icon = " ",
-            key = "f",
+            key = "s",
           },
           {
-            action = "Telescope live_grep",
-            desc = " Find text",
+            action = "ToggleTerm direction=float",
+            desc = " Terminal",
             icon = " ",
-            key = "g",
+            key = "t",
           },
-          --{ action = "Telescope oldfiles",                                       desc = " Recent files",    icon = " ", key = "r" },
-          -- { action = [[lua require("lazyvim.util").telescope.config_files()()]], desc = " Config",          icon = " ", key = "c" },
-          -- { action = 'lua require("persistence").load()',                        desc = " Restore Session", icon = " ", key = "s" },
-          --[[ {
-            action = "LazyExtras",
-            desc = " Lazy Extras",
-            icon = " ",
-            key = "x",
-          }, ]]
           {
             action = "Lazy",
             desc = " Lazy",

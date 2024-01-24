@@ -11,14 +11,14 @@ return {
         },
         buffer_close_icon = "",
         show_close_icon = false,
-        --[[ offsets = {
+        offsets = {
           {
             filetype = "neo-tree",
             text = "Neo-tree",
             highlight = "Directory",
             text_align = "left",
           },
-        }, ]]
+        },
       },
     },
   },
