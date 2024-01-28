@@ -163,6 +163,32 @@ return {
         },
       },
     },
+    keys = function()
+      local lsp = vim.lsp
+      return {
+        { "<Leader>lR", lsp.buf.rename, desc = "Rename current symbol" },
+        { "K", lsp.buf.hover, desc = "LSP hover symbol details" },
+        { "[d", vim.diagnostic.goto_prev, desc = "LSP previous diagnostic" },
+        { "]d", vim.diagnostic.goto_next, desc = "LSP next diagnostic" },
+        { "<Leader>ld", vim.diagnostic.open_float, desc = "LSP hover diagnostics" },
+        { "<Leader>la", lsp.buf.code_action, desc = "LSP code action" },
+        {
+          "<Leader>lA",
+          function()
+            lsp.buf.code_action {
+              context = {
+                only = { "source" },
+                diagnostics = {},
+              },
+            }
+          end,
+          desc = "LSP source action",
+        },
+        { "<Leader>ll", lsp.codelens.refresh, desc = "LSP CodeLens refresh" },
+        { "<Leader>lL", lsp.codelens.run, desc = "LSP CodeLens run" },
+        { "<leader>lh", lsp.buf.signature_help, desc = "Signature help" },
+      }
+    end,
     config = function(_, opts)
       local signs = { Error = "", Warn = "", Info = "", Hint = "󰌵" }
       for type, icon in pairs(signs) do
@@ -171,41 +197,6 @@ return {
       end
 
       vim.diagnostic.config(opts.diagnostics)
-      vim.api.nvim_create_autocmd("LspAttach", {
-        desc = "LSP actions",
-        callback = function(event)
-          local lsp = vim.lsp
-          local buf = event.buf
-          require("caskey").setup {
-            ["<Leader>lR"] = { act = lsp.buf.rename, buffer = buf, desc = "Rename current symbol" },
-            K = { act = lsp.buf.hover, buffer = buf, desc = "LSP hover symbol details" },
-            --gd = { act = lsp.buf.definition, buffer = buf, desc = "LSP definition of current symbol" },
-            --gD = { act = lsp.buf.type_definition, buffer = buf, desc = "Definition of current type" },
-            -- gD{ act = lsp.buf.declaration, buffer = buf, desc = "LSP declaration of current symbol" },
-            --gr = { act = lsp.buf.references, buffer = buf, desc = "LSP references of current symbol" },
-            ["[d"] = { act = vim.diagnostic.goto_prev, buffer = buf, desc = "LSP previous diagnostic" },
-            ["]d"] = { act = vim.diagnostic.goto_next, buffer = buf, desc = "LSP next diagnostic" },
-            ["<Leader>ld"] = { act = vim.diagnostic.open_float(), buffer = buf, desc = "LSP hover diagnostics" },
-            ["<Leader>la"] = { act = lsp.buf.code_action, buffer = buf, desc = "LSP code action" },
-            ["<Leader>lA"] = {
-              act = function()
-                lsp.buf.code_action {
-                  context = {
-                    only = { "source" },
-                    diagnostics = {},
-                  },
-                }
-              end,
-              buffer = buf,
-              desc = "LSP source action",
-            },
-            -- NOTE: check if code lens below any work
-            ["<Leader>ll"] = { act = lsp.codelens.refresh, buffer = buf, desc = "LSP CodeLens refresh" },
-            ["<Leader>lL"] = { act = lsp.codelens.run, buffer = buf, desc = "LSP CodeLens run" },
-            ["<leader>lh"] = { act = lsp.buf.signature_help, buffer = buf, desc = "Signature help" },
-          }
-        end,
-      })
 
       local function setup(server)
         local server_opts = vim.tbl_deep_extend("force", {
