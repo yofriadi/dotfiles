@@ -1,4 +1,8 @@
+[core]
+  pager = delta
+	excludesfile = /home/ypc/.config/.gitignore
 [pager]
+  status = true
   difftool = true
   diff = delta
   log = delta
@@ -21,6 +25,8 @@
   hunk-header-file-style = red
   hunk-header-line-number-style = "#067a00"
   hunk-header-style = file line-number syntax
+[merge]
+    conflictstyle = diff3
 [url "ssh://git@pinhome-gitlab/"]
   insteadOf = https://gitlab.com/pinvest/*
 [user]
@@ -32,11 +38,11 @@
 [diff]
 	external = difft
   tool = difftastic
+  colorMoved = default
 [difftool]
   prompt = false
 [difftool "difftastic"]
   cmd = difft "$LOCAL" "$REMOTE"
 [alias]
   dft = difftool
-[core]
-	excludesfile = /Users/yofriadi/.config/.gitignore
+  dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
