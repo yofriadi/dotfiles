@@ -52,6 +52,21 @@ return {
     config = function() require("hlslens").setup() end,
   },
   {
+    "backdround/improved-search.nvim",
+    event = "BufRead",
+    keys = function()
+      local search = require "improved-search"
+      return {
+        { "n", search.stable_next, mode = { "n", "x", "o" }, desc = "search stable next" },
+        { "N", search.stable_previous, mode = { "n", "x", "o" }, desc = "search stable previous" },
+        { "!", search.current_word, desc = "search stable current word" },
+        { "!", search.in_place, mode = "x", desc = "search stable in place" },
+        { "*", search.forward, mode = "x", desc = "search forward" },
+        { "#", search.backward, mode = "x", desc = "search backward" },
+      }
+    end,
+  },
+  {
     "Cassin01/wf.nvim",
     version = "*",
     event = "VeryLazy",

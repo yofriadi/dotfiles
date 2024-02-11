@@ -90,7 +90,7 @@ return {
     cmd = "Speedtyper",
     opts = {},
   },
-  {
+  --[[ {
     "TobinPalmer/Tip.nvim",
     event = "VimEnter",
     dependencies = { "nvim-lua/plenary.nvim", lazy = true },
@@ -101,7 +101,7 @@ return {
         url = "https://vtip.43z.one",
       }
     end,
-  },
+  }, ]]
   {
     "Nexmean/caskey.nvim",
     config = function() require("caskey").setup(require "config.keymaps") end,

@@ -44,6 +44,12 @@ return {
             key = "t",
           },
           {
+            action = require("dbee").open,
+            desc = " Database",
+            icon = " ",
+            key = "d",
+          },
+          {
             action = "Lazy",
             desc = " Lazy",
             icon = "󰒲 ",

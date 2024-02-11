@@ -24,5 +24,5 @@ setopt GLOB_STAR_SHORT
 # Sort numbers numerically, not lexicographically.
 setopt NUMERIC_GLOB_SORT
 
-export EDITOR='nvim'
-export VISUAL='nvim'
+export EDITOR=n
+export VISUAL=n

@@ -1,5 +1,4 @@
 return {
-  { "m-demare/hlargs.nvim" },
   {
     "lukas-reineke/indent-blankline.nvim",
     branch = "current-indent",

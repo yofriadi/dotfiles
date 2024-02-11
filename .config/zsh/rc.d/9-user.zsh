@@ -6,6 +6,7 @@
 
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
+bindkey '^r' atuin-search
 #eval "$(zellij setup --generate-completion zsh)"
 
 zstyle ':hist:*' expand-aliases yes
@@ -39,8 +40,7 @@ export CLOUDSDK_PYTHON=python3
 #export PATH="$HOME/.cargo/bin:$PATH"
 
 alias n='NVIM_APPNAME=nvim/default nvim'
-alias nlv='NVIM_APPNAME=nvim/LazyVim-starter nvim'
-alias nan='NVIM_APPNAME=nvim/AstroNvim nvim'
+alias nn='NVIM_APPNAME=nvim/AstroNvim nvim'
 
 alias ...="cd ../.."
 alias ....="cd ../../.."

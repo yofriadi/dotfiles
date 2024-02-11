@@ -5,6 +5,18 @@ return {
     opts = {},
   },
   {
+    "vidocqh/auto-indent.nvim",
+    opts = {},
+  },
+  {
+    "numToStr/Comment.nvim",
+    event = "BufRead",
+    opts = function()
+      local commentstring_avail, commentstring = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+      return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
+    end,
+  },
+  {
     "gbprod/yanky.nvim",
     event = "UIEnter",
     dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find "Windows" } },
