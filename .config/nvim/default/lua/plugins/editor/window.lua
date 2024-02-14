@@ -1,5 +1,12 @@
 return {
   {
+    "carbon-steel/detour.nvim",
+    config = function()
+      --vim.keymap.set("n", "<C-w><enter>", ":Detour<cr>") -- not working
+      vim.keymap.set("n", "<C-w>.", ":DetourCurrentWindow<cr>")
+    end,
+  },
+  {
     "mrjones2014/smart-splits.nvim",
     keys = {
       { "<C-h>", function() require("smart-splits").move_cursor_left() end, desc = "Move to window left" },

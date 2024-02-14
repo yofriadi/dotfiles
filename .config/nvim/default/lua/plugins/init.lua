@@ -78,6 +78,11 @@ return {
     },
   } ]]
   {
+    "mvllow/modes.nvim",
+    tag = "v0.2.1",
+    config = function() require("modes").setup() end,
+  },
+  {
     "mrjones2014/legendary.nvim",
     priority = 10000,
     lazy = false,
