@@ -3,7 +3,7 @@
 	excludesfile = /home/ypc/.config/.gitignore
 [pager]
   status = true
-  difftool = true
+  #difftool = true # difft
   diff = delta
   log = delta
   reflog = delta
@@ -26,7 +26,7 @@
   hunk-header-line-number-style = "#067a00"
   hunk-header-style = file line-number syntax
 [merge]
-    conflictstyle = diff3
+  conflictstyle = diff3
 [url "ssh://git@pinhome-gitlab/"]
   insteadOf = https://gitlab.com/pinvest/*
 [user]
@@ -35,14 +35,19 @@
 	default = current
 [pull]
   default = current
+	rebase = true
 [diff]
-	external = difft
-  tool = difftastic
+  #external = difft # still not integrate with delta
+  #tool = difftastic # difft
   colorMoved = default
-[difftool]
-  prompt = false
-[difftool "difftastic"]
-  cmd = difft "$LOCAL" "$REMOTE"
+#[difftool]
+#  prompt = false # difft
+#[difftool "difftastic"]
+#  cmd = difft "$LOCAL" "$REMOTE" # difft
 [alias]
-  dft = difftool
-  dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+  #dft = difftool
+  #dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+  # use fzf to list changes and add it with tab key, then enter
+  fza = "!git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git add"
+  # removes local branches that don't exist on the remote.
+  gone = "!f() { git fetch --all --prune; git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D; }; f"
