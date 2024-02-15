@@ -29,7 +29,7 @@ return {
       return {
         { "<Leader>etv", function() open "vsplit" end, desc = "Terminal open vertical" },
         { "<Leader>eth", function() open "20split" end, desc = "Terminal open horizontal" },
-        { "<Leader>etf", function() open "float" end, desc = "Terminal open float" },
+        --{ "<Leader>etf", function() open "float" end, desc = "Terminal open float" },
         { "<Esc><Esc>", "<C-\\><C-n>", mode = "t", desc = "Terminal normal mode" },
         { "jk", "<C-\\><c-n>", mode = "t", desc = "Terminal normal mode" },
         { "<C-h>", "<C-\\><C-n><C-w>h", mode = "t", desc = "Move to left window in terminal mode" },
@@ -77,14 +77,14 @@ return {
       })
     end,
   },
-  --[[ {
+  {
     "akinsho/toggleterm.nvim",
     cmd = { "ToggleTerm", "TermExec" },
     keys = {
       { "<leader>etf", "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" },
-      { "<leader>etb", "<cmd>ToggleTerm direction=tab<cr>", desc = "ToggleTerm tab" },
+      --[[ { "<leader>etb", "<cmd>ToggleTerm direction=tab<cr>", desc = "ToggleTerm tab" },
       { "<leader>eth", "<cmd>ToggleTerm size=15 direction=horizontal<cr>", desc = "ToggleTerm horizontal" },
-      { "<leader>etv", "<cmd>ToggleTerm size=60 direction=vertical<cr>", desc = "ToggleTerm vertical" },
+      { "<leader>etv", "<cmd>ToggleTerm size=60 direction=vertical<cr>", desc = "ToggleTerm vertical" }, ]]
       { "<esc><esc>", "<c-\\><c-n>", mode = "t", desc = "Terminal normal mode" },
       { "jk", "<c-\\><c-n>", mode = "t", desc = "Terminal normal mode" },
       { "<c-h>", "<c-\\><c-n><c-w>h", mode = "t", desc = "Move to left window in terminal mode" },
@@ -107,5 +107,5 @@ return {
       size = 10,
       float_opts = { border = "rounded" },
     },
-  } ]]
+  },
 }
