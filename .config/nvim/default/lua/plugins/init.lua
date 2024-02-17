@@ -88,7 +88,6 @@ return {
     lazy = false,
     dependencies = { "kkharji/sqlite.lua" },
   },
-  { "anuvyklack/help-vsplit.nvim", opts = {} },
   { "LunarVim/bigfile.nvim", opts = {} },
   {
     "NStefan002/speedtyper.nvim",
