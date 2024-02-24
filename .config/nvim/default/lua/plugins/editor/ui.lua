@@ -112,7 +112,40 @@ return {
         desc = "Toggle fold status",
       },
     },
-    config = function()
+
+    opts = function()
+      local builtin = require "statuscol.builtin"
+
+      return {
+        bt_ignore = { "nofile", "terminal" },
+        segments = {
+          {
+            sign = {
+              name = { ".*" },
+              text = { ".*" },
+            },
+          },
+          {
+            text = { builtin.lnumfunc },
+            condition = { true, builtin.not_empty },
+          },
+          {
+            sign = { namespace = { "gitsigns" }, colwidth = 1, wrap = true },
+          },
+          {
+            text = {
+              function(args)
+                args.fold.close = ""
+                args.fold.open = ""
+                args.fold.sep = "▕"
+                return builtin.foldfunc(args)
+              end,
+            },
+          },
+        },
+      }
+    end,
+    --[[ config = function()
       local builtin = require "statuscol.builtin"
       require("statuscol").setup {
         relculright = true,
@@ -148,7 +181,7 @@ return {
           --{ text = { "%s" } }, show all sign in 1 column
         },
       }
-    end,
+    end, ]]
   },
   { -- TODO: check how to show next line if fold only show 1 char
     "kevinhwang91/nvim-ufo",

@@ -53,6 +53,10 @@ return {
     ["<S-Tab>"] = { act = "<gv", desc = "Better left indenting" },
   },
   {
+    mode = "x",
+    p = { act = '"_dP', desc = "Better paste" },
+  },
+  {
     mode = { "n", "x" },
     j = { act = "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Better move up" },
     k = { act = "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Better move down" },
