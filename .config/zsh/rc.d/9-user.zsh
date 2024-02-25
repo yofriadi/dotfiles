@@ -5,18 +5,12 @@
 #
 
 eval "$(zoxide init zsh)"
+#eval $(shellclear --init-shell)
 eval "$(atuin init zsh)"
 bindkey '^r' atuin-search
 #eval "$(zellij setup --generate-completion zsh)"
 
 zstyle ':hist:*' expand-aliases yes
-
-. "/opt/asdf-vm/asdf.sh"
-
-export GOPRIVATE="gitlab.com/pinvest/*"
-
-#export PNPM_HOME="/Users/ymbp/Library/pnpm"
-#export PATH="$PNPM_HOME:$PATH"
 
 # Golang
 export GOPATH="$HOME/.local/state/go"
@@ -33,12 +27,6 @@ if [ -f '/home/ypcl/.local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/home/y
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/ypcl/.local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ypcl/.local/bin/google-cloud-sdk/completion.zsh.inc'; fi
 
-export CLOUDSDK_PYTHON=python3
-
-# Rust
-#export PATH="$HOME/.asdf/installs/rust/1.71.0/bin:$PATH"
-#export PATH="$HOME/.cargo/bin:$PATH"
-
 alias n='NVIM_APPNAME=nvim/default nvim'
 alias nn='NVIM_APPNAME=nvim/AstroNvim nvim'
 
@@ -51,12 +39,24 @@ alias ll="eza -l"
 alias la="eza -a"
 alias lla="eza -la"
 
+alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message "--wip-- [skip ci]"'
+alias gunwip='git rev-list --max-count=1 --format="%s" HEAD | grep -q "\--wip--" && git reset HEAD~1'
+
+# Similar to `gunwip` but recursive "Unwips" all recent `--wip--` commits not just the last one
+function gunwipall() {
+  local _commit=$(git log --grep='--wip--' --invert-grep --max-count=1 --format=format:%H)
+
+  # Check if a commit without "--wip--" was found and it's not the same as HEAD
+  if [[ "$_commit" != "$(git rev-parse HEAD)" ]]; then
+    git reset $_commit || return 1
+  fi
+}
+
 alias hx="helix"
 export BAT_THEME="Nord"
 
-# bun completions
-[ -s "/home/ypcl/.bun/_bun" ] && source "/home/ypcl/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export PNPM_HOME="/home/yofri/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac

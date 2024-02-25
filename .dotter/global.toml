@@ -1,0 +1,15 @@
+[helpers]
+
+[default]
+depends = []
+
+[default.files]
+".zshenv" = "~/.zshenv"
+".config/zsh" = "~/.config/zsh"
+".tmux.conf" = "~/.tmux.conf"
+".config/alacritty" = "~/.config/alacritty"
+".config/nvim" = "~/.config/nvim"
+".config/atuin" = "~/.config/atuin"
+".gitignore" = "~/.gitignore"
+
+[default.variables]

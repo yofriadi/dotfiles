@@ -116,6 +116,7 @@ return {
             },
           },
         },
+        bashls = {},
         dockerls = {},
         docker_compose_language_service = {},
         marksman = {},
@@ -175,12 +176,12 @@ return {
         {
           "<Leader>lA",
           function()
-            lsp.buf.code_action {
+            lsp.buf.code_action({
               context = {
                 only = { "source" },
                 diagnostics = {},
               },
-            }
+            })
           end,
           desc = "LSP source action",
         },
@@ -208,9 +209,13 @@ return {
         }, opts.servers[server])
 
         if opts.server_setup[server] then
-          if opts.server_setup[server](server, server_opts) then return end
+          if opts.server_setup[server](server, server_opts) then
+            return
+          end
         elseif opts.server_setup["*"] then
-          if opts.server_setup["*"](server, server_opts) then return end
+          if opts.server_setup["*"](server, server_opts) then
+            return
+          end
         end
 
         require("lspconfig")[server].setup(server_opts)
@@ -218,9 +223,11 @@ return {
 
       local ensure_installed = {}
       for server, server_opts in pairs(opts.servers) do
-        if server_opts then ensure_installed[#ensure_installed + 1] = server end
+        if server_opts then
+          ensure_installed[#ensure_installed + 1] = server
+        end
       end
-      require("mason-lspconfig").setup { ensure_installed = ensure_installed, handlers = { setup } }
+      require("mason-lspconfig").setup({ ensure_installed = ensure_installed, handlers = { setup } })
     end,
   },
   {
@@ -239,7 +246,7 @@ return {
           local completion = require("null-ls").builtins.completion
           --local code_actions = require("null-ls").builtins.code_actions
 
-          require("null-ls").setup {
+          require("null-ls").setup({
             sources = {
               -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
               --formatting.stylua,
@@ -256,15 +263,15 @@ return {
               --code_actions.gomodifytags,
               --code_actions.impl,
             },
-          }
+          })
         end,
       },
     },
     config = function()
-      require("mason-null-ls").setup {
+      require("mason-null-ls").setup({
         ensure_installed = {
           -- linter
-          "luacheck",
+          "selene", -- lua
           "golangci_lint",
           "staticcheck", -- golang
           "hadolint", -- docker
@@ -283,12 +290,12 @@ return {
         },
         automatic_installation = true,
         handlers = {},
-      }
-      require("null-ls").setup {
+      })
+      require("null-ls").setup({
         sources = {
           -- Anything not supported by mason.
         },
-      }
+      })
     end,
   },
   {
