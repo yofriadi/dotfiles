@@ -39,8 +39,12 @@ local function get_kind_filter(buf)
     },
   }
 
-  if kind_filter == false then return end
-  if kind_filter[ft] == false then return end
+  if kind_filter == false then
+    return
+  end
+  if kind_filter[ft] == false then
+    return
+  end
   ---@diagnostic disable-next-line: return-type-mismatch
   return type(kind_filter) == "table" and type(kind_filter.default) == "table" and kind_filter.default or nil
 end
@@ -49,13 +53,15 @@ return {
   {
     "kevinhwang91/nvim-hlslens",
     event = "BufRead",
-    config = function() require("hlslens").setup() end,
+    config = function()
+      require("hlslens").setup()
+    end,
   },
   {
     "backdround/improved-search.nvim",
     event = "BufRead",
     keys = function()
-      local search = require "improved-search"
+      local search = require("improved-search")
       return {
         { "n", search.stable_next, mode = { "n", "x", "o" }, desc = "search stable next" },
         { "N", search.stable_previous, mode = { "n", "x", "o" }, desc = "search stable previous" },
@@ -71,39 +77,42 @@ return {
     version = "*",
     event = "VeryLazy",
     keys = function()
-      local which_key = require "wf.builtin.which_key"
-      local register = require "wf.builtin.register"
-      local bookmark = require "wf.builtin.bookmark"
-      local mark = require "wf.builtin.mark"
+      local which_key = require("wf.builtin.which_key")
+      local register = require("wf.builtin.register")
+      local bookmark = require("wf.builtin.bookmark")
+      local mark = require("wf.builtin.mark")
       return {
         {
           "<Leader>",
-          which_key { text_insert_in_advance = "<Leader>" },
+          which_key({ text_insert_in_advance = "<Leader>" }),
           desc = "[wf.nvim] which-key /",
         },
         { "<C-W><CR>", register(), desc = "[wf.nvim] register" },
         { "'", mark(), desc = "[wf.nvim] mark" },
         {
           "<C-W>m",
-          bookmark {
+          bookmark({
             nvim = "~/.config/nvim/default",
             zsh = "~/.config/zsh/.zshrc",
-          },
+          }),
           desc = "[wf.nvim] bookmark",
         },
       }
     end,
-    config = function() require("wf").setup { theme = "space" } end,
+    config = function()
+      require("wf").setup({ theme = "space" })
+    end,
   },
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {
+      "natecraddock/telescope-zf-native.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
-        enabled = vim.fn.executable "make" == 1,
+        enabled = vim.fn.executable("make") == 1,
       },
       {
         "LukasPietzschmann/telescope-tabs",
@@ -114,22 +123,38 @@ return {
       {
         "FabianWirth/search.nvim",
         keys = {
-          { "<Leader>ss", function() require("search").open() end, desc = "Search files with tabs option" },
+          {
+            "<Leader>ss",
+            function()
+              require("search").open()
+            end,
+            desc = "Search files with tabs option",
+          },
         },
         config = function()
-          local t = require "telescope"
-          local tsb = require "telescope.builtin"
-          return require("search").setup {
+          local t = require("telescope")
+          local tsb = require("telescope.builtin")
+          return require("search").setup({
             tabs = {
-              { "Frecency", function() t.extensions.frecency.frecency { workspace = "CWD" } end },
+              {
+                "Frecency",
+                function()
+                  t.extensions.frecency.frecency({ workspace = "CWD" })
+                end,
+              },
               { "Grep", tsb.live_grep },
               { "Undo", t.extensions.undo.undo },
-              { "Buffers", function() return tsb.buffers { sort_mru = true, sort_lastused = true } end },
+              {
+                "Buffers",
+                function()
+                  return tsb.buffers({ sort_mru = true, sort_lastused = true })
+                end,
+              },
               { "Tabs", require("telescope-tabs").list_tabs },
               { "Macros", t.extensions.macros.macros },
               { "Env", t.extensions.env.env },
             },
-          }
+          })
         end,
       },
       {
@@ -142,13 +167,21 @@ return {
       "LinArcX/telescope-env.nvim",
     },
     config = function(opts)
-      local telescope = require "telescope"
-      local utils = require "utils"
+      local telescope = require("telescope")
+      local utils = require("utils")
       telescope.setup(opts)
-      utils.conditional_func(telescope.load_extension, utils.is_available "fzf", "undo", "frecency", "macros", "env")
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available("fzf"),
+        "undo",
+        "frecency",
+        "macros",
+        "env",
+        "zf-native"
+      )
     end,
     opts = function()
-      local actions = require "telescope.actions"
+      local actions = require("telescope.actions")
 
       --[[ local open_with_trouble = function(...)
         return require("trouble.providers.telescope").open_with_trouble(...)
@@ -188,7 +221,9 @@ return {
             table.insert(wins, 1, vim.api.nvim_get_current_win())
             for _, win in ipairs(wins) do
               local buf = vim.api.nvim_win_get_buf(win)
-              if vim.bo[buf].buftype == "" then return win end
+              if vim.bo[buf].buftype == "" then
+                return win
+              end
             end
             return 0
           end,
@@ -212,49 +247,109 @@ return {
       }
     end,
     keys = function()
-      local tsb = require "telescope.builtin"
+      local tsb = require("telescope.builtin")
       local tse = require("telescope").extensions
       return {
-        { "<Leader>s<CR>", function() tsb.resume() end, desc = "Resume previous search" },
-        { "<Leader>s/", function() tsb.live_grep() end, desc = "Search words" },
+        {
+          "<Leader>s<CR>",
+          function()
+            tsb.resume()
+          end,
+          desc = "Resume previous search",
+        },
+        {
+          "<Leader>s/",
+          function()
+            tsb.live_grep()
+          end,
+          desc = "Search words",
+        },
         {
           "<Leader>s?",
-          function() tsb.live_grep { hidden = true, no_ignore = true } end,
+          function()
+            tsb.live_grep({ hidden = true, no_ignore = true })
+          end,
           desc = "Search all words",
         },
         {
           "<Leader>sF",
-          function() tsb.find_files { hidden = true, no_ignore = true } end,
+          function()
+            tsb.find_files({ hidden = true, no_ignore = true })
+          end,
           desc = "Search all file",
         },
         {
           "<Leader>sb",
-          function() tsb.buffers { sort_mru = true, sort_lastused = true } end,
+          function()
+            tsb.buffers({ sort_mru = true, sort_lastused = true })
+          end,
           desc = "Search buffers",
         },
-        { "<Leader>sn", function() tse.notify.notify() end, desc = "Search notifications" },
-        { "<Leader>sk", function() tsb.keymaps() end, desc = "Search keymaps" },
-        { "<Leader>sc", function() tsb.commands() end, desc = "Search commands" },
-        { "<Leader>sC", function() tsb.command_history() end, desc = "Search command history" },
+        {
+          "<Leader>sn",
+          function()
+            tse.notify.notify()
+          end,
+          desc = "Search notifications",
+        },
+        {
+          "<Leader>sk",
+          function()
+            tsb.keymaps()
+          end,
+          desc = "Search keymaps",
+        },
+        {
+          "<Leader>sc",
+          function()
+            tsb.commands()
+          end,
+          desc = "Search commands",
+        },
+        {
+          "<Leader>sC",
+          function()
+            tsb.command_history()
+          end,
+          desc = "Search command history",
+        },
 
         -- LSP
         {
           "<Leader>lr",
-          function() tsb.lsp_references { jump_type = "never" } end,
+          function()
+            tsb.lsp_references({ jump_type = "never" })
+          end,
           desc = "LSP Search references of current symbol",
         },
         {
           "<Leader>lD",
-          function() tsb.lsp_definitions { jump_type = "never", reuse_win = true } end,
+          function()
+            tsb.lsp_definitions({ jump_type = "never", reuse_win = true })
+          end,
           desc = "Definition of current symbol",
         },
         {
           "<Leader>li",
-          function() tsb.lsp_implementations { reuse_win = true } end,
+          function()
+            tsb.lsp_implementations({ reuse_win = true })
+          end,
           desc = "Implementation of current symbol",
         },
-        { "<Leader>sd", function() tsb.diagnostics { bufnr = 0 } end, desc = "Search document diagnostics" },
-        { "<Leader>sD", function() tsb.diagnostics() end, desc = "Search workspace diagnostics" },
+        {
+          "<Leader>sd",
+          function()
+            tsb.diagnostics({ bufnr = 0 })
+          end,
+          desc = "Search document diagnostics",
+        },
+        {
+          "<Leader>sD",
+          function()
+            tsb.diagnostics()
+          end,
+          desc = "Search workspace diagnostics",
+        },
         --[[
         { "<leader>lq", vim.lsp.buf.workspace_symbol, desc = "Search symbols" },
         {
@@ -273,29 +368,99 @@ return {
         } ]]
 
         -- Git
-        { "<Leader>sgb", function() tsb.git_branches { use_file_path = true } end, desc = "Search git branches" },
-        { "<Leader>sgc", function() tsb.git_commits { use_file_path = true } end, desc = "Search git commits in file" },
+        {
+          "<Leader>sgb",
+          function()
+            tsb.git_branches({ use_file_path = true })
+          end,
+          desc = "Search git branches",
+        },
+        {
+          "<Leader>sgc",
+          function()
+            tsb.git_commits({ use_file_path = true })
+          end,
+          desc = "Search git commits in file",
+        },
         {
           "<Leader>sgC",
-          function() tsb.git_bcommits { use_file_path = true } end,
+          function()
+            tsb.git_bcommits({ use_file_path = true })
+          end,
           desc = "Search git commits in repo",
         },
-        { "<Leader>sgs", function() tsb.git_status { use_file_path = true } end, desc = "Search git status" },
+        {
+          "<Leader>sgs",
+          function()
+            tsb.git_status({ use_file_path = true })
+          end,
+          desc = "Search git status",
+        },
 
         -- TODO: find out if below is any useful, change if needed
-        { "<Leader>s'", function() tsb.marks() end, desc = "Search marks" },
-        { "<Leader>sR", function() tsb.registers() end, desc = "Search registers" },
-        { "<Leader>sh", function() tsb.help_tags() end, desc = "Search helps" },
+        {
+          "<Leader>s'",
+          function()
+            tsb.marks()
+          end,
+          desc = "Search marks",
+        },
+        {
+          "<Leader>sR",
+          function()
+            tsb.registers()
+          end,
+          desc = "Search registers",
+        },
+        {
+          "<Leader>sh",
+          function()
+            tsb.help_tags()
+          end,
+          desc = "Search helps",
+        },
         -- { "<Leader>fH", function () tsb.highlights() end, desc = "Search highlights", },
-        { "<Leader>sm", function() tsb.man_pages() end, desc = "Search manual pages" },
-        { "<Leader>so", function() tsb.oldfiles { cwd = vim.loop.cwd() } end, desc = "Search cwd history file" },
-        { "<Leader>sO", function() tsb.oldfiles() end, desc = "Search all history file" },
-        { "<Leader>sa", function() tsb.autocommands() end, desc = "Search autocommands" },
-        { "<Leader>sv", function() tsb.vim_options() end, desc = "Search Vim options" },
+        {
+          "<Leader>sm",
+          function()
+            tsb.man_pages()
+          end,
+          desc = "Search manual pages",
+        },
+        {
+          "<Leader>so",
+          function()
+            tsb.oldfiles({ cwd = vim.loop.cwd() })
+          end,
+          desc = "Search cwd history file",
+        },
+        {
+          "<Leader>sO",
+          function()
+            tsb.oldfiles()
+          end,
+          desc = "Search all history file",
+        },
+        {
+          "<Leader>sa",
+          function()
+            tsb.autocommands()
+          end,
+          desc = "Search autocommands",
+        },
+        {
+          "<Leader>sv",
+          function()
+            tsb.vim_options()
+          end,
+          desc = "Search Vim options",
+        },
         -- TODO: below preview not working
         {
           "<Leader>sT",
-          function() tsb.colorscheme { enable_preview = true } end,
+          function()
+            tsb.colorscheme({ enable_preview = true })
+          end,
           desc = "Search theme with preview",
         },
         --[[ {
@@ -333,12 +498,12 @@ return {
       { "<leader>er", require("ssr").open, mode = { "n", "x" }, desc = "Search and replace" },
     }, ]]
     config = function()
-      local ssr = require "ssr"
-      ssr.setup {
+      local ssr = require("ssr")
+      ssr.setup({
         keymaps = {
           close = "<Esc>",
         },
-      }
+      })
       vim.keymap.set({ "n", "x" }, "<leader>sr", ssr.open)
     end,
     -- Calling setup is optional.
