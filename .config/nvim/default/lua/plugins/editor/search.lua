@@ -109,6 +109,7 @@ return {
     version = false, -- telescope did only one release, so use HEAD for now
     dependencies = {
       "natecraddock/telescope-zf-native.nvim",
+      "andrew-george/telescope-themes",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
@@ -153,6 +154,7 @@ return {
               { "Tabs", require("telescope-tabs").list_tabs },
               { "Macros", t.extensions.macros.macros },
               { "Env", t.extensions.env.env },
+              { "Themes", t.extensions.themes.themes },
             },
           })
         end,
@@ -177,7 +179,8 @@ return {
         "frecency",
         "macros",
         "env",
-        "zf-native"
+        "zf-native",
+        "themes"
       )
     end,
     opts = function()
@@ -454,14 +457,6 @@ return {
             tsb.vim_options()
           end,
           desc = "Search Vim options",
-        },
-        -- TODO: below preview not working
-        {
-          "<Leader>sT",
-          function()
-            tsb.colorscheme({ enable_preview = true })
-          end,
-          desc = "Search theme with preview",
         },
         --[[ {
           "<Leader>ss",

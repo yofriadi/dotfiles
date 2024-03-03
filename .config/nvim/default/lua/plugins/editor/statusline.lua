@@ -3,7 +3,9 @@ M.cache = {}
 M.spec = { "lsp", { ".git", "lua" }, "cwd" }
 M.detectors = {}
 
-function M.detectors.cwd() return { vim.loop.cwd() } end
+function M.detectors.cwd()
+  return { vim.loop.cwd() }
+end
 
 function M.get_clients(opts)
   local ret = {} ---@type lsp.Client[]
@@ -14,19 +16,25 @@ function M.get_clients(opts)
     ret = vim.lsp.get_active_clients(opts)
     if opts and opts.method then
       ---@param client lsp.Client
-      ret = vim.tbl_filter(function(client) return client.supports_method(opts.method, { bufnr = opts.bufnr }) end, ret)
+      ret = vim.tbl_filter(function(client)
+        return client.supports_method(opts.method, { bufnr = opts.bufnr })
+      end, ret)
     end
   end
   return opts and opts.filter and vim.tbl_filter(opts.filter, ret) or ret
 end
 
-function M.bufpath(buf) return M.realpath(vim.api.nvim_buf_get_name(assert(buf))) end
+function M.bufpath(buf)
+  return M.realpath(vim.api.nvim_buf_get_name(assert(buf)))
+end
 
 function M.detectors.lsp(buf)
   local bufpath = M.bufpath(buf)
-  if not bufpath then return {} end
+  if not bufpath then
+    return {}
+  end
   local roots = {} ---@type string[]
-  for _, client in pairs(M.get_clients { bufnr = buf }) do
+  for _, client in pairs(M.get_clients({ bufnr = buf })) do
     -- only check workspace folders, since we're not interested in clients
     -- running in single file mode
     local workspace = client.config.workspace_folders
@@ -51,7 +59,9 @@ end
 function M.norm(path)
   if path:sub(1, 1) == "~" then
     local home = vim.loop.os_homedir()
-    if home:sub(-1) == "\\" or home:sub(-1) == "/" then home = home:sub(1, -2) end
+    if home:sub(-1) == "\\" or home:sub(-1) == "/" then
+      home = home:sub(1, -2)
+    end
     path = home .. path:sub(2)
   end
   path = path:gsub("\\", "/"):gsub("/+", "/")
@@ -59,7 +69,9 @@ function M.norm(path)
 end
 
 function M.realpath(path)
-  if path == "" or path == nil then return nil end
+  if path == "" or path == nil then
+    return nil
+  end
   path = vim.loop.fs_realpath(path) or path
   return M.norm(path)
 end
@@ -70,7 +82,9 @@ function M.resolve(spec)
   elseif type(spec) == "function" then
     return spec
   end
-  return function(buf) return M.detectors.pattern(buf, spec) end
+  return function(buf)
+    return M.detectors.pattern(buf, spec)
+  end
 end
 
 function M.detect(opts)
@@ -86,30 +100,42 @@ function M.detect(opts)
     local roots = {} ---@type string[]
     for _, p in ipairs(paths) do
       local pp = M.realpath(p)
-      if pp and not vim.tbl_contains(roots, pp) then roots[#roots + 1] = pp end
+      if pp and not vim.tbl_contains(roots, pp) then
+        roots[#roots + 1] = pp
+      end
     end
-    table.sort(roots, function(a, b) return #a > #b end)
+    table.sort(roots, function(a, b)
+      return #a > #b
+    end)
     if #roots > 0 then
       ret[#ret + 1] = { spec = spec, paths = roots }
-      if opts.all == false then break end
+      if opts.all == false then
+        break
+      end
     end
   end
   return ret
 end
 
-function M.cwd() return M.realpath(vim.loop.cwd()) or "" end
+function M.cwd()
+  return M.realpath(vim.loop.cwd()) or ""
+end
 
-function M.is_win() return vim.loop.os_uname().sysname:find "Windows" ~= nil end
+function M.is_win()
+  return vim.loop.os_uname().sysname:find("Windows") ~= nil
+end
 
 function M.get(opts)
   local buf = vim.api.nvim_get_current_buf()
   local ret = M.cache[buf]
   if not ret then
-    local roots = M.detect { all = false }
+    local roots = M.detect({ all = false })
     ret = roots[1] and roots[1].paths[1] or vim.loop.cwd()
     M.cache[buf] = ret
   end
-  if opts and opts.normalize then return ret end
+  if opts and opts.normalize then
+    return ret
+  end
   return M.is_win() and ret:gsub("/", "\\") or ret
 end
 
@@ -126,12 +152,12 @@ function M.root_dir(opts)
     parent = true,
     other = true,
     icon = "󱉭 ",
-    color = M.fg "Special",
+    color = M.fg("Special"),
   }, opts or {})
 
   local function get()
     local cwd = M.cwd()
-    local root = M.get { normalize = true }
+    local root = M.get({ normalize = true })
     local name = vim.fs.basename(root)
 
     if root == cwd then
@@ -146,8 +172,12 @@ function M.root_dir(opts)
   end
 
   return {
-    function() return (opts.icon and opts.icon .. " ") .. get() end,
-    cond = function() return type(get()) == "string" end,
+    function()
+      return (opts.icon and opts.icon .. " ") .. get()
+    end,
+    cond = function()
+      return type(get()) == "string"
+    end,
     color = opts.color,
   }
 end
@@ -159,10 +189,12 @@ function M.pretty_path(opts)
   }, opts or {})
 
   return function(self)
-    local path = vim.fn.expand "%:p" --[[@as string]]
+    local path = vim.fn.expand("%:p") --[[@as string]]
 
-    if path == "" then return "" end
-    local root = M.get { normalize = true }
+    if path == "" then
+      return ""
+    end
+    local root = M.get({ normalize = true })
     local cwd = M.cwd()
 
     if opts.relative == "cwd" and path:find(cwd, 1, true) == 1 then
@@ -173,9 +205,13 @@ function M.pretty_path(opts)
 
     local sep = package.config:sub(1, 1)
     local parts = vim.split(path, "[\\/]")
-    if #parts > 3 then parts = { parts[1], "…", parts[#parts - 1], parts[#parts] } end
+    if #parts > 3 then
+      parts = { parts[1], "…", parts[#parts - 1], parts[#parts] }
+    end
 
-    if opts.modified_hl and vim.bo.modified then parts[#parts] = M.format(self, parts[#parts], opts.modified_hl) end
+    if opts.modified_hl and vim.bo.modified then
+      parts[#parts] = M.format(self, parts[#parts], opts.modified_hl)
+    end
 
     return table.concat(parts, sep)
   end
@@ -197,7 +233,7 @@ return {
     end,
     opts = function()
       -- PERF: we don't need this lualine require madness 🤷
-      local lualine_require = require "lualine_require"
+      local lualine_require = require("lualine_require")
       lualine_require.require = require
       vim.o.laststatus = vim.g.lualine_laststatus
 
@@ -230,13 +266,25 @@ return {
           lualine_a = {
             {
               "mode",
-              fmt = function(mode) return mode_map[mode] or mode end,
+              fmt = function(mode)
+                return mode_map[mode] or mode
+              end,
             },
           },
           lualine_b = { "branch" },
           lualine_c = {
             M.root_dir(),
             {
+              function()
+                return require("noice").api.status.command.get()
+              end,
+              cond = function()
+                return package.loaded["noice"] and require("noice").api.status.command.has()
+              end,
+              color = M.fg("Statement"),
+            },
+
+            --[[ {
               "diagnostics",
               symbols = {
                 error = " ",
@@ -246,32 +294,31 @@ return {
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { M.pretty_path() },
+            { M.pretty_path() }, ]]
           },
           lualine_x = {},
           lualine_y = {
-            { require("NeoComposer.ui").status_recording },
-            {
-              function() return require("noice").api.status.command.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-              color = M.fg "Statement",
-            },
+            { require("NeoComposer.ui").status_recording }, -- TODO: make it work with incline.nvim
             --[[ { hide macro status, because already handled by NeoComposer.nvim
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
               color = M.fg "Constant",
             }, ]]
             {
-              function() return "  " .. require("dap").status() end,
-              cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-              color = M.fg "Debug",
+              function()
+                return "  " .. require("dap").status()
+              end,
+              cond = function()
+                return package.loaded["dap"] and require("dap").status() ~= ""
+              end,
+              color = M.fg("Debug"),
             },
             {
               require("lazy.status").updates,
               cond = require("lazy.status").has_updates,
-              color = M.fg "Special",
+              color = M.fg("Special"),
             },
-            {
+            --[[ {
               "diff",
               symbols = {
                 added = "󰐗 ",
@@ -288,7 +335,7 @@ return {
                   }
                 end
               end,
-            },
+            }, ]]
           },
           lualine_z = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },

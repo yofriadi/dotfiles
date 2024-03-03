@@ -4,7 +4,7 @@ return {
     cmd = { "MacroSave", "MacroYank", "MacroSelect", "MacroDelete" },
     opts = {
 
-      json_file_path = vim.fs.normalize(vim.fn.stdpath "config" .. "/macros.json"),
+      json_file_path = vim.fs.normalize(vim.fn.stdpath("config") .. "/macros.json"),
       default_macro_register = "q",
       json_formatter = "jaq",
     },
@@ -29,14 +29,14 @@ return {
   {
     "gbprod/yanky.nvim",
     event = "UIEnter",
-    dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find "Windows" } },
+    dependencies = { { "kkharji/sqlite.lua", enabled = not jit.os:find("Windows") } },
     opts = function()
-      local mapping = require "yanky.telescope.mapping"
+      local mapping = require("yanky.telescope.mapping")
       local mappings = mapping.get_defaults()
       mappings.i["<c-p>"] = nil
       return {
         highlight = { timer = 200 },
-        ring = { storage = jit.os:find "Windows" and "shada" or "sqlite" },
+        ring = { storage = jit.os:find("Windows") and "shada" or "sqlite" },
         picker = {
           telescope = {
             use_default_mappings = false,
@@ -71,4 +71,5 @@ return {
     opts = {},
   },
   { "lukas-reineke/virt-column.nvim", opts = {} },
+  -- { "echasnovski/mini.operators", version = "*" }, -- not working
 }

@@ -3,7 +3,9 @@ return {
   {
     "stevearc/dressing.nvim",
     lazy = true,
-    init = function() require("utils").load_plugin_with_func("dressing.nvim", vim.ui, { "input", "select" }) end,
+    init = function()
+      require("utils").load_plugin_with_func("dressing.nvim", vim.ui, { "input", "select" })
+    end,
     opts = {
       input = { default_prompt = "➤ " },
       select = { backend = { "telescope", "builtin" } },
@@ -11,23 +13,35 @@ return {
   },
   {
     "rcarriga/nvim-notify",
-    init = function() require("utils").load_plugin_with_func("nvim-notify", vim, "notify") end,
+    init = function()
+      require("utils").load_plugin_with_func("nvim-notify", vim, "notify")
+    end,
     opts = {
       timeout = 3000,
-      max_height = function() return math.floor(vim.o.lines * 0.75) end,
-      max_width = function() return math.floor(vim.o.columns * 0.75) end,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.75)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 100 })
-        if not vim.g.ui_notifications_enabled then vim.api.nvim_win_close(win, true) end
-        if not package.loaded["nvim-treesitter"] then pcall(require, "nvim-treesitter") end
+        if not vim.g.ui_notifications_enabled then
+          vim.api.nvim_win_close(win, true)
+        end
+        if not package.loaded["nvim-treesitter"] then
+          pcall(require, "nvim-treesitter")
+        end
         vim.wo[win].conceallevel = 3
         local buf = vim.api.nvim_win_get_buf(win)
-        if not pcall(vim.treesitter.start, buf, "markdown") then vim.bo[buf].syntax = "markdown" end
+        if not pcall(vim.treesitter.start, buf, "markdown") then
+          vim.bo[buf].syntax = "markdown"
+        end
         vim.wo[win].spell = false
       end,
     },
     config = function()
-      local notify = require "notify"
+      local notify = require("notify")
       notify.setup()
       vim.notify = notify
     end,
@@ -65,11 +79,19 @@ return {
       },
     },
     keys = {
-      { "<leader>en", function() require("noice").cmd "history" end, desc = "Noice History" },
+      {
+        "<leader>en",
+        function()
+          require("noice").cmd("history")
+        end,
+        desc = "Noice History",
+      },
       {
         "<c-f>",
         function()
-          if not require("noice.lsp").scroll(4) then return "<c-f>" end
+          if not require("noice.lsp").scroll(4) then
+            return "<c-f>"
+          end
         end,
         silent = true,
         expr = true,
@@ -79,7 +101,9 @@ return {
       {
         "<c-b>",
         function()
-          if not require("noice.lsp").scroll(-4) then return "<c-b>" end
+          if not require("noice.lsp").scroll(-4) then
+            return "<c-b>"
+          end
         end,
         silent = true,
         expr = true,
@@ -114,7 +138,7 @@ return {
     },
 
     opts = function()
-      local builtin = require "statuscol.builtin"
+      local builtin = require("statuscol.builtin")
 
       return {
         bt_ignore = { "nofile", "terminal" },
@@ -145,43 +169,6 @@ return {
         },
       }
     end,
-    --[[ config = function()
-      local builtin = require "statuscol.builtin"
-      require("statuscol").setup {
-        relculright = true,
-        segments = {
-          { sign = { namespace = { "gitsigns" }, colwidth = 1, auto = true } },
-          { text = { builtin.foldfunc, " " } },
-          {
-            text = { builtin.lnumfunc },
-            condition = { builtin.not_empty, true, builtin.not_empty },
-          },
-          -- TODO: I want to to achieve todo, dap, diagnostic to be as one config
-          -- so it only occupied 1 column if all have in 3 different lines
-          -- but also shows all 3 if occured in one line
-          {
-            sign = {
-              name = { ".*" },
-              namespace = { "todo", "Dap*" },
-              colwidth = 1,
-              auto = true,
-            },
-          },
-          {
-            sign = {
-              namespace = { "diagnostic" },
-              colwidth = 1,
-              auto = true,
-            },
-          },
-          { -- all other sign
-            sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-            click = "v:lua.ScSa",
-          },
-          --{ text = { "%s" } }, show all sign in 1 column
-        },
-      }
-    end, ]]
   },
   { -- TODO: check how to show next line if fold only show 1 char
     "kevinhwang91/nvim-ufo",
@@ -220,7 +207,9 @@ return {
       end
       return {
         fold_virt_text_handler = handler,
-        provider_selector = function() return { "treesitter", "indent" } end,
+        provider_selector = function()
+          return { "treesitter", "indent" }
+        end,
         preview = {
           mappings = {
             scrollB = "<C-b>",
@@ -235,7 +224,7 @@ return {
       }
     end,
     keys = function()
-      local ufo = require "ufo"
+      local ufo = require("ufo")
       return {
         { "zR", ufo.openAllFolds, desc = "Fold open all" },
         { "zM", ufo.closeAllFolds, desc = "Fold close all" },
@@ -246,12 +235,18 @@ return {
       }
     end,
   },
-  {
+  { -- TODO: make it work with incline.nvim
     "Bekaboo/dropbar.nvim",
     event = "UIEnter",
     dependencies = { "nvim-telescope/telescope-fzf-native.nvim" },
     keys = {
-      { "<Leader>eS", function() require("dropbar.api").pick() end, desc = "Breadcrumbs" },
+      {
+        "<Leader>eS",
+        function()
+          require("dropbar.api").pick()
+        end,
+        desc = "Breadcrumbs",
+      },
     },
     opts = {
       keymaps = {
@@ -259,9 +254,70 @@ return {
       },
     },
   },
-  --[[ {
+  { -- TODO: make it work with dropbar.nvim
     "b0o/incline.nvim",
-    event = "UIEnter",
-    opts = {},
-  }, ]]
+    dependencies = {
+      "lewis6991/gitsigns.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      -- local devicons = require("nvim-web-devicons")
+      require("incline").setup({
+        window = {
+          margin = { horizontal = 0, vertical = 0 },
+        },
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+          if filename == "" then
+            filename = "[No Name]"
+          end
+          -- local ft_icon, ft_color = devicons.get_icon_color(filename)
+
+          local function get_diagnostic_label()
+            local icons = { error = " ", warn = " ", info = " ", hint = " " }
+            local label = {}
+
+            for severity, icon in pairs(icons) do
+              local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+              if n > 0 then
+                table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity })
+              end
+            end
+            if #label > 0 then
+              table.insert(label, "┊ ")
+            end
+            return label
+          end
+
+          local function get_git_diff()
+            local icons = { removed = " ", changed = " ", added = " " }
+            local signs = vim.b[props.buf].gitsigns_status_dict
+            local labels = {}
+            if signs == nil then
+              return labels
+            end
+            for name, icon in pairs(icons) do
+              if tonumber(signs[name]) and signs[name] > 0 then
+                table.insert(labels, { icon .. signs[name] .. " ", group = "Diff" .. name })
+              end
+            end
+            if #labels > 0 then
+              table.insert(labels, { " " })
+            end
+            return labels
+          end
+
+          return {
+            { get_diagnostic_label() },
+            { get_git_diff() },
+            --[[ { (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
+            { filename .. " ", gui = vim.bo[props.buf].modified and "bold,italic" or "bold" }, ]]
+            { vim.api.nvim_win_get_number(props.win) },
+          }
+        end,
+      })
+    end,
+    -- Optional: Lazy load Incline
+    event = "VeryLazy",
+  },
 }

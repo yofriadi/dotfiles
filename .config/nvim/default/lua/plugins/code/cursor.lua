@@ -17,12 +17,12 @@ return {
       },
     },
     config = function(_, opts)
-      local npairs = require "nvim-autopairs"
+      local npairs = require("nvim-autopairs")
       npairs.setup(opts)
 
       local cmp_status_ok, cmp = pcall(require, "cmp")
       if cmp_status_ok then
-        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done { tex = false })
+        cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done({ tex = false }))
       end
     end,
   },
@@ -63,12 +63,9 @@ return {
       require("illuminate").configure(opts)
 
       local function map(key, dir, buffer)
-        vim.keymap.set(
-          "n",
-          key,
-          function() require("illuminate")["goto_" .. dir .. "_reference"](false) end,
-          { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer }
-        )
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
       end
 
       map("]]", "next")
@@ -94,6 +91,21 @@ return {
     opts = {},
   },
   {
+    "rmagatti/goto-preview",
+    keys = function()
+      local gtp = require("goto-preview")
+      return {
+        { "gpd", gtp.goto_preview_definition, desc = "LSP definition of current symbol", noremap = true },
+        { "gpt", gtp.goto_preview_type_definition, desc = "LSP references of current symbol", noremap = true },
+        { "gpi", gtp.goto_preview_implementation, desc = "LSP type definition of current symbol", noremap = true },
+        { "gpD", gtp.goto_preview_declaration, desc = "LSP implementations of current symbol", noremap = true },
+        { "gP", gtp.close_all_win, desc = "LSP implementations of current symbol", noremap = true },
+        { "gpr", gtp.goto_preview_references, desc = "LSP implementations of current symbol", noremap = true },
+      }
+    end,
+    opts = {},
+  },
+  --[[ {
     "dnlhc/glance.nvim",
     keys = {
       { "gd", "<Cmd>Glance definitions<CR>", desc = "LSP definition of current symbol" },
@@ -124,7 +136,7 @@ return {
         },
       }
     end,
-  },
+  }, ]]
   --[[ {
     "nat-418/boole.nvim",
     event = "BufRead",
