@@ -180,6 +180,10 @@ return {
       return {
         { "<Leader>lR", lsp.buf.rename, desc = "Rename current symbol" },
         { "K", lsp.buf.hover, desc = "LSP hover symbol details" },
+        { "gd", lsp.buf.definition, desc = "LSP go to definition" },
+        { "gD", lsp.buf.declaration, desc = "LSP go to declaration" },
+        { "gi", lsp.buf.implementation, desc = "LSP go to implementation" },
+        { "gt", lsp.buf.type_definition, desc = "LSP go to type definition" },
         { "[d", vim.diagnostic.goto_prev, desc = "LSP previous diagnostic" },
         { "]d", vim.diagnostic.goto_next, desc = "LSP next diagnostic" },
         { "<Leader>ld", vim.diagnostic.open_float, desc = "LSP hover diagnostics" },
@@ -314,5 +318,6 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {},
   },
+  { "folke/neodev.nvim", opts = {} },
   --'WhoIsSethDaniel/mason-tool-installer.nvim'
 }
