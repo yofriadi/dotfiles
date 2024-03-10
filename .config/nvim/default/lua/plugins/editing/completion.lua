@@ -116,12 +116,11 @@ return {
     "David-Kunz/gen.nvim",
     cmd = { "Gen" },
     config = function()
-      local gen = require("gen")
-      gen.setup({
-        model = "zephyr", -- The default model to use.
+      require("gen").setup({
+        model = "mistral", -- The default model to use.
         display_mode = "split", -- The display mode. Can be "float" or "split".
         show_prompt = false, -- Shows the Prompt submitted to Ollama.
-        show_model = false, -- Displays which model you are using at the beginning of your chat session.
+        show_model = true, -- Displays which model you are using at the beginning of your chat session.
         no_auto_close = false, -- Never closes the window automatically.
         init = function()
           pcall(io.popen, "ollama serve > /dev/null 2>&1 &")

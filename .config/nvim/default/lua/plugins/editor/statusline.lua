@@ -274,6 +274,21 @@ return {
           lualine_b = { "branch" },
           lualine_c = {
             M.root_dir(),
+            --[[ {
+              "diagnostics",
+              symbols = {
+                error = " ",
+                warn = " ",
+                info = " ",
+                hint = " ",
+              },
+            }, ]]
+            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { M.pretty_path() },
+          },
+          lualine_x = {},
+          lualine_y = {
+            { require("NeoComposer.ui").status_recording }, -- TODO: make it work with incline.nvim
             {
               function()
                 return require("noice").api.status.command.get()
@@ -283,27 +298,11 @@ return {
               end,
               color = M.fg("Statement"),
             },
-
-            --[[ {
-              "diagnostics",
-              symbols = {
-                error = " ",
-                warn = " ",
-                info = " ",
-                hint = " ",
-              },
+            {
+              "datetime",
+              -- options: default, us, uk, iso, or your own format string ("%H:%M", etc..)
+              style = "%ddd/%m/%y %H:%M",
             },
-            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { M.pretty_path() }, ]]
-          },
-          lualine_x = {},
-          lualine_y = {
-            { require("NeoComposer.ui").status_recording }, -- TODO: make it work with incline.nvim
-            --[[ { hide macro status, because already handled by NeoComposer.nvim
-              function() return require("noice").api.status.mode.get() end,
-              cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-              color = M.fg "Constant",
-            }, ]]
             {
               function()
                 return "  " .. require("dap").status()
@@ -317,8 +316,7 @@ return {
               require("lazy.status").updates,
               cond = require("lazy.status").has_updates,
               color = M.fg("Special"),
-            },
-            --[[ {
+              {},
               "diff",
               symbols = {
                 added = "󰐗 ",
@@ -335,7 +333,7 @@ return {
                   }
                 end
               end,
-            }, ]]
+            },
           },
           lualine_z = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },

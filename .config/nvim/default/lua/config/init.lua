@@ -45,4 +45,4 @@ require("lazy").setup({
 })
 
 require("current-theme")
-require("ollama")
+--require("ollama")

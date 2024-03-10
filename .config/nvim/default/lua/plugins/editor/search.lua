@@ -210,12 +210,25 @@ return {
           git_worktrees = vim.g.git_worktrees,
           path_display = { "truncate" },
           sorting_strategy = "ascending",
+          layout_strategy = "vertical",
           layout_config = {
-            horizontal = { prompt_position = "bottom", preview_width = 0.55 },
-            vertical = { mirror = false },
-            width = 0.87,
-            height = 0.80,
-            preview_cutoff = 120,
+            vertical = {
+              mirror = true,
+            },
+            center = {
+              mirror = true,
+            },
+            --center = {
+            --  height = 0.8,
+            --  preview_cutoff = 40,
+            --  prompt_position = "top",
+            --  width = 0.87,
+            --},
+            --horizontal = { prompt_position = "bottom" },
+            --vertical = { mirror = false },
+            --width = 0.87,
+            --height = 0.80,
+            --preview_cutoff = 120,
           },
           -- open files in the first window that is an actual file.
           -- use the current window if no other window is available.
@@ -241,9 +254,6 @@ return {
               ["<c-p>"] = actions.cycle_history_prev,
               ["<c-j>"] = actions.move_selection_next,
               ["<c-k>"] = actions.move_selection_previous,
-            },
-            n = {
-              ["q"] = actions.close,
             },
           },
         },
