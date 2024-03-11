@@ -5,9 +5,12 @@
 
 ---@type LazySpec
 return {
-  "AstroNvim/astroui",
-  ---@type AstroUIOpts
-  opts = {
-    colorscheme = "dayfox",
+  { "cpea2506/relative-toggle.nvim" },
+  {
+    "AstroNvim/astroui",
+    ---@type AstroUIOpts
+    opts = {
+      colorscheme = "dayfox",
+    },
   },
 }

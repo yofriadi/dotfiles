@@ -172,32 +172,11 @@ return {
         --["<C-Left>"] = false,
         --["<C-Right>"] = false,
       },
-      i = {
-        ["<C-s>"] = { "<Esc><Cmd>w<CR>", desc = "Save file" },
-        ["<C-h>"] = { "<C-w>" }, -- delete word to the left
-      },
-      v = {
-        ["<Tab>"] = { ">gv", desc = "Stay in right indenting" },
-        ["<S-Tab>"] = { "<gv", desc = "Stay in left indenting" },
-      },
       x = {
-        j = { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" },
-        k = { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" },
-
-        ["<C-s>"] = { "<Esc><Cmd>w<CR>", desc = "Save file" },
-
         -- DISABLE BUILT-IN BELOW
         --["<C-'>"] = false,
       },
       t = {
-        ["jk"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
-        ["jj"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
-        ["<Esc><Esc>"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
-        ["<C-h>"] = { "<Cmd>wincmd h<CR>", desc = "Terminal left window navigation" },
-        ["<C-j>"] = { "<Cmd>wincmd j<CR>", desc = "Terminal below window navigation" },
-        ["<C-k>"] = { "<Cmd>wincmd k<CR>", desc = "Terminal above window navigation" },
-        ["<C-l>"] = { "<Cmd>wincmd l<CR>", desc = "Terminal right window navigation" },
-
         -- DISABLE BUILT-IN BELOW
         --["<C-'>"] = false,
       },

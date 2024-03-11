@@ -6,7 +6,15 @@
 return {
   -- TODO: Remove branch v4 on release
   { "AstroNvim/astrocommunity", branch = "v4" },
+  { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
   { import = "astrocommunity.bars-and-lines.scope-nvim" },
+  { import = "astrocommunity.color.tint-nvim" },
+  { import = "astrocommunity.editing-support.cutlass-nvim" },
+  { import = "astrocommunity.editing-support.true-zen-nvim" },
+  { import = "astrocommunity.git.neogit" },
+  { import = "astrocommunity.recipes.heirline-clock-statusline" },
+  { import = "astrocommunity.recipes.heirline-mode-text-statusline" },
+  { import = "astrocommunity.utility.noice-nvim" },
   { import = "astrocommunity.pack.lua" },
   -- import/override with your plugins folder
 }
