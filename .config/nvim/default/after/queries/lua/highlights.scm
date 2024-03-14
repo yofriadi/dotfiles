@@ -1,15 +1,15 @@
 ;; extends 
 
+(("and" @keyword.function) (#set! conceal "󰣡"))
 (("return" @keyword.function) (#set! conceal "󱞱"))
 (("then" @conditional) (#set! conceal "↙"))
 (("else" @conditional) (#set! conceal "!"))
 (("elseif" @conditional) (#set! conceal "¿"))
 (("end" @keyword.function) (#set! conceal ""))
-((function_call name: (identifier) @function.builtin (#eq? @function.builtin "require")) (#set! conceal ""))
+(("do" @repeat) (#set! conceal "󱞭"))
 (("for" @repeat) (#set! conceal ""))
 (("function" @keyword.function) (#set! conceal "󰊕"))
+((function_call name: (identifier) @function.builtin (#eq? @function.builtin "require")) (#set! conceal ""))
 (("if" @conditional) (#set! conceal "?"))
 (("in" @keyword) (#set! conceal "i"))
 (("local" @keyword) (#set! conceal "~"))
-(("do" @repeat) (#set! conceal "󱞭"))
-(("and" @keyword.function) (#set! conceal "󰣡"))

@@ -20,6 +20,18 @@ return {
               callback = function() require("astrocore").set_url_match() end,
             },
           },
+          _filetype = {
+            {
+              event = "FileType",
+              pattern = { "sql", "go" },
+              command = "setlocal ts=4 sw=4",
+            },
+            {
+              event = "FileType",
+              pattern = { "lua", "json", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+              command = "setlocal ts=2 sw=2",
+            },
+          },
         },
       })
     end,

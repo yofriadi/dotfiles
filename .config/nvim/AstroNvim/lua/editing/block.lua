@@ -1,6 +1,14 @@
 ---@type LazySpec
 return {
   {
+    "Darazaki/indent-o-matic",
+    opts = {
+      filetype_go = {
+        standard_widths = { 4 },
+      },
+    },
+  },
+  {
     "lukas-reineke/indent-blankline.nvim",
     dependencies = {
       {
