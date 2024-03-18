@@ -28,7 +28,8 @@ if [ -f '/home/ypcl/.local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/home/y
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/ypcl/.local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ypcl/.local/bin/google-cloud-sdk/completion.zsh.inc'; fi
 
-export PNPM_HOME="/home/yofri/.local/share/pnpm"
+# pnpm
+export PNPM_HOME="/home/ypcl/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

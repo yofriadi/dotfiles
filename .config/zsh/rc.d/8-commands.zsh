@@ -46,6 +46,16 @@ alias -s {css,gradle,html,js,json,md,patch,properties,txt,xml,yml}=$PAGER
 alias -s gz='gzip -l'
 alias -s {log,out}='tail -F'
 
+nvim_paste() {
+    # Check for win32yank.exe executable
+    if command -v win32yank.exe >/dev/null 2>/dev/null; then
+        # The --lf option pastes data unix style. Which is what I almost always want.
+        win32yank.exe -o --lf
+    else
+        # Else rely on PowerShell being installed and available.
+        powershell.exe Get-Clipboard | tr -d '\r' | sed -z '$ s/\n$//'
+    fi
+}
 
 # Use `< file` to quickly view the contents of any text file.
 READNULLCMD=$PAGER  # Set the program to use for this.

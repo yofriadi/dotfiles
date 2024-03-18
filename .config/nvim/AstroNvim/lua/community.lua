@@ -8,7 +8,6 @@ return {
   { "AstroNvim/astrocommunity", branch = "v4" },
   { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
   { import = "astrocommunity.bars-and-lines.scope-nvim" },
-  { import = "astrocommunity.color.tint-nvim" },
   { import = "astrocommunity.editing-support.cutlass-nvim" },
   { import = "astrocommunity.editing-support.true-zen-nvim" },
   { import = "astrocommunity.git.neogit" },

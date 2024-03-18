@@ -32,6 +32,30 @@ return {
               command = "setlocal ts=2 sw=2",
             },
           },
+          FocusDisable = {
+            {
+              event = "WinEnter",
+              callback = function(_)
+                if vim.tbl_contains({ "nofile", "prompt", "popup" }, vim.bo.buftype) then
+                  vim.w.focus_disable = true
+                else
+                  vim.w.focus_disable = false
+                end
+              end,
+              desc = "Disable focus autoresize for BufType",
+            },
+            {
+              event = "FileType",
+              callback = function(_)
+                if vim.tbl_contains({ "neo-tree" }, vim.bo.filetype) then
+                  vim.b.focus_disable = true
+                else
+                  vim.b.focus_disable = false
+                end
+              end,
+              desc = "Disable focus autoresize for FileType",
+            },
+          },
         },
       })
     end,
