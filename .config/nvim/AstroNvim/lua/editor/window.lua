@@ -127,15 +127,13 @@ return {
   },
   {
     "rest-nvim/rest.nvim",
-    ft = { "http", "json" },
-    cmd = {
-      "RestNvim",
-      "RestNvimPreview",
-      "RestNvimLast",
+    dependencies = {
+      {
+        "vhyrro/luarocks.nvim",
+        config = function() require("luarocks").setup {} end,
+      },
     },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    keys = {
-      { "<Leader>r", "<Plug>RestNvim", desc = "Run request" },
-    },
+    ft = "http",
+    config = function() require("rest-nvim").setup() end,
   },
 }
