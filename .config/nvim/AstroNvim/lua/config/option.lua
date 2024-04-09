@@ -24,7 +24,7 @@ return {
         mouse = "", -- disable mouse support
         pumblend = 10, -- Popup blend
         shiftround = true, -- Round indent
-        --smartindent = true, -- Insert indents automatically
+        smartindent = true, -- Insert indents automatically
         splitkeep = "screen",
         undofile = true, -- enable persistent undo
         undolevels = 10000,
@@ -61,6 +61,6 @@ return {
         cache_enabled = true,
       }
     end
-    return require("astrocore").extend_tbl(opts, { options })
+    return require("astrocore").extend_tbl(opts, { options = options })
   end,
 }

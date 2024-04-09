@@ -71,6 +71,7 @@ return {
         on_attach = function(client, bufnr)
           -- this would disable semanticTokensProvider for all clients
           -- client.server_capabilities.semanticTokensProvider = nil
+          require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
         end,
       })
     end,

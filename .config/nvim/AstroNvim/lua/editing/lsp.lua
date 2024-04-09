@@ -83,6 +83,7 @@ end
 return {
   "m-demare/hlargs.nvim",
   "zeioth/garbage-day.nvim",
+  "artemave/workspace-diagnostics.nvim",
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },

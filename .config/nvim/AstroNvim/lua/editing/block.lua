@@ -1,5 +1,6 @@
 ---@type LazySpec
 return {
+  { "akinsho/git-conflict.nvim", version = "*", config = true },
   {
     "Darazaki/indent-o-matic",
     opts = {

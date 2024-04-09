@@ -33,8 +33,10 @@ return {
       "toml",
       "yaml",
       "rust",
-      "http", -- rest.nvim
       "dockerfile",
+      "http",
+      "xml",
+      "graphql",
     }
   end,
 }

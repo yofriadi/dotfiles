@@ -11,7 +11,7 @@ require("lazy").setup({
     },
   },
   { import = "community" },
-  { import = "configs" },
+  { import = "config" },
   { import = "editing" },
   { import = "editor" },
   { import = "interfaces" },

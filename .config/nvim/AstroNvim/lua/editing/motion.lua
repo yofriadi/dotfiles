@@ -93,5 +93,5 @@ return {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
   },
-  { "declancm/cinnamon.nvim", event = "VeryLazy", opts = {} },
+  -- { "declancm/cinnamon.nvim", event = "VeryLazy", opts = {} },
 }

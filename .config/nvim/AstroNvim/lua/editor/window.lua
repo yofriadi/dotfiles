@@ -1,3 +1,4 @@
+---@type LazySpec
 return {
   { "nvim-focus/focus.nvim", version = "*", opts = {} },
   {
@@ -28,6 +29,38 @@ return {
       return {
         { "<Leader>gd", DiffviewToggle, desc = "Git diff" },
       }
+    end,
+  },
+  { -- TODO: this conflicting interests with fugit
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    event = "User AstroGitFile",
+    keys = {
+      { "<Leader>gn", "<Cmd>Neogit<CR>", desc = "Open Neogit Tab Page" },
+      { "<Leader>gnc", "<Cmd>Neogit commit<CR>", desc = "Open Neogit Commit Page" },
+      { "<Leader>gnc", ":Neogit cwd=", desc = "Open Neogit Override CWD" },
+      { "<Leader>gnc", ":Neogit kind=", desc = "Open Neogit Override Kind" },
+    },
+    opts = function(_, opts)
+      local utils = require "astrocore"
+      local disable_builtin_notifications = utils.is_available "nvim-notify" or utils.is_available "noice.nvim"
+      local ui_utils = require "astroui"
+      local fold_signs = { ui_utils.get_icon "FoldClosed", ui_utils.get_icon "FoldOpened" }
+
+      return utils.extend_tbl(opts, {
+        disable_builtin_notifications = disable_builtin_notifications,
+        telescope_sorter = function()
+          if utils.is_available "telescope-fzf-native.nvim" then
+            return require("telescope").extensions.fzf.native_fzf_sorter()
+          end
+        end,
+        integrations = { telescope = utils.is_available "telescope.nvim" },
+        signs = { section = fold_signs, item = fold_signs },
+      })
     end,
   },
   {
@@ -130,10 +163,48 @@ return {
     dependencies = {
       {
         "vhyrro/luarocks.nvim",
-        config = function() require("luarocks").setup {} end,
+        priority = 1000,
+        config = true,
       },
     },
+    keys = {
+      { "<localleader>rr", "<Cmd>Rest run<CR>", "Run request under the cursor" },
+      { "<localleader>rl", "<Cmd>Rest run last<CR>", "Re-run latest request" },
+    },
     ft = "http",
-    config = function() require("rest-nvim").setup() end,
+    config = function()
+      require("rest-nvim").setup {
+        result = {
+          behavior = {
+            formatters = {
+              json = "jaq",
+            },
+          },
+        },
+      }
+
+      local is_available = require("astrocore").is_available
+      if is_available "telescope" then
+        local telescope = require "telescope"
+        telescope.load_extension "rest"
+        telescope.extensions.rest.select_env() -- you can also use the `:Telescope rest select_env` command
+      end
+    end,
+  },
+  { -- TODO: this conflicting interests with Neogit
+    "SuperBo/fugit2.nvim",
+    opts = {
+      width = 70,
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
+    },
+    cmd = { "Fugit2", "Fugit2Graph" },
+    keys = {
+      { "<leader>gf", "<Cmd>Fugit2<CR>" },
+      { "<leader>gfg", "<Cmd>Fugit2Graph<CR>" },
+    },
   },
 }
