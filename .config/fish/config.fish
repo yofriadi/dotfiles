@@ -8,7 +8,8 @@ end
 fish_vi_key_bindings
 
 # Neovim
-set -Ux PATH $HOME/.local/share/bob/nvim-bin $PATH
+#set -Ux PATH $HOME/.local/share/bob/nvim-bin $PATH
+set -p PATH $HOME/.local/share/bob/nvim-bin $PATH
 
 # Golang
 set -Ux GOMODCACHE $HOME/.cache/go
@@ -16,7 +17,8 @@ set -Ux GOBIN $GOPATH/bin
 set -Ux PATH $GOBIN $PATH
 
 # PNPM
-set -Ux PNPM_HOME /home/ypcl/.local/share/pnpm
+#set -Ux PNPM_HOME ~/.local/share/pnpm
+set -p PATH ~/.local/share/pnpm $PATH
 if not string match -q "*:$PNPM_HOME:*" $PATH
     set -Ux PATH $PNPM_HOME $PATH
 end
