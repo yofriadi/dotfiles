@@ -7,6 +7,8 @@ end
 
 fish_vi_key_bindings
 
+set -p PATH $HOME/.local/bin $PATH
+
 # Neovim
 #set -Ux PATH $HOME/.local/share/bob/nvim-bin $PATH
 set -p PATH $HOME/.local/share/bob/nvim-bin $PATH
