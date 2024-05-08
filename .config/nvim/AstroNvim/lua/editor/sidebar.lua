@@ -1,6 +1,11 @@
 ---@type LazySpec
 return {
   {
+    "stevearc/oil.nvim",
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  {
     "nvim-neo-tree/neo-tree.nvim",
     keys = function()
       local cmd = require "neo-tree.command"

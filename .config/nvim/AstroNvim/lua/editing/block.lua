@@ -10,6 +10,28 @@ return {
     },
   },
   {
+    "shellRaining/hlchunk.nvim",
+    event = { "UIEnter" },
+    config = function()
+      require("hlchunk").setup {
+        exclude_files = {
+          neotree = true,
+          dashboard = true,
+        },
+        chunk = {
+          chars = {
+            horizontal_line = "─",
+            vertical_line = "│",
+            left_top = "┌",
+            left_bottom = "└",
+            right_arrow = "─",
+          },
+          style = "#806d9c",
+        },
+      }
+    end,
+  },
+  --[[ {
     "lukas-reineke/indent-blankline.nvim",
     dependencies = {
       {
@@ -45,7 +67,7 @@ return {
 
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
-  },
+  }, ]]
   {
     "Wansmer/treesj",
     keys = { { "gss", "<Cmd>TSJToggle<CR>", desc = "Toggle Treesitter Join" } },
