@@ -9,11 +9,11 @@ return {
   {
     "AstroNvim/astroui",
     ---@type AstroUIOpts
-    --[[ opts = {
+    opts = {
       colorscheme = "dayfox",
-    }, ]]
+    },
   },
-  {
+  --[[ {
     "vague2k/huez.nvim",
     dependencies = {
       "nvim-telescope/telescope.nvim",
@@ -25,5 +25,5 @@ return {
 
       -- vim.keymap.set("n", "<leader>co", "<cmd>Huez<CR>", {})
     end,
-  },
+  }, ]]
 }

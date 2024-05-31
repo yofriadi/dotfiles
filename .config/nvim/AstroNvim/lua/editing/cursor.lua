@@ -140,5 +140,38 @@ return {
     event = "InsertEnter",
     opts = {},
   },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has "nvim-0.10.0" == 1,
+  },
   { "lukas-reineke/virt-column.nvim", opts = {} },
+  {
+    "supermaven-inc/supermaven-nvim",
+    dependencies = {
+      {
+        "hrsh7th/nvim-cmp",
+        opts = function(_, opts)
+          if not opts.sources then opts.sources = {} end
+          opts.sources.name = "supermaven"
+          --[[ opts.formatting = {
+            format = lspkind.cmp_format({
+              mode = "symbol",
+              max_width = 50,
+              symbol_map = { Supermaven = "" }
+            })
+          } ]]
+        end,
+      },
+      {
+        "onsails/lspkind.nvim",
+        opts = function(_, opts)
+          if not opts.symbol_map then opts.symbol_map = {} end
+          opts.symbol_map.Supermaven = ""
+        end,
+      },
+    },
+    config = function() require("supermaven-nvim").setup {} end,
+  },
 }

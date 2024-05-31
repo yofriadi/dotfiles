@@ -7,6 +7,10 @@ end
 
 fish_vi_key_bindings
 
+# Encore
+set -x ENCORE_INSTALL "/home/ypcl/.encore"
+set -x PATH "$ENCORE_INSTALL/bin:$PATH"
+
 set -gx PATH $HOME/.local/bin $PATH
 
 # Neovim
@@ -27,6 +31,8 @@ end
 if test -f ~/.local/bin/google-cloud-sdk/path.fish.inc
     source ~/.local/bin/google-cloud-sdk/path.fish.inc
 end
+
+#alias docker="podman"
 
 alias ...="cd ../.."
 alias ....="cd ../../.."
