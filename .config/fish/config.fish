@@ -3,6 +3,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     atuin init fish | source
     eval (zellij setup --generate-auto-start fish | string collect)
+    eval (atlas completion fish | string collect)
 end
 
 fish_vi_key_bindings
@@ -17,9 +18,10 @@ set -gx PATH $HOME/.local/bin $PATH
 set -p PATH $HOME/.local/share/bob/nvim-bin $PATH
 
 # Golang
-set -Ux GOMODCACHE $HOME/.cache/go
-set -Ux GOBIN $GOPATH/bin
-set -Ux PATH $GOBIN $PATH
+set -x GOMODCACHE $HOME/.cache/go
+set -x GOPATH $HOME/.local/share/go
+set -x GOBIN $GOPATH/bin
+set -x PATH $GOBIN $PATH
 
 # PNPM
 set -gx PATH ~/.local/share/pnpm $PATH

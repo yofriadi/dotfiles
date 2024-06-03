@@ -122,7 +122,7 @@ return {
     config = function()
       --vim.keymap.set("n", "<C-w><enter>", ":Detour<cr>") -- not working
       vim.keymap.set("n", "<C-w>.", ":DetourCurrentWindow<cr>")
-      vim.api.nvim_create_autocmd("BufWinEnter", {
+      --[[ vim.api.nvim_create_autocmd("BufWinEnter", {
         pattern = "*",
         callback = function(event)
           local filetype = vim.bo[event.buf].filetype
@@ -142,7 +142,7 @@ return {
             end
           end
         end,
-      })
+      }) ]]
     end,
   },
   {

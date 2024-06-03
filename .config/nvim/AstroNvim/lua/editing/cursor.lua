@@ -148,30 +148,56 @@ return {
   },
   { "lukas-reineke/virt-column.nvim", opts = {} },
   {
-    "supermaven-inc/supermaven-nvim",
-    dependencies = {
-      {
-        "hrsh7th/nvim-cmp",
-        opts = function(_, opts)
-          if not opts.sources then opts.sources = {} end
-          opts.sources.name = "supermaven"
-          --[[ opts.formatting = {
-            format = lspkind.cmp_format({
-              mode = "symbol",
-              max_width = 50,
-              symbol_map = { Supermaven = "" }
-            })
-          } ]]
-        end,
-      },
-      {
-        "onsails/lspkind.nvim",
-        opts = function(_, opts)
-          if not opts.symbol_map then opts.symbol_map = {} end
-          opts.symbol_map.Supermaven = ""
-        end,
-      },
+    "David-Kunz/gen.nvim",
+    opts = {
+      model = "codestral", -- The default model to use.
+      no_auto_close = false, -- Never closes the window automatically.
+      display_mode = "split",
+      init = function() pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
+      command = function(options)
+        local body = { model = options.model, stream = true }
+        return "curl --silent --no-buffer -X POST http://"
+          .. options.host
+          .. ":"
+          .. options.port
+          .. "/api/chat -d $body"
+      end,
     },
-    config = function() require("supermaven-nvim").setup {} end,
+  },
+  {
+    "supermaven-inc/supermaven-nvim",
+    -- dependencies = {
+    --   {
+    --     "hrsh7th/nvim-cmp",
+    --     opts = function(_, opts)
+    --       if not opts.sources then opts.sources = {} end
+    --       opts.sources.name = "supermaven"
+    --       --[[ opts.formatting = {
+    --         format = lspkind.cmp_format({
+    --           mode = "symbol",
+    --           max_width = 50,
+    --           symbol_map = { Supermaven = "" }
+    --         })
+    --       } ]]
+    --     end,
+    --   },
+    --   {
+    --     "onsails/lspkind.nvim",
+    --     opts = function(_, opts)
+    --       if not opts.symbol_map then opts.symbol_map = {} end
+    --       opts.symbol_map.Supermaven = ""
+    --     end,
+    --   },
+    -- },
+    config = function()
+      require("supermaven-nvim").setup {
+        keymaps = {
+          accept_suggestion = "<C-l>",
+          clear_suggestion = "<C-]>",
+          accept_word = "<C-k>",
+        },
+        disable_inline_completion = false,
+      }
+    end,
   },
 }
