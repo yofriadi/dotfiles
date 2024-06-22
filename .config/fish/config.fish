@@ -17,6 +17,9 @@ set -gx PATH $HOME/.local/bin $PATH
 # Neovim
 set -p PATH $HOME/.local/share/bob/nvim-bin $PATH
 
+# Bun
+set -x PATH $HOME/.local/bin/bun $PATH
+
 # Golang
 set -x GOMODCACHE $HOME/.cache/go
 set -x GOPATH $HOME/.local/share/go
@@ -87,3 +90,7 @@ if not string match -q -- $PNPM_HOME $PATH
   set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
