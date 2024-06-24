@@ -136,6 +136,42 @@ return {
       )
       -- require telescope and load extensions as necessary
       require("telescope").load_extension "zf-native"
+
+      local actions, get_icon = require "telescope.actions", require("astroui").get_icon
+      return {
+        defaults = {
+          git_worktrees = require("astrocore").config.git_worktrees,
+          prompt_prefix = get_icon("Selected", 1), -- " "
+          selection_caret = get_icon("Selected", 1), -- " "
+          multi_icon = get_icon("Selected", 1),
+          path_display = { "truncate" },
+          sorting_strategy = "ascending",
+          layout_config = {
+            horizontal = { prompt_position = "top", preview_width = 0.55 },
+            vertical = { mirror = false },
+            width = 0.87,
+            height = 0.80,
+            preview_cutoff = 120,
+          },
+          mappings = {
+            i = {
+              ["<C-N>"] = actions.cycle_history_next,
+              ["<C-P>"] = actions.cycle_history_prev,
+              ["<C-J>"] = actions.move_selection_next,
+              ["<C-K>"] = actions.move_selection_previous,
+              ["<c-t>"] = open_with_trouble,
+              ["<a-t>"] = open_with_trouble,
+              ["<a-i>"] = find_files_no_ignore,
+              ["<a-h>"] = find_files_with_hidden,
+              ["<C-Down>"] = actions.cycle_history_next,
+              ["<C-Up>"] = actions.cycle_history_prev,
+              ["<C-f>"] = actions.preview_scrolling_down,
+              ["<C-b>"] = actions.preview_scrolling_up,
+            },
+            n = { q = actions.close },
+          },
+        },
+      }
     end,
   },
 }

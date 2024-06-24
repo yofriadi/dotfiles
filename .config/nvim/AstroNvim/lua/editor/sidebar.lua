@@ -87,40 +87,9 @@ return {
     keys = function()
       local cw = require "codewindow"
       return {
-        { "<Leader>tmm", cw.toggle_minimap, desc = "Toggle minimap" },
-        { "<Leader>tmf", cw.toggle_focus, desc = "Toggle minimap focus" },
+        { "<Leader>emm", cw.toggle_minimap, desc = "Toggle minimap" },
+        { "<Leader>emf", cw.toggle_focus, desc = "Toggle minimap focus" },
       }
     end,
   },
-  --[[ {
-    "wfxr/minimap.vim",
-    event = "LazyFile",
-    cmd = { "Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight" },
-    keys = {
-      { "<leader>tm", "<cmd>MinimapToggle<CR>", desc = "Toggle minimap" },
-    },
-    init = function()
-      vim.g.minimap_width = 10
-      vim.g.minimap_auto_start = 1
-      vim.g.minimap_auto_start_win_enter = 1
-      vim.g.minimap_highlight_search = 1
-      vim.g.minimap_git_colors = 1
-      vim.g.minimap_block_filetypes = {
-        "fugitive",
-        "nerdtree",
-        "tagbar",
-        "fzf",
-        "qf",
-        "netrw",
-        "NvimTree",
-        "lazy",
-        "mason",
-        "prompt",
-        "TelescopePrompt",
-        "noice",
-        "notify",
-        "neo-tree",
-      }
-    end,
-  }, ]]
 }

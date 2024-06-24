@@ -1,5 +1,4 @@
 return {
-  { "cpea2506/relative-toggle.nvim" },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -39,10 +38,46 @@ return {
       local get_icon = require("astroui").get_icon
       vim.fn.sign_define("DiagnosticSignError", { text = get_icon "DiagnosticError", texthl = "DiagnosticSignError" })
 
+      local sources = {
+        { source = "filesystem", display_name = get_icon("FolderClosed", 1, true) .. "File" },
+        { source = "buffers", display_name = get_icon("DefaultFile", 1, true) .. "Bufs" },
+        { source = "diagnostics", display_name = get_icon("Diagnostic", 1, true) .. "Diagnostic" },
+        { source = "document_symbols", display_name = get_icon("Spellcheck", 1, true) .. "Symbol" },
+      }
+
       require("neo-tree").setup {
+        auto_clean_after_session_restore = true,
+        close_if_last_window = true,
+        sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+        source_selector = {
+          winbar = true,
+          content_layout = "center",
+          sources = sources,
+        },
+        open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+        filesystem = {
+          bind_to_cwd = false,
+          follow_current_file = { enabled = true },
+          use_libuv_file_watcher = true,
+        },
+        window = {
+          width = 40,
+          mappings = {
+            ["<Space>"] = "none", -- disable space until we figure out which-key disabling
+            ["<Esc>"] = "quit",
+            K = "navigate_up",
+            p = "prev_source",
+            n = "next_source",
+            y = "copy_file_name",
+            Y = "copy_file_path",
+            h = "parent_or_close",
+            l = "child_or_open",
+          },
+        },
         default_component_configs = {
           indent = {
             padding = 0,
+            with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
           },
           name = {
             trailing_slash = true,
@@ -61,31 +96,18 @@ return {
             },
           },
         },
-        sources = { "filesystem", "buffers", "git_status", "document_symbols" },
-        source_selector = {},
-        window = {
-          width = 40,
-          ["<S-CR>"] = "system_open",
-          ["<Space>"] = false, -- TODO: disable space until we figure out which-key disabling
-          ["[b"] = "prev_source",
-          ["]b"] = "next_source",
-          O = "system_open",
-          Y = "copy_selector",
-          h = "parent_or_close",
-          l = "child_or_open",
-        },
         commands = {
           copy_file_name = function(state)
             local filepath = state.tree:get_node():get_id()
             local file = vim.fn.fnamemodify(filepath, ":.")
             vim.fn.setreg("+", file)
-            require("notify").info(("Copied: `%s`").format(file), { title = "Clipboard" })
+            notif.info(("Copied: `%s`").format(file), { title = "Clipboard" })
           end,
           copy_file_path = function(state)
             local filepath = state.tree:get_node():get_id()
             local file = vim.fn.fnamemodify(filepath, ":~")
             vim.fn.setreg("+", file)
-            require("notify").info(("Copied: `%s`").format(file), { title = "Clipboard" })
+            notif.info(("Copied: `%s`").format(file), { title = "Clipboard" })
           end,
           parent_or_close = function(state)
             local node = state.tree:get_node()
@@ -108,25 +130,25 @@ return {
             end
           end,
         },
-        -- below from LazyVim
-        deactivate = function() vim.cmd [[Neotree close]] end,
-        init = function()
-          -- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
-          -- because `cwd` is not set up properly.
-          vim.api.nvim_create_autocmd("BufEnter", {
-            group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
-            desc = "Start Neo-tree with directory",
-            once = true,
-            callback = function()
-              if package.loaded["neo-tree"] then
-                return
-              else
-                local stats = vim.uv.fs_stat(vim.fn.argv(0))
-                if stats and stats.type == "directory" then require "neo-tree" end
-              end
-            end,
-          })
-        end,
+      }
+    end,
+  },
+  {
+    "FabijanZulj/blame.nvim",
+    enabled = vim.fn.executable "git" == 1,
+    keys = {
+      { "<Leader>gB", "<Cmd>BlameToggle<CR>", desc = "Git blame" },
+    },
+    config = function() require("blame").setup { date_format = "%d/%m/%Y %H:%M" } end,
+  },
+  {
+    "gorbit99/codewindow.nvim",
+    opts = {},
+    keys = function()
+      local cw = require "codewindow"
+      return {
+        { "<Leader>emm", cw.toggle_minimap, desc = "Toggle minimap" },
+        { "<Leader>emf", cw.toggle_focus, desc = "Toggle minimap focus" },
       }
     end,
   },

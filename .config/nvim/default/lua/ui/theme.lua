@@ -101,5 +101,16 @@ return {
         variant = "light",
       },
     },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "CyberdreamToggleMode",
+        callback = function(event)
+          local is_available = require("astrocore").is_available
+          if is_available "notify" then
+            require("notify").info("Switched to " .. event.data .. " mode!")
+          end
+        end,
+      })
+    end,
   },
 }

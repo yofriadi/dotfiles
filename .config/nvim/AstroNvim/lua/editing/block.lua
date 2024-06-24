@@ -1,6 +1,16 @@
 ---@type LazySpec
 return {
-  { "akinsho/git-conflict.nvim", version = "*", config = true },
+  {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = true,
+    keys = {
+      { "<Leader>gco", "<Cmd>GitConflictChooseOurs<CR>", desc = "Git conflict choose ours" },
+      { "<Leader>gct", "<Cmd>GitConflictChooseTheirs<CR>", desc = "Git conflict choose theirs" },
+      { "<Leader>gcn", "<Cmd>GitConflictNextConflict<CR>", desc = "Git conflict next conflict" },
+      { "<Leader>gcp", "<Cmd>GitConflictPrevConflict<CR>", desc = "Git conflict previous conflict" },
+    },
+  },
   {
     "Darazaki/indent-o-matic",
     opts = {
@@ -11,7 +21,7 @@ return {
   },
   {
     "shellRaining/hlchunk.nvim",
-    event = { "UIEnter" },
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("hlchunk").setup {
         exclude_files = {
@@ -27,6 +37,21 @@ return {
             right_arrow = "─",
           },
           style = "#806d9c",
+        },
+        line_num = {
+          style = "#806d9c",
+        },
+        blank = {
+          enable = true,
+          chars = {
+            " ",
+          },
+          style = {
+            { bg = "#434437" },
+            { bg = "#2f4440" },
+            { bg = "#433054" },
+            { bg = "#284251" },
+          },
         },
       }
     end,
