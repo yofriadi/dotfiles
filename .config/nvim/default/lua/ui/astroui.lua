@@ -2,6 +2,22 @@
 return {
   { "cpea2506/relative-toggle.nvim" },
   {
+    "stevearc/dressing.nvim",
+    lazy = true,
+    init = function()
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require("lazy").load { plugins = { "dressing.nvim" } }
+        return vim.ui.select(...)
+      end
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.input = function(...)
+        require("lazy").load { plugins = { "dressing.nvim" } }
+        return vim.ui.input(...)
+      end
+    end,
+  },
+  {
     "AstroNvim/astroui",
     lazy = true,
     ---@type AstroUIOpts
@@ -111,21 +127,5 @@ return {
         TabClose = "X",
       },
     },
-  },
-  {
-    "stevearc/dressing.nvim",
-    lazy = true,
-    init = function()
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.select = function(...)
-        require("lazy").load { plugins = { "dressing.nvim" } }
-        return vim.ui.select(...)
-      end
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.ui.input = function(...)
-        require("lazy").load { plugins = { "dressing.nvim" } }
-        return vim.ui.input(...)
-      end
-    end,
   },
 }

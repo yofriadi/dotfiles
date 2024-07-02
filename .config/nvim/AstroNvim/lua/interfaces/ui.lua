@@ -9,9 +9,9 @@ return {
   {
     "AstroNvim/astroui",
     ---@type AstroUIOpts
-    --[[ opts = {
+    opts = {
       colorscheme = "tokyonight-storm",
-    }, ]]
+    },
   },
   {
     "vague2k/huez.nvim",

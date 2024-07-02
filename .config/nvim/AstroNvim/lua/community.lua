@@ -12,7 +12,7 @@ return {
   { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.recipes.heirline-clock-statusline" },
   { import = "astrocommunity.recipes.heirline-mode-text-statusline" },
-  { import = "astrocommunity.scrolling.cinnamon-nvim" },
+  --{ import = "astrocommunity.scrolling.cinnamon-nvim" },
   -- { import = "astrocommunity.utility.noice-nvim" },
   { import = "astrocommunity.pack.lua" },
   -- import/override with your plugins folder

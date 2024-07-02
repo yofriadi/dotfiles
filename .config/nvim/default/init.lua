@@ -1,12 +1,14 @@
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
   vim.fn.system {
     "git",
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
     "--branch=stable",
+    lazyrepo,
     lazypath,
   }
 end
@@ -49,11 +51,11 @@ vim.api.nvim_set_keymap("n", "<C-A-D>", ':echo "Ctrl+Alt+D pressed"<CR>', { nore
 vim.api.nvim_set_keymap("n", "<C-A-E>", ':echo "Ctrl+Alt+E pressed"<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-A-F>", ':echo "Ctrl+Alt+F pressed"<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-A-G>", ':echo "Ctrl+Alt+G pressed"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-A-H>", ':echo "Ctrl+Alt+H pressed"<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("n", "<C-A-H>", ':echo "Ctrl+Alt+H pressed"<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-A-I>", ':echo "Ctrl+Alt+I pressed"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-A-J>", ':echo "Ctrl+Alt+J pressed"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-A-K>", ':echo "Ctrl+Alt+K pressed"<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<C-A-L>", ':echo "Ctrl+Alt+L pressed"<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("n", "<C-A-J>", ':echo "Ctrl+Alt+J pressed"<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("n", "<C-A-K>", ':echo "Ctrl+Alt+K pressed"<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap("n", "<C-A-L>", ':echo "Ctrl+Alt+L pressed"<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-A-M>", ':echo "Ctrl+Alt+M pressed"<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-A-N>", ':echo "Ctrl+Alt+N pressed"<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-A-O>", ':echo "Ctrl+Alt+O pressed"<CR>', { noremap = true, silent = true })

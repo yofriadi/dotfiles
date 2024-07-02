@@ -2,7 +2,7 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
-    dependencies = { "MunifTanjim/nui.nvim" },
+    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" },
     opts = function(_, opts)
       local utils = require "astrocore"
       return utils.extend_tbl(opts, {

@@ -4,46 +4,46 @@ SETUVAR --export BAT_THEME:tokyonight_storm
 SETUVAR --export GOBIN:/home/ypcl/\x2elocal/share/go/bin
 SETUVAR --export GOMODCACHE:/home/ypcl/\x2ecache/go
 SETUVAR --export --path GOPATH:/home/ypcl/\x2elocal/share/go
-SETUVAR --export --path PATH:/home/ypcl/\x2elocal/share/pnpm\x1e/home/ypcl/\x2elocal/share/pnpm\x1e/home/ypcl/\x2elocal/share/go/bin\x1e/home/ypcl/\x2elocal/bin/bun\x1e/home/ypcl/\x2elocal/share/bob/nvim\x2dbin\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Python312/Scripts/\x1e/mnt/c/Python312/\x1e/mnt/c/Program\x20Files/Lapce/\x1e/mnt/c/Program\x20Files/Rio/\x1e/mnt/c/Program\x20Files/Alacritty/\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files/dotnet/\x1e/mnt/c/Program\x20Files/WezTerm\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/PowerShell/7/\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Administrator/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WinGet/Links\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Python312/Scripts/\x1e/mnt/c/Python312/\x1e/mnt/c/Program\x20Files/Lapce/\x1e/mnt/c/Program\x20Files/Rio/\x1e/mnt/c/Program\x20Files/Alacritty/\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files/dotnet/\x1e/mnt/c/Program\x20Files/WezTerm\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/PowerShell/7/\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Administrator/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WinGet/Links\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl
+SETUVAR --export --path PATH:/home/ypcl/\x2elocal/share/pnpm\x1e/home/ypcl/\x2elocal/share/pnpm\x1e/home/ypcl/\x2elocal/share/go/bin\x1e/home/ypcl/\x2elocal/bin/bun\x1e/home/ypcl/\x2elocal/share/bob/nvim\x2dbin\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/home/ypcl/\x2ebun/bin\x1e/home/ypcl/\x2elocal/bin/google\x2dcloud\x2dsdk/bin\x1e/home/ypcl/\x2elocal/share/pnpm\x1e/home/ypcl/\x2elocal/share/go/bin\x1e/home/ypcl/\x2elocal/bin/bun\x1e/home/ypcl/\x2elocal/share/bob/nvim\x2dbin\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Python312/Scripts/\x1e/mnt/c/Python312/\x1e/mnt/c/Program\x20Files/Lapce/\x1e/mnt/c/Program\x20Files/Rio/\x1e/mnt/c/Program\x20Files/Alacritty/\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files/dotnet/\x1e/mnt/c/Program\x20Files/WezTerm\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/PowerShell/7/\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Administrator/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WinGet/Links\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Python312/Scripts/\x1e/mnt/c/Python312/\x1e/mnt/c/Program\x20Files/Lapce/\x1e/mnt/c/Program\x20Files/Rio/\x1e/mnt/c/Program\x20Files/Alacritty/\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files/dotnet/\x1e/mnt/c/Program\x20Files/WezTerm\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/PowerShell/7/\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Administrator/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WinGet/Links\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/home/ypcl/\x2ebun/bin\x1e/home/ypcl/\x2elocal/bin/google\x2dcloud\x2dsdk/bin\x1e/home/ypcl/\x2elocal/share/pnpm\x1e/home/ypcl/\x2elocal/share/go/bin\x1e/home/ypcl/\x2elocal/bin/bun\x1e/home/ypcl/\x2elocal/share/bob/nvim\x2dbin\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Python312/Scripts/\x1e/mnt/c/Python312/\x1e/mnt/c/Program\x20Files/Lapce/\x1e/mnt/c/Program\x20Files/Rio/\x1e/mnt/c/Program\x20Files/Alacritty/\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files/dotnet/\x1e/mnt/c/Program\x20Files/WezTerm\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/PowerShell/7/\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Administrator/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WinGet/Links\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/ypcl/\x2elocal/bin\x1e/home/ypcl/\x2eencore/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/sbin\x1e/usr/bin\x1e/sbin\x1e/bin\x1e/usr/games\x1e/usr/local/games\x1e/usr/lib/wsl/lib\x1e/mnt/c/Python312/Scripts/\x1e/mnt/c/Python312/\x1e/mnt/c/Program\x20Files/Lapce/\x1e/mnt/c/Program\x20Files/Rio/\x1e/mnt/c/Program\x20Files/Alacritty/\x1e/mnt/c/Windows/system32\x1e/mnt/c/Windows\x1e/mnt/c/Windows/System32/Wbem\x1e/mnt/c/Windows/System32/WindowsPowerShell/v1\x2e0/\x1e/mnt/c/Windows/System32/OpenSSH/\x1e/mnt/c/Program\x20Files/dotnet/\x1e/mnt/c/Program\x20Files/WezTerm\x1e/mnt/c/ProgramData/chocolatey/bin\x1e/mnt/c/Program\x20Files/PowerShell/7/\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WindowsApps\x1e/mnt/c/Users/Administrator/AppData/Local/Programs/Microsoft\x20VS\x20Code/bin\x1e/mnt/c/Users/Administrator/AppData/Local/Microsoft/WinGet/Links\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl
 SETUVAR --export PNPM_HOME:/home/ypcl/\x2elocal/share/pnpm
 SETUVAR __fish_initialized:3400
 SETUVAR _fisher_upgraded_to_4_4:\x1d
-SETUVAR fish_color_autosuggestion:7b8496
-SETUVAR fish_color_cancel:d11500
-SETUVAR fish_color_command:008c99
-SETUVAR fish_color_comment:7b8496
-SETUVAR fish_color_cwd:d17c00
+SETUVAR fish_color_autosuggestion:837a72
+SETUVAR fish_color_cancel:\x1d
+SETUVAR fish_color_command:287980
+SETUVAR fish_color_comment:837a72
+SETUVAR fish_color_cwd:\x1d
 SETUVAR fish_color_cwd_root:red
-SETUVAR fish_color_end:a018ff
-SETUVAR fish_color_error:d11500
-SETUVAR fish_color_escape:850c3f
+SETUVAR fish_color_end:955f61
+SETUVAR fish_color_error:a5222f
+SETUVAR fish_color_escape:a440b5
 SETUVAR fish_color_gray:7b8496
 SETUVAR fish_color_history_current:\x2d\x2dbold
-SETUVAR fish_color_host:008b0c
-SETUVAR fish_color_host_remote:997b00
-SETUVAR fish_color_keyword:008b0c
-SETUVAR fish_color_normal:16181a
-SETUVAR fish_color_operator:0057d1
-SETUVAR fish_color_option:997b00
-SETUVAR fish_color_param:850c3f
-SETUVAR fish_color_quote:997b00
-SETUVAR fish_color_redirection:0057d1
-SETUVAR fish_color_search_match:\x2d\x2dbackground\x3dacacac
-SETUVAR fish_color_selection:\x2d\x2dbackground\x3dacacac
+SETUVAR fish_color_host:\x1d
+SETUVAR fish_color_host_remote:\x1d
+SETUVAR fish_color_keyword:a440b5
+SETUVAR fish_color_normal:3d2b5a
+SETUVAR fish_color_operator:396847
+SETUVAR fish_color_option:\x1d
+SETUVAR fish_color_param:6e33ce
+SETUVAR fish_color_quote:ac5402
+SETUVAR fish_color_redirection:3d2b5a
+SETUVAR fish_color_search_match:\x2d\x2dbackground\x3de7d2be
+SETUVAR fish_color_selection:\x2d\x2dbackground\x3de7d2be
 SETUVAR fish_color_status:d11500
-SETUVAR fish_color_user:008b6e
+SETUVAR fish_color_user:\x1d
 SETUVAR fish_color_valid_path:\x2d\x2dunderline
 SETUVAR fish_key_bindings:fish_vi_key_bindings
 SETUVAR fish_pager_color_background:\x1d
-SETUVAR fish_pager_color_completion:16181a
-SETUVAR fish_pager_color_description:7b8496
-SETUVAR fish_pager_color_prefix:0057d1
-SETUVAR fish_pager_color_progress:7b8496
+SETUVAR fish_pager_color_completion:3d2b5a
+SETUVAR fish_pager_color_description:837a72
+SETUVAR fish_pager_color_prefix:287980
+SETUVAR fish_pager_color_progress:837a72
 SETUVAR fish_pager_color_secondary_background:\x1d
 SETUVAR fish_pager_color_secondary_completion:\x1d
 SETUVAR fish_pager_color_secondary_description:\x1d
 SETUVAR fish_pager_color_secondary_prefix:\x1d
-SETUVAR fish_pager_color_selected_background:\x1d
+SETUVAR fish_pager_color_selected_background:\x2d\x2dbackground\x3d837a72
 SETUVAR fish_pager_color_selected_completion:\x1d
 SETUVAR fish_pager_color_selected_description:\x1d
 SETUVAR fish_pager_color_selected_prefix:\x1d

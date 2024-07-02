@@ -49,11 +49,6 @@ return {
         auto_clean_after_session_restore = true,
         close_if_last_window = true,
         sources = { "filesystem", "buffers", "git_status", "document_symbols" },
-        source_selector = {
-          winbar = true,
-          content_layout = "center",
-          sources = sources,
-        },
         open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
         filesystem = {
           bind_to_cwd = false,

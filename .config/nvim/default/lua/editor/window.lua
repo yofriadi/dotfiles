@@ -2,9 +2,6 @@ return {
   { "nvim-focus/focus.nvim", version = "*", opts = {} },
   {
     "mrjones2014/smart-splits.nvim",
-    --keys = {
-    --  { "<C-W>r", require("smart-splits").start_resize_mode, desc = "Window resize mode" },
-    --},
     opts = function(_, opts)
       return require("astrocore").extend_tbl(opts, {
         resize_mode = {
@@ -44,11 +41,11 @@ return {
     keys = {
       { "<C-W>R", "<Cmd>WinShift<CR>", desc = "Window shift mode" },
       { "<C-W>X", "<Cmd>WinShift swap<CR>", desc = "Window swap" },
-      -- { "<C-M-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
-      -- { "<C-S-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
-      -- { "<C-M-J>", "<Cmd>WinShift down<CR>", desc = "Window swap below" },
-      -- { "<C-M-K>", "<Cmd>WinShift up<CR>", desc = "Window swap above" },
-      -- { "<C-M-L>", "<Cmd>WinShift right<CR>", desc = "Window swap right" },
+      { "<C-A-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
+      { "<C-A-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
+      { "<C-A-J>", "<Cmd>WinShift down<CR>", desc = "Window swap below" },
+      { "<C-A-K>", "<Cmd>WinShift up<CR>", desc = "Window swap above" },
+      { "<C-A-L>", "<Cmd>WinShift right<CR>", desc = "Window swap right" },
     },
   },
 }

@@ -4,7 +4,7 @@ local SEVERITY = {
   WARN = 2,
   INFO = 3,
   HINT = 4,
-  ALL = 10,
+  ALL = 5,
 }
 
 vim.api.nvim_create_user_command("SetMinDiagnosticsSeverity", function(ctx)
@@ -37,7 +37,7 @@ local original_handler = vim.diagnostic.handlers.virtual_text
 local ns = vim.api.nvim_create_namespace "my_diagnostics"
 
 ---
----@param severity (1 | 2 | 3 | 4 | 10) # One of vim.diagnostic.severity.
+---@param severity (1 | 2 | 3 | 4 | 5) # One of vim.diagnostic.severity.
 ---@example
 ----- Show only errors.
 --set_diagnostics_severity(vim.diagnostic.severity.ERROR)
@@ -79,11 +79,17 @@ local function set_diagnostics_severity(severity)
   vim.diagnostic.show(ns, bufnr, filtered_diagnostics)
 end
 
----@type LazySpec
+local formatting_enabled = function(client)
+  local disabled = opts.formatting.disabled
+  return client.supports_method "textDocument/formatting"
+    and disabled ~= true
+    and not vim.tbl_contains(disabled, client.name)
+end
+
 return {
   "m-demare/hlargs.nvim",
   "zeioth/garbage-day.nvim",
-  "artemave/workspace-diagnostics.nvim",
+  -- "artemave/workspace-diagnostics.nvim",
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -118,6 +124,76 @@ return {
         },
         servers = {},
         on_attach = nil,
+        commands = {
+          Format = {
+            cond = function(client)
+              local formatting_disabled = vim.tbl_get(require("astrolsp").config, "formatting", "disabled")
+              return client.supports_method "textDocument/formatting"
+                and formatting_disabled ~= true
+                and not vim.tbl_contains(formatting_disabled, client.name)
+            end,
+            function() vim.lsp.buf.format(require("astrolsp").format_opts) end,
+            desc = "Format file with LSP",
+          },
+        },
+        autocmds = {
+          lsp_codelens_refresh = {
+            cond = "textDocument/codeLens",
+            {
+              event = { "InsertLeave", "BufEnter" },
+              desc = "Refresh codelens (buffer)",
+              callback = function(args)
+                if require("astrolsp").config.features.codelens then vim.lsp.codelens.refresh { bufnr = args.buf } end
+              end,
+            },
+          },
+          lsp_auto_format = {
+            cond = formatting_enabled,
+            {
+              event = "BufWritePre",
+              desc = "autoformat on save",
+              callback = function(_, _, bufnr)
+                local astrolsp = require "astrolsp"
+                local autoformat = assert(astrolsp.config.formatting.format_on_save)
+                local buffer_autoformat = vim.b[bufnr].autoformat
+                if buffer_autoformat == nil then buffer_autoformat = autoformat.enabled end
+                if buffer_autoformat and ((not autoformat.filter) or autoformat.filter(bufnr)) then
+                  vim.lsp.buf.format(vim.tbl_deep_extend("force", astrolsp.format_opts, { bufnr = bufnr }))
+                end
+              end,
+            },
+          },
+        },
+        mappings = {
+          n = {
+            ["K"] = { vim.lsp.buf.hover, cond = "textDocument/hover", desc = "LSP hover symbol details" },
+            ["gd"] = { vim.lsp.buf.definition, cond = "textDocument/definition", desc = "LSP definition of current symbol" },
+            ["gD"] = { vim.lsp.buf.declaration, cond = "textDocument/declaration", desc = "LSP declaration of current symbol" },
+            ["gI"] = { vim.lsp.buf.implementation, cond = "textDocument/implementation", desc = "LSP implementation of current symbol" },
+            ["gy"] = { vim.lsp.buf.type_definition, cond = "textDocument/typeDefinition", desc = "LSP definition of current type" },
+            ["<Leader>la"] = { vim.lsp.buf.code_action, cond = "testDocument/codeAction", desc = "LSP code action" },
+            ["<Leader>ll"] = { vim.lsp.codelens.refresh, cond = "textDocument/codeLens", desc = "LSP CodeLens refresh" },
+            ["<Leader>lL"] = { vim.lsp.codelens.run, cond = "textDocument/codeLens", desc = "LSP CodeLens run" },
+            ["<Leader>lf"] = { function() vim.lsp.buf.format(require("astrolsp").format_opts) end, cond = formatting_enabled, desc = "LSP format buffer" },
+            ["<Leader>lR"] = { vim.lsp.buf.references, cond = "textDocument/references", desc = "LSP search references" },
+            ["<Leader>lr"] = { vim.lsp.buf.rename, cond = "textDocument/rename", desc = "LSP rename current symbol" },
+            ["<Leader>lh"] = { vim.lsp.buf.signature_help, cond = "textDocument/signatureHelp", desc = "LSP signature help" },
+            ["<Leader>lG"] = { vim.lsp.buf.workspace_symbol, cond = "workspace/symbol", desc = "LSP search workspace symbols" },
+            ["<Leader>tf"] = { require("astrolsp.toggles").buffer_autoformat, cond = formatting_enabled, desc = "Toggle LSP buffer autoformatting" },
+            ["<Leader>tF"] = { require("astrolsp.toggles").autoformat, cond = formatting_enabled, desc = "Toggle LSP autoformatting" },
+            ["<Leader>tL"] = { require("astrolsp.toggles").codelens, cond = "textDocument/codeLens", desc = "Toggle LSP CodeLens" },
+            ["<Leader>th"] = { require("astrolsp.toggles").buffer_inlay_hints, cond = vim.lsp.inlay_hint and "textDocument/inlayHint" or false, desc = "Toggle LSP buffer inlay hints" },
+            ["<Leader>tH"] = { require("astrolsp.toggles").inlay_hints, cond = vim.lsp.inlay_hint and "textDocument/inlayHint" or false, desc = "Toggle LSP inlay hints" },
+            ["<Leader>tY"] = { require("astrolsp.toggles").buffer_semantic_tokens, cond = function(client) return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens end, desc = "Toggle LSP buffer semantic highlight" },
+            --[""] = { , cond = "", desc = "LSP " },
+          },
+          v = {
+            ["<Leader>lf"] = { function() vim.lsp.buf.format(require("astrolsp").format_opts) end, cond = formatting_enabled, desc = "LSP format buffer" },
+          },
+          x = {
+            ["<Leader>la"] = { vim.lsp.buf.code_action, cond = "testDocument/codeAction", desc = "LSP code action" },
+          },
+        },
       } --[[@as AstroLSPOpts]])
     end,
   },
@@ -152,7 +228,7 @@ return {
       },
       {
         "<Leader>tda",
-        function() set_diagnostics_severity(10) end,
+        function() set_diagnostics_severity(5) end,
         desc = "Set minimum diagnostics severity level to ALL",
       },
     },
@@ -184,17 +260,18 @@ return {
             ["local"] = { conceal = "~" },
             ["return"] = { conceal = "󱞱" },
             ["function"] = { conceal = "󰊕" },
+            --["not"] = { conceal = "" },
             ["if"] = { conceal = "?" },
             ["else"] = { conceal = "!" },
             ["elseif"] = { conceal = "¿" },
             ["for"] = { conceal = "" },
             ["then"] = { conceal = "↙" },
-            ["and"] = { conceal = "󰣡" },
+            ["or"] = { conceal = "|" },
+            ["and"] = { conceal = "&" },
             ["end"] = { conceal = "" },
             ["require"] = { conceal = "" },
             ["do"] = { conceal = "󱞭" },
             ["vim.cmd"] = { conceal = "" },
-            --[""] = { conceal = "" },
           },
         },
       }
@@ -223,6 +300,6 @@ return {
       })
     end,
   },
-  { "dmmulroy/ts-error-translator.nvim" },
+  { "dmmulroy/ts-error-translator.nvim", opts = {} },
   { "brenoprata10/nvim-highlight-colors", opts = {} },
 }
