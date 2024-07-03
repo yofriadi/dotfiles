@@ -1,4 +1,3 @@
----@type LazySpec
 return {
   {
     "lewis6991/gitsigns.nvim",
@@ -77,11 +76,13 @@ return {
     end,
     opts = {},
   },
-  { -- this conflicting use case with NeoComposer, only useful because it can use defined macro
+  { -- TODO: this conflicting use case with NeoComposer, only useful because it can use defined macro
     "kr40/nvim-macros",
     cmd = { "MacroSave", "MacroYank", "MacroSelect", "MacroDelete" },
+    keys = {
+      { "<Leader>sm", "MacroSelect", desc = "Select macro" },
+    },
     opts = {
-
       json_file_path = vim.fs.normalize(vim.fn.stdpath "config" .. "/macros.json"),
       default_macro_register = "q",
       json_formatter = "jaq",
@@ -150,30 +151,6 @@ return {
         },
       }
     end,
-    --[[ keys = {
-      { "y", "YankyYank", mode = { "n", "x" }, desc = "Yank text" },
-      { "p", "YankyPutAfter", mode = { "n", "x" }, desc = "Put yanked text after cursor" },
-      { "P", "YankyPutBefore", mode = { "n", "x" }, desc = "Put yanked text before cursor" },
-      { "gp", "YankyGPutAfter", mode = { "n", "x" }, desc = "Put yanked text after selection" },
-      { "gP", "YankyGPutBefore", mode = { "n", "x" }, desc = "Put yanked text before selection" },
-      { "[y", "YankyCycleForward", desc = "Cycle forward through yank history" },
-      { "]y", "YankyCycleBackward", desc = "Cycle backward through yank history" },
-      { "]p", "YankyPutIndentAfterLinewise", desc = "Put indented after cursor (linewise)" },
-      { "[p", "YankyPutIndentBeforeLinewise", desc = "Put indented before cursor (linewise)" },
-      { "]P", "YankyPutIndentAfterLinewise", desc = "Put indented after cursor (linewise)" },
-      { "[P", "YankyPutIndentBeforeLinewise", desc = "Put indented before cursor (linewise)" },
-      { ">p", "YankyPutIndentAfterShiftRight", desc = "Put and indent right" },
-      { "<p", "YankyPutIndentAfterShiftLeft", desc = "Put and indent left" },
-      { ">P", "YankyPutIndentBeforeShiftRight", desc = "Put before and indent right" },
-      { "<P", "YankyPutIndentBeforeShiftLeft", desc = "Put before and indent left" },
-      { "=p", "YankyPutAfterFilter", desc = "Put after applying a filter" },
-      { "=P", "YankyPutBeforeFilter", desc = "Put before applying a filter" },
-    }, ]]
-  },
-  {
-    "kawre/neotab.nvim",
-    event = "InsertEnter",
-    opts = {},
   },
   {
     "folke/ts-comments.nvim",
@@ -184,8 +161,8 @@ return {
   { "lukas-reineke/virt-column.nvim", opts = {} },
   {
     "David-Kunz/gen.nvim",
-    opts = {
-      model = "codestral", -- The default model to use.
+    --[[ opts = {
+      model = "deepseek-coder-v2", -- The default model to use.
       no_auto_close = false, -- Never closes the window automatically.
       display_mode = "split",
       init = function() pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
@@ -197,45 +174,94 @@ return {
           .. options.port
           .. "/api/chat -d $body"
       end,
-    },
+    }, ]]
+    config = function()
+      local use_local = false
+
+      local get_api_key = function(path)
+        local expanded_path = vim.fn.expand(path)
+        local file = io.open(expanded_path, "r")
+        if file then
+          local content = file:read("*all"):gsub("\n", "")
+          file:close()
+          return content
+        else
+          error "Could not open file!"
+        end
+      end
+
+      local base_configs = {
+        quit_map = "q", -- set keymap for close the response window
+        retry_map = "<c-r>", -- set keymap to re-send the current prompt
+        -- list_models = '<omitted lua function>', -- Retrieves a list of model names
+        display_mode = "split", -- The display mode. Can be "float" or "split".
+        show_prompt = false, -- Shows the prompt submitted to Ollama.
+        show_model = false, -- Displays which model you are using at the beginning of your chat session.
+        no_auto_close = false, -- Never closes the window automatically.
+        debug = false, -- Prints errors and the command which is run.
+      }
+
+      local groq_configs = {
+        model = "llama3-70b-8192",
+        -- model = "mixtral-8x7b-32768",
+        body = { max_tokens = nil, temperature = 1, top_p = 1, stop = nil },
+        command = function()
+          local api_url = "https://api.groq.com"
+          local api_endpoint = api_url .. "/openai/v1/chat/completions"
+          local api_key_path = "~/.groq/creds"
+          local api_key = get_api_key(api_key_path)
+          local curl_cmd = "curl --silent --no-buffer -X POST"
+          local header_options = "-H 'Authorization: Bearer " .. api_key .. "'"
+          return curl_cmd .. " " .. header_options .. " " .. api_endpoint .. " -d $body"
+        end,
+        init = nil,
+      }
+
+      local ollama_configs = {
+        model = "llama3",
+        host = "localhost", -- The host running the Ollama service.
+        port = "11434", -- The port on which the Ollama service is listening.
+        command = function(options)
+          return "curl --silent --no-buffer -X POST http://"
+            .. options.host
+            .. ":"
+            .. options.port
+            .. "/api/chat -d $body"
+        end,
+        -- Function to initialize Ollama
+        -- The command for the Ollama service. You can use placeholders $prompt, $model and $body (shellescaped).
+        -- This can also be a command string.
+        -- The executed command must return a JSON object with { response, context }
+        -- (context property is optional).
+        init = function() pcall(io.popen, "ollama serve > /dev/null 2>&1 &") end,
+      }
+
+      if use_local then
+        require("gen").setup(vim.tbl_deep_extend("force", ollama_configs, base_configs))
+      else
+        require("gen").setup(vim.tbl_deep_extend("force", groq_configs, base_configs))
+      end
+    end,
   },
   {
     "supermaven-inc/supermaven-nvim",
-    -- dependencies = {
-    --   {
-    --     "hrsh7th/nvim-cmp",
-    --     opts = function(_, opts)
-    --       if not opts.sources then opts.sources = {} end
-    --       opts.sources.name = "supermaven"
-    --       --[[ opts.formatting = {
-    --         format = lspkind.cmp_format({
-    --           mode = "symbol",
-    --           max_width = 50,
-    --           symbol_map = { Supermaven = "" }
-    --         })
-    --       } ]]
-    --     end,
-    --   },
-    --   {
-    --     "onsails/lspkind.nvim",
-    --     opts = function(_, opts)
-    --       if not opts.symbol_map then opts.symbol_map = {} end
-    --       opts.symbol_map.Supermaven = ""
-    --     end,
-    --   },
-    -- },
     config = function()
       require("supermaven-nvim").setup {
         keymaps = {
           accept_suggestion = "<C-l>",
-          clear_suggestion = "<C-]>",
+          --clear_suggestion = "<C-]>",
           accept_word = "<C-k>",
         },
         disable_inline_completion = false,
       }
     end,
   },
-  {
+  --[[ { -- not working
+    "kawre/neotab.nvim",
+    event = "InsertEnter",
+    opts = {},
+  }, ]]
+  --[[ {
     "Exafunction/codeium.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -243,5 +269,5 @@ return {
         enable_chat = true,
       }
     end,
-  },
+  }, ]]
 }

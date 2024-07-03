@@ -1,4 +1,3 @@
----@type LazySpec
 return {
   { "nvim-focus/focus.nvim", version = "*", opts = {} },
   {
@@ -63,6 +62,22 @@ return {
       })
     end,
   },
+  { -- TODO: this conflicting interests with Neogit
+    "SuperBo/fugit2.nvim",
+    opts = {
+      width = 70,
+    },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "nvim-lua/plenary.nvim",
+    },
+    cmd = { "Fugit2", "Fugit2Graph" },
+    keys = {
+      { "<leader>gf", "<Cmd>Fugit2<CR>" },
+      { "<leader>gfg", "<Cmd>Fugit2Graph<CR>" },
+    },
+  },
   {
     "akinsho/toggleterm.nvim",
     keys = {
@@ -80,70 +95,31 @@ return {
   },
   {
     "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
+    cmd = { "Trouble" },
     opts = { use_diagnostic_signs = true },
-    keys = function()
-      local trouble = require "trouble"
-      return {
-        { "<BS>", "<Cmd>close<CR>" },
-        { "<Leader>ex", "<Cmd>TroubleToggle document_diagnostics<CR>", desc = "Trouble document diagnostics" },
-        { "<Leader>eX", "<Cmd>TroubleToggle workspace_diagnostics<CR>", desc = "Trouble workspace diagnostics" },
-        { "<Leader>eL", "<Cmd>TroubleToggle loclist<CR>", desc = "Trouble location list" },
-        { "<Leader>eQ", "<Cmd>TroubleToggle quickfix<CR>", desc = "Trouble quickfix list" },
-        {
-          "[q",
-          function()
-            if trouble.is_open() then
-              trouble.previous { skip_groups = true, jump = true }
-            else
-              local ok, err = pcall(vim.cmd.cprev)
-              if not ok then vim.notify(err, vim.log.levels.ERROR) end
-            end
-          end,
-          desc = "Trouble previous trouble/quickfix item",
-        },
-        {
-          "]q",
-          function()
-            if trouble.is_open() then
-              trouble.next { skip_groups = true, jump = true }
-            else
-              local ok, err = pcall(vim.cmd.cnext)
-              if not ok then vim.notify(err, vim.log.levels.ERROR) end
-            end
-          end,
-          desc = "Trouble next trouble/quickfix item",
-        },
-      }
-    end,
+    keys = {
+      { "<Leader>eX", "<Cmd>Trouble diagnostics toggle<CR>", desc = "Trouble toggle diagnostics" },
+      {
+        "<Leader>ex",
+        "<Cmd>Trouble diagnostics toggle filter.buf=0<CR>",
+        desc = "Trouble toggle buffer diagnostics",
+      },
+      { "<Leader>eS", "<Cmd>Trouble symbols toggle focus=false<CR>", desc = "Trouble toggle symbols" },
+      {
+        "<Leader>el",
+        "<Cmd>Trouble lsp toggle focus=false win.position=right<CR>",
+        desc = "Trouble LSP definitions / references / ...",
+      },
+      { "<Leader>eL", "<Cmd>Trouble loclist toggle<CR>", desc = "Trouble location list" },
+      { "<Leader>eQ", "<Cmd>Trouble qflist toggle<CR>", desc = "Trouble quickfix list" },
+    },
   },
   {
     "carbon-steel/detour.nvim",
-    config = function()
-      --vim.keymap.set("n", "<C-w><enter>", ":Detour<cr>") -- not working
-      vim.keymap.set("n", "<C-w>.", ":DetourCurrentWindow<cr>")
-      --[[ vim.api.nvim_create_autocmd("BufWinEnter", {
-        pattern = "*",
-        callback = function(event)
-          local filetype = vim.bo[event.buf].filetype
-          local file_path = event.match
-
-          if file_path:match "/doc/" ~= nil then
-            -- Only run if the filetype is a help file
-            if filetype == "help" or filetype == "markdown" then
-              -- Get the newly opened help window
-              -- and attempt to open a Detour() float
-              local help_win = vim.api.nvim_get_current_win()
-              local ok = require("detour").Detour()
-
-              -- If we successfully create a float of the help file
-              -- Close the split
-              if ok then vim.api.nvim_win_close(help_win, false) end
-            end
-          end
-        end,
-      }) ]]
-    end,
+    keys = {
+      { "<C-w><enter>", "<Cmd>Detour<CR>", desc = "Detour" },
+      { "<C-w>.", "<Cmd>DetourCurrentWindow<CR>", desc = "Detour Current Window" },
+    },
   },
   {
     "sindrets/winshift.nvim",
@@ -151,14 +127,14 @@ return {
     keys = {
       { "<C-W>R", "<Cmd>WinShift<CR>", desc = "Window shift mode" },
       { "<C-W>X", "<Cmd>WinShift swap<CR>", desc = "Window swap" },
-      -- { "<C-M-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
-      -- { "<C-S-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
-      -- { "<C-M-J>", "<Cmd>WinShift down<CR>", desc = "Window swap below" },
-      -- { "<C-M-K>", "<Cmd>WinShift up<CR>", desc = "Window swap above" },
-      -- { "<C-M-L>", "<Cmd>WinShift right<CR>", desc = "Window swap right" },
+      -- { "<C-A-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
+      -- { "<C-A-H>", "<Cmd>WinShift left<CR>", desc = "Window swap left" },
+      -- { "<C-A-J>", "<Cmd>WinShift down<CR>", desc = "Window swap below" },
+      -- { "<C-A-K>", "<Cmd>WinShift up<CR>", desc = "Window swap above" },
+      -- { "<C-A-L>", "<Cmd>WinShift right<CR>", desc = "Window swap right" },
     },
   },
-  {
+  --[[ {
     "rest-nvim/rest.nvim",
     dependencies = {
       {
@@ -190,21 +166,5 @@ return {
         telescope.extensions.rest.select_env() -- you can also use the `:Telescope rest select_env` command
       end
     end,
-  },
-  { -- TODO: this conflicting interests with Neogit
-    "SuperBo/fugit2.nvim",
-    opts = {
-      width = 70,
-    },
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = { "Fugit2", "Fugit2Graph" },
-    keys = {
-      { "<leader>gf", "<Cmd>Fugit2<CR>" },
-      { "<leader>gfg", "<Cmd>Fugit2Graph<CR>" },
-    },
-  },
+  }, ]]
 }

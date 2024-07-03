@@ -1,13 +1,22 @@
 local astrocore_extend_tbl = require("astrocore").extend_tbl
 
----@type LazySpec
 return {
   { -- TODO: this cant be moved outside plugins folder
     "nvim-telescope/telescope.nvim",
     dependencies = {
       "natecraddock/telescope-zf-native.nvim",
-      "nvim-telescope/telescope-frecency.nvim",
-      "LinArcX/telescope-env.nvim",
+      {
+        "nvim-telescope/telescope-frecency.nvim",
+        keys = {
+          { "<Leader>sf", "<Cmd>Telescope frecency<CR>", desc = "Search file frecency" },
+        },
+      },
+      {
+        "LinArcX/telescope-env.nvim",
+        keys = {
+          { "<Leader>se", "<Cmd>Telescope env<CR>", desc = "Search environment variables" },
+        },
+      },
       {
         "LukasPietzschmann/telescope-tabs",
         keys = {
@@ -39,13 +48,14 @@ return {
                 function() extensions.frecency.frecency { workspace = "CWD" } end,
               },
               { "Grep", builtin.live_grep },
-              --{ "Undo", extensions.undo.undo },
               {
                 "Buffer",
                 function() return builtin.buffers { sort_mru = true, sort_lastused = true } end,
               },
               { "Tab", require("telescope-tabs").list_tabs },
-              --{ "Macros", extensions.macros.macros },
+              { "Yank", "<Cmd>Telescope yank_history<CR>" },
+              { "Undo", extensions.undo.undo },
+              { "Macros", extensions.macros.macros },
               { "Env", extensions.env.env },
             },
           }
@@ -62,7 +72,7 @@ return {
           function() builtin.live_grep { hidden = true, no_ignore = true } end,
           desc = "Search words in project",
         },
-        { "<Leader>sf", builtin.find_files, desc = "Search files" },
+        -- { "<Leader>sf", builtin.find_files, desc = "Search files" },
         {
           "<Leader>sF",
           function() builtin.find_files { hidden = true, no_ignore = true } end,

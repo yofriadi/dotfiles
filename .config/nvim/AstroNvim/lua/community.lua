@@ -6,7 +6,7 @@
 return {
   { "AstroNvim/astrocommunity" },
   { import = "astrocommunity.bars-and-lines.dropbar-nvim" },
-  { import = "astrocommunity.bars-and-lines.scope-nvim" },
+  --{ import = "astrocommunity.bars-and-lines.scope-nvim" },
   { import = "astrocommunity.editing-support.cutlass-nvim" },
   { import = "astrocommunity.editing-support.true-zen-nvim" },
   { import = "astrocommunity.git.neogit" },

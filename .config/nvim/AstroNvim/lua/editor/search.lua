@@ -1,4 +1,3 @@
----@type LazySpec
 return {
   {
     "Cassin01/wf.nvim",

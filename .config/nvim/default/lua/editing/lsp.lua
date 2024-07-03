@@ -198,6 +198,78 @@ return {
     end,
   },
   {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      {
+        "AstroNvim/astrolsp",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>li"] =
+            { "<Cmd>LspInfo<CR>", desc = "LSP information", cond = function() return vim.fn.exists ":LspInfo" > 0 end }
+        end,
+      },
+      { "folke/neoconf.nvim", lazy = true, opts = {} },
+      {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+        cmd = { "LspInstall", "LspUninstall" },
+        init = function(plugin) require("astrocore").on_load("mason.nvim", plugin.name) end,
+        opts_extend = { "ensure_installed" },
+        opts = {
+          ensure_installed = {},
+          handlers = { function(server) require("astrolsp").lsp_setup(server) end },
+        },
+      },
+    },
+    cmd = function(_, cmds) -- HACK: lazy load lspconfig on `:Neoconf` if neoconf is available
+      if require("lazy.core.config").spec.plugins["neoconf.nvim"] then table.insert(cmds, "Neoconf") end
+      vim.list_extend(cmds, { "LspInfo", "LspLog", "LspStart" }) -- add normal `nvim-lspconfig` commands
+    end,
+    event = "User AstroFile",
+    config = function()
+      local setup_servers = function()
+        vim.tbl_map(require("astrolsp").lsp_setup, require("astrolsp").config.servers)
+        require("astrocore").exec_buffer_autocmds("FileType", { group = "lspconfig" })
+
+        require("astrocore").event "LspSetup"
+      end
+      local astrocore = require "astrocore"
+      if astrocore.is_available "mason-lspconfig.nvim" then
+        astrocore.on_load("mason-lspconfig.nvim", setup_servers)
+      else
+        setup_servers()
+      end
+    end
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    main = "null-ls",
+    dependencies = {
+      { "nvim-lua/plenary.nvim", lazy = true },
+      {
+        "AstroNvim/astrolsp",
+        opts = function(_, opts)
+          local maps = opts.mappings
+          maps.n["<Leader>lI"] = {
+            "<Cmd>NullLsInfo<CR>",
+            desc = "Null-ls information",
+            cond = function() return vim.fn.exists ":NullLsInfo" > 0 end,
+          }
+        end,
+      },
+      {
+        "jay-babu/mason-null-ls.nvim",
+        dependencies = { "williamboman/mason.nvim" },
+        cmd = { "NullLsInstall", "NullLsUninstall" },
+        init = function(plugin) require("astrocore").on_load("mason.nvim", plugin.name) end,
+        opts_extend = { "ensure_installed" },
+        opts = { ensure_installed = {}, handlers = {} },
+      },
+    },
+    event = "User AstroFile",
+    opts = function() return { on_attach = require("astrolsp").on_attach } end,
+  },
+  {
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
     event = "LspAttach",
     keys = {

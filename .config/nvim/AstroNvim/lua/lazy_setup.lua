@@ -14,7 +14,7 @@ require("lazy").setup({
   { import = "config" },
   { import = "editing" },
   { import = "editor" },
-  { import = "interfaces" },
+  { import = "ui" },
   { import = "plugins" },
 } --[[@as LazySpec]], {
   -- Configure any other `lazy.nvim` configuration options here

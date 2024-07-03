@@ -1,4 +1,3 @@
----@type LazySpec
 return {
   { "goolord/alpha-nvim", enabled = false },
   { "folke/which-key.nvim", enabled = false },

@@ -1,10 +1,4 @@
----@type LazySpec
 return {
-  {
-    "stevearc/oil.nvim",
-    opts = {},
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
   {
     "nvim-neo-tree/neo-tree.nvim",
     keys = function()
@@ -87,9 +81,14 @@ return {
     keys = function()
       local cw = require "codewindow"
       return {
-        { "<Leader>emm", cw.toggle_minimap, desc = "Toggle minimap" },
-        { "<Leader>emf", cw.toggle_focus, desc = "Toggle minimap focus" },
+        { "<Leader>emm", cw.toggle_minimap, desc = "Editor toggle minimap" },
+        { "<Leader>emf", cw.toggle_focus, desc = "Editor toggle minimap focus" },
       }
     end,
   },
+  --[[ {
+    "stevearc/oil.nvim",
+    opts = {},
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  }, ]]
 }
