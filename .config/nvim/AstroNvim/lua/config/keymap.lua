@@ -24,6 +24,40 @@ return {
           },
           ["<C-s>"] = { "<Cmd>w<CR>", desc = "Save File" },
           ["<C-q>"] = { "<Cmd>confirm q<CR>", desc = "Quit" },
+          ["x"] = {
+            -- Also let's allow 'x' key to delete blank lines in normal mode.
+            function()
+              if vim.fn.col "." == 1 then
+                local line = vim.fn.getline "."
+                if line:match "^%s*$" then
+                  vim.api.nvim_feedkeys('"_dd', "n", false)
+                  vim.api.nvim_feedkeys("$", "n", false)
+                else
+                  vim.api.nvim_feedkeys('"_x', "n", false)
+                end
+              else
+                vim.api.nvim_feedkeys('"_x', "n", false)
+              end
+            end,
+            desc = "Delete character without yanking it",
+          },
+          ["X"] = {
+            -- Also let's allow 'x' key to delete blank lines in normal mode.
+            function()
+              if vim.fn.col "." == 1 then
+                local line = vim.fn.getline "."
+                if line:match "^%s*$" then
+                  vim.api.nvim_feedkeys('"_dd', "n", false)
+                  vim.api.nvim_feedkeys("$", "n", false)
+                else
+                  vim.api.nvim_feedkeys('"_X', "n", false)
+                end
+              else
+                vim.api.nvim_feedkeys('"_X', "n", false)
+              end
+            end,
+            desc = "Delete before character without yanking it",
+          },
 
           -- split
           ["|"] = { "<Cmd>vsplit<CR>", desc = "Split vertical" },
@@ -109,6 +143,8 @@ return {
           k = { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" },
 
           ["<C-s>"] = { "<Esc><Cmd>w<CR>", desc = "Save file" },
+          ["p"] = { "P", desc = "Paste content you've previourly yanked" },
+          ["P"] = { "p", desc = "Yank what you are going to override, then paste" },
         },
         t = {
           ["jk"] = { "<C-\\><C-n>", desc = "Terminal normal mode" },
@@ -129,9 +165,9 @@ return {
         opts.mappings.n["<Leader>tc"] = { astrocore_toggles.cmp, desc = "Toggle autocompletion" }
       end
 
-      if is_available "indent-blankline.nvim" then
+      --[[ if is_available "indent-blankline.nvim" then
         opts.mappings.n["<Leader>t|"] = { "<Cmd>IBLToggle<CR>", desc = "Toggle indent guides" }
-      end
+      end ]]
 
       if is_available "mason.nvim" then
         opts.mappings.n["<Leader>pm"] = { require("mason.ui").open, desc = "Mason Installer" }
@@ -173,7 +209,7 @@ return {
               cond = "textDocument/declaration",
               desc = "LSP declaration of current symbol",
             },
-            ["gT"] = {
+            ["gy"] = {
               vim.lsp.buf.type_definition,
               cond = "textDocument/typeDefinition",
               desc = "Definition of current type",

@@ -31,6 +31,12 @@ return {
               pattern = { "lua", "json", "javascript", "javascriptreact", "typescript", "typescriptreact" },
               command = "setlocal ts=2 sw=2",
             },
+            {
+              event = "FileType",
+              desc = "Unlist quickfist buffers",
+              pattern = "qf",
+              callback = function() vim.opt_local.buflisted = false end,
+            },
           },
           FocusDisable = {
             {
@@ -54,6 +60,48 @@ return {
                 end
               end,
               desc = "Disable focus autoresize for FileType",
+            },
+          },
+          SaveView = {
+            {
+              event = { "BufWinLeave", "BufWritePost", "WinLeave" },
+              desc = "Save view with mkview for real files",
+              callback = function(args)
+                if vim.b[args.buf].view_activated then vim.cmd.mkview { mods = { emsg_silent = true } } end
+              end,
+            },
+            {
+              event = { "BufWinEnter" },
+              desc = "Try to load file view if available and enable view saving for real files",
+              callback = function(args)
+                if not vim.b[args.buf].view_activated then
+                  local filetype = vim.api.nvim_get_option_value("filetype", { buf = args.buf })
+                  local buftype = vim.api.nvim_get_option_value("buftype", { buf = args.buf })
+                  local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
+                  if
+                    buftype == ""
+                    and filetype
+                    and filetype ~= ""
+                    and not vim.tbl_contains(ignore_filetypes, filetype)
+                  then
+                    vim.b[args.buf].view_activated = true
+                    vim.cmd.loadview { mods = { emsg_silent = true } }
+                  end
+                end
+              end,
+            },
+          },
+          CreateParentDir = {
+            {
+              event = { "BufWritePre" },
+              desc = "Automatically create parent directories if they don't exist when saving a file",
+              callback = function(args)
+                local buf_is_valid_and_listed = vim.api.nvim_buf_is_valid(args.buf) and vim.bo[args.buf].buflisted
+
+                if buf_is_valid_and_listed then
+                  vim.fn.mkdir(vim.fn.fnamemodify(vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
+                end
+              end,
             },
           },
         },
