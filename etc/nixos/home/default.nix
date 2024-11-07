@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../hosts/msl/home.nix
+    ../hosts/wsl/home.nix
     ./programs.nix
   ];
 }

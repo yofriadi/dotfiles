@@ -1,32 +1,42 @@
 {
-  description = "NixOS config";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL/main";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
-    let
-      system = "aarch64-linux";  # Apple arm M-series processor
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      nixosConfigurations = {
-        msl = nixpkgs.lib.nixosSystem {
-          inherit system;
-          modules = [
-            ./hosts/msl/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.ymn = import ./home;
-            }
-          ];
-        };
+  outputs = { self, nixpkgs, nixos-wsl, home-manager, ... }: {
+    nixosConfigurations = {
+      msl = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./hosts/msl/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.ymn = import ./home;
+          }
+        ];
+      };
+      wsl = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/wsl/configuration.nix
+          nixos-wsl.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            networking.hostName = "nixos-wsl";
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.ydn = import ./home;
+          }
+        ];
       };
     };
+  };
 }
