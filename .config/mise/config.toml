@@ -1,0 +1,6 @@
+[tools]
+go = "1.24"
+ni = "latest"
+node = "20"
+pnpm = "10"
+yarn = "1"

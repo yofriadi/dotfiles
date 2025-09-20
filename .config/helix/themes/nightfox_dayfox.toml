@@ -92,7 +92,7 @@
 "comment" = { fg = "comment" } # This is a comment.
 "comment.block.documentation" = { fg = "comment", modifiers = ["bold"] } # Doc comments, e.g '///' in rust.
 
-"variable" = { fg = "white" }  # Variable names.
+"variable" = { fg = "black" }  # Variable names.
 "variable.builtin" = { fg = "red" } # Language reserved variables: `this`, `self`, `super`, etc.
 "variable.parameter" = { fg = "cyan-bright" } # Function parameters.
 "variable.other.member" = { fg = "fg2" } # Fields of composite data types (e.g. structs, unions).
