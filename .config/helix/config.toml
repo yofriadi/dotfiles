@@ -4,3 +4,9 @@ theme = "nightfox_dayfox"
 line-number = "relative"
 mouse = false
 true-color = true
+
+[keys.normal]
+";" = "command_mode"
+
+[keys.select]
+";" = "command_mode"

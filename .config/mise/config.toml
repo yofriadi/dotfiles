@@ -1,9 +1,9 @@
 [tools]
 bun = "1"
-go = "1.24"
+go = "1.25"
 lua = "5.1.5"
 neovim = "latest"
 ni = "latest"
-node = "24"
+node = "lts"
 pnpm = "10"
 yarn = "1"
