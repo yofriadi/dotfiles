@@ -8,8 +8,8 @@
   },
   "autoupdate": true,
   "plugin": [
-    "opencode-openai-codex-auth@4.2.0",
-    "opencode-antigravity-auth@1.2.6",
+    "opencode-openai-codex-auth",
+    "opencode-antigravity-auth",
     "opencode-alibaba-qwen3-auth",
     "oh-my-opencode"
   ],
@@ -222,16 +222,48 @@
             "output": ["text"]
           }
         },
-        "claude-sonnet-4-5-thinking": {
-          "name": "Claude Sonnet 4.5 Thinking (Antigravity)",
+        "claude-sonnet-4-5-thinking-low": {
+          "name": "Claude Sonnet 4.5 Thinking Low (Antigravity)",
           "limit": { "context": 200000, "output": 64000 },
           "modalities": {
             "input": ["text", "image", "pdf"],
             "output": ["text"]
           }
         },
-        "claude-opus-4-5-thinking": {
-          "name": "Claude Opus 4.5 Thinking (Antigravity)",
+        "claude-sonnet-4-5-thinking-medium": {
+          "name": "Claude Sonnet 4.5 Thinking Medium (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
+        },
+        "claude-sonnet-4-5-thinking-high": {
+          "name": "Claude Sonnet 4.5 Thinking High (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
+        },
+        "claude-opus-4-5-thinking-low": {
+          "name": "Claude Opus 4.5 Thinking Low (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
+        },
+        "claude-opus-4-5-thinking-medium": {
+          "name": "Claude Opus 4.5 Thinking Medium (Antigravity)",
+          "limit": { "context": 200000, "output": 64000 },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"]
+          }
+        },
+        "claude-opus-4-5-thinking-high": {
+          "name": "Claude Opus 4.5 Thinking High (Antigravity)",
           "limit": { "context": 200000, "output": 64000 },
           "modalities": {
             "input": ["text", "image", "pdf"],
@@ -249,6 +281,15 @@
       "tools": {
         "write": false,
         "edit": false
+      }
+    },
+    "interviewer": {
+      "description": "Interviews the user to create a detailed specification",
+      "model": "openai/gpt-5.2-medium",
+      "prompt": "Read the {{#if args}}{{args}}{{else}}SPEC.md{{/if}} file and interview the user in detail using the AskUserQuestionTool about literally anything: technical implementation, UI & UX, concerns, tradeoffs, etc. Make sure the questions are not obvious. Be very in-depth and continue interviewing continually until the spec is complete, then write the spec to the file.",
+      "tools": {
+        "write": true,
+        "edit": true
       }
     }
   },

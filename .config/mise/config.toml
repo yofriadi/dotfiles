@@ -1,5 +1,6 @@
 [tools]
 bun = "1"
+"github:sst/opencode" = "latest"
 go = "1.25"
 lua = "5.1.5"
 neovim = "latest"
