@@ -1,77 +1,81 @@
 [core]
-    pager = delta
-    excludesfile = /home/ypc/.config/.gitignore
-    attributesfile = /Users/ycm/.gitattributes
+  pager = delta
+	excludesfile = /Users/ycm/.config/git/ignore
+
 [pager]
-    status = true
-    #difftool = true # difft
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
+  status = true
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
 [interactive]
-    diffFilter = delta --color-only --features=interactive
+  diffFilter = delta --color-only --features=interactive
+
 [delta]
-    line-numbers = true
-    features = decorations
-    syntax-theme = rose-pine-dawn
-    navigate = true
+  line-numbers = true
+  features = decorations
+  syntax-theme = rose-pine-dawn
+  navigate = true
+
 [delta "interactive"]
-    keep-plus-minus-markers = false
+  keep-plus-minus-markers = false
+
 [delta "decorations"]
-    commit-decoration-style = blue ol
-    commit-style = raw
-    file-style = omit
-    hunk-header-decoration-style = blue box
-    hunk-header-file-style = red
-    hunk-header-line-number-style = "#067a00"
-    hunk-header-style = file line-number syntax
-[merge]
-    tool = difftastic
-    conflictstyle = diff3
-[mergetool]
-    prompt = false
-[mergetool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
-[url "ssh://git@pinhome-gitlab/"]
-    insteadOf = https://gitlab.com/pinvest/*
-[user]
-    name = Yofriadi Yahya
-    email = yofriadi.yahya@proton.me
-[push]
-    default = current
-[pull]
-    default = current
-    rebase = true
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+
 [diff]
-    external = difft
-    tool = difftastic
-    colorMoved = default
-    colorWords = true
-    wordRegex = \\w+|.
+  colorMoved = default
+  colorWords = true
+  wordRegex = \\w+|.
+  algorithm = patience
+
 [difftool]
-    prompt = false
-[difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
+  prompt = false
+
 [alias]
-    #dft = difftool
-    #dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
-    # use fzf to list changes and add it with tab key, then enter
-    fza = "!git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git add"
-    # removes local branches that don't exist on the remote.
-    gone = "!f() { git fetch --all --prune; git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D; }; f"
-    graph = !git --no-pager log --graph --date-order --date=short -10 --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%an %C(reset)%C(green)%cr (%cd)'
-    coall = !git add -A && git commit
-    amend-to = "!f() { SHA=$(git rev-parse \"$1\"); git add -A && git commit --fixup \"$SHA\" && GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash \"$SHA^\"; }; f"
-    clean-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D && echo  && git branch -vv
+  d = diff
+  ds = "!f() { git difftool --tool=difftastic "$@"; }; f"
+  fza = "!git ls-files -m -o --exclude-standard | fzf -m --print0 | xargs -0 git add"
+  gone = "!f() { git fetch --all --prune; git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D; }; f"
+  graph = !git --no-pager log --graph --date-order --date=short -10 --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%an %C(reset)%C(green)%cr (%cd)'
+  coall = !git add -A && git commit
+  amend-to = "!f() { SHA=$(git rev-parse "$1"); git add -A && git commit --fixup "$SHA" && GIT_SEQUENCE_EDITOR=true git rebase --interactive --autosquash "$SHA^"; }; f"
+  clean-branches = !git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D && echo && git branch -vv
+
+[merge]
+  tool = difftastic
+  conflictstyle = diff3
+
+[mergetool]
+  prompt = false
+
+[user]
+  name = Yofriadi Yahya
+  email = yofriadi.yahya@proton.me
+
+[push]
+  default = current
+
+[pull]
+  default = current
+  rebase = true
+
 [fetch]
-    prune = true
+  prune = true
+
 [rebase]
-    autostash = true
+  autostash = true
+
 [rerere]
-    enabled = true
+  enabled = true
+
 [merge "mergiraf"]
-    name = mergiraf
-    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
-[coderabbit]
-	machineId = cli/298d0a31dd504b50a2733a2629ba853d
+  name = mergiraf
+  driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L

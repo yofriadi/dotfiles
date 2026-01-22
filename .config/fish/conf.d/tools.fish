@@ -1,30 +1,40 @@
 if status is-interactive
     # Atuin
-    atuin init fish --disable-up-arrow | source
-    if functions -q _atuin_bind_up
-        bind \eOA _atuin_bind_up
-        bind \e\[A _atuin_bind_up
-        bind -M insert \eOA _atuin_bind_up
-        bind -M insert \e\[A _atuin_bind_up
+    if type -q atuin
+        atuin init fish --disable-up-arrow | source
+        if functions -q _atuin_bind_up
+            bind \eOA _atuin_bind_up
+            bind \e\[A _atuin_bind_up
+            bind -M insert \eOA _atuin_bind_up
+            bind -M insert \e\[A _atuin_bind_up
+        end
     end
 
     # Zoxide
-    zoxide init fish --cmd z | source
+    if type -q zoxide
+        zoxide init fish --cmd z | source
+    end
 
     # Starship
-    if not set -q __starship_rebuilt
-        __starship_rebuild
-        set -g __starship_rebuilt 1
+    if type -q starship
+        if not set -q __starship_rebuilt
+            __starship_rebuild
+            set -g __starship_rebuilt 1
+        end
+        starship init fish | source
     end
-    starship init fish | source
     
     # Fzf
-    fzf --fish | source
+    if type -q fzf
+        fzf --fish | source
+    end
 end
 
 # Mise
-eval (mise completion fish | string collect)
-mise activate --shims fish | source
+if type -q mise
+    eval (mise completion fish | string collect)
+    mise activate --shims fish | source
+end
 
 # OrbStack: command-line tools and integration
 # This won't be added again if you remove it.

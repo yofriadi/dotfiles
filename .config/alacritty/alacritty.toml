@@ -103,7 +103,7 @@ color = "#a440b5"
 bindings = [
   #{ key = "X", mods = "Control", chars = "\u001b[88;4u" },
   { key = "X", mods = "Control|Shift", chars = "\u001b[88;5u" },
-  { key = "Return",  mods = "Shift",  chars = "\u001b[13;3u" },
+  { key = "Return",  mods = "Shift",  chars = "\u001b[13;2u" },
   { key = "Return",  mods = "Control",  chars = "\u001b[13;5u" },
   { key = "Return",  mods = "Alt",  chars = "\u001b[13;2u" },
   { key = "Return",  mods = "Control|Shift",  chars = "\u001b[13;6u" },
