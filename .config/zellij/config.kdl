@@ -126,7 +126,7 @@ keybinds clear-defaults=true {
         bind "Alt {" { MovePane "Left"; }
         bind "Alt }" { MovePane "Right"; }
         // force new panes to open to the right (zellij 0.40+ defaulted to down)
-        bind "Alt p" { NewPane "Right"; }
+        bind "Alt p" { NewPane; SwitchToMode "Normal"; }
         bind "Alt Shift p" { ToggleFocusFullscreen; }
         bind "Alt Ctrl t" { SwitchToMode "RenameTab"; TabNameInput 0; }
     }

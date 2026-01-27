@@ -4,12 +4,24 @@
 depends = []
 
 [default.files]
-".zshenv" = "~/.zshenv"
-".config/zsh" = "~/.config/zsh"
-".tmux.conf" = "~/.tmux.conf"
-".config/alacritty" = "~/.config/alacritty"
-".config/nvim" = "~/.config/nvim"
-".config/atuin" = "~/.config/atuin"
-".gitignore" = "~/.gitignore"
+".zshenv" = { target = "~/.zshenv", type = "symbolic" }
+".config/zsh" = { target = "~/.config/zsh", type = "symbolic" }
+".tmux.conf" = { target = "~/.tmux.conf", type = "symbolic" }
+".config/alacritty" = { target = "~/.config/alacritty", type = "symbolic" }
+".config/nvim" = { target = "~/.config/nvim", type = "symbolic" }
+".config/atuin" = { target = "~/.config/atuin", type = "symbolic" }
+".gitignore" = { target = "~/.gitignore", type = "symbolic" }
+".config/bat" = { target = "~/.config/bat", type = "symbolic" }
+".config/fish" = { target = "~/.config/fish", type = "symbolic" }
+".config/gh" = { target = "~/.config/gh", type = "symbolic" }
+".config/helix" = { target = "~/.config/helix", type = "symbolic" }
+".config/karabiner" = { target = "~/.config/karabiner", type = "symbolic" }
+".config/mise" = { target = "~/.config/mise", type = "symbolic" }
+".config/opencode/opencode.jsonc" = { target = "~/.config/opencode/opencode.jsonc", type = "symbolic" }
+".config/starship.toml" = { target = "~/.config/starship.toml", type = "symbolic" }
+".config/television" = { target = "~/.config/television", type = "symbolic" }
+".config/wezterm" = { target = "~/.config/wezterm", type = "symbolic" }
+".config/zed" = { target = "~/.config/zed", type = "symbolic" }
+".config/zellij" = { target = "~/.config/zellij", type = "symbolic" }
 
 [default.variables]
