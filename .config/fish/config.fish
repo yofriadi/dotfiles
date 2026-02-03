@@ -16,8 +16,3 @@ end
 if test -f ~/.config/fish/themes/Rosé\ Pine\ Dawn.theme
     source ~/.config/fish/themes/Rosé\ Pine\ Dawn.theme
 end
-
-# Load local secrets if present (kept out of git).
-if test -f ~/.config/fish/secrets.fish
-    source ~/.config/fish/secrets.fish
-end

@@ -18,16 +18,7 @@ size = 15.5
 style = { shape = "Beam", blinking = "Always" }
 blink_interval = 600
 
-[keyboard]
-#bindings = [
-#  #{ key = "X", mods = "Control", chars = "\u001b[88;4u" },
-#  { key = "X", mods = "Control|Shift", chars = "\u001b[88;5u" },
-#  { key = "Return",  mods = "Shift",  chars = "\u001b[13;3u" },
-#  { key = "Return",  mods = "Control",  chars = "\u001b[13;5u" },
-#  { key = "Return",  mods = "Alt",  chars = "\u001b[13;2u" },
-#  { key = "Return",  mods = "Control|Shift",  chars = "\u001b[13;6u" },
-#  { key = "Space",   mods = "Shift",  chars = "\u001b[32;3u" },
-#  #{ key = "Space",   mods = "Control",  chars = "\u001b[32;1u" },
-#  { key = "Space",   mods = "Alt",  chars = "\u001b[32;2u" },
-#  #{ key = "Space",   mods = "Control|Shift",  chars = "\u001b[32;6u" },
-#]
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001b\u000d"

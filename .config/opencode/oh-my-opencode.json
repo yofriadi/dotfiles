@@ -1,0 +1,65 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "openai/gpt-5.2",
+      "variant": "high"
+    },
+    "oracle": {
+      "model": "openai/gpt-5.2",
+      "variant": "high"
+    },
+    "librarian": {
+      "model": "google/gemini-3-pro-preview",
+      "variant": "high"
+    },
+    "explore": {
+      "model": "google/gemini-3-flash-preview"
+    },
+    "multimodal-looker": {
+      "model": "google/antigravity-gemini-3-flash"
+    },
+    "prometheus": {
+      "model": "openai/gpt-5.2",
+      "variant": "high"
+    },
+    "metis": {
+      "model": "openai/gpt-5.2",
+      "variant": "high"
+    },
+    "momus": {
+      "model": "google/antigravity-gemini-3-pro",
+      "variant": "high"
+    },
+    "atlas": {
+      "model": "openai/gpt-5.2"
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "google/gemini-3-pro"
+    },
+    "ultrabrain": {
+      "model": "openai/gpt-5.2-codex",
+      "variant": "xhigh"
+    },
+    "artistry": {
+      "model": "google/gemini-3-pro",
+      "variant": "high"
+    },
+    "quick": {
+      "model": "google/gemini-3-flash"
+    },
+    "unspecified-low": {
+      "model": "google/antigravity-gemini-3-pro",
+      "variant": "high"
+    },
+    "unspecified-high": {
+      "model": "openai/gpt-5.2-codex",
+      "variant": "high"
+    },
+    "writing": {
+      "model": "google/gemini-3-flash"
+    }
+  }
+}
