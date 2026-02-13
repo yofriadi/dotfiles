@@ -25,6 +25,12 @@ set -g __anth_provider__chutes__extra_env \
 # z.ai (GLM / Zhipu AI)
 set -g __anth_provider__zai__token       $ZAI_API_KEY
 set -g __anth_provider__zai__base_url    "https://api.z.ai/api/anthropic"
+set -g __anth_provider__chutes__extra_env \
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL=GLM-4.7-Air" \
+    "ANTHROPIC_DEFAULT_SONNET_MODEL=GLM-4.7" \
+    "ANTHROPIC_DEFAULT_OPUS_MODEL=GLM-5" \
+    "CLAUDE_CODE_SUBAGENT_MODEL=GLM-4.7" \
+    "ANTHROPIC_SMALL_FAST_MODEL=GLM-4.7-Air"
 
 # Example: proxy / gateway
 # set -g __anth_provider__gateway__token    "TOKEN_FOR_GATEWAY"
