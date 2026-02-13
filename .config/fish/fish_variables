@@ -2,14 +2,14 @@
 # VERSION: 3.0
 SETUVAR --export BAT_THEME:rose\x2dpine\x2ddawn
 SETUVAR --export EDITOR:nvim
-SETUVAR --export GOBIN:/Users/ycm/\x2elocal/share/go/bin
-SETUVAR --export GOMODCACHE:/Users/ycm/\x2ecache/go
-SETUVAR --export --path GOPATH:/Users/ycm/\x2elocal/share/go
+SETUVAR --export GOBIN:/Users/hendricksmacbookair/\x2elocal/share/go/bin
+SETUVAR --export GOMODCACHE:/Users/hendricksmacbookair/\x2ecache/go
+SETUVAR --export --path GOPATH:/Users/hendricksmacbookair/\x2elocal/share/go
 SETUVAR --export --path PATH:/Users/ycm/\x2elocal/share/go/bin\x1e/Users/ycm/\x2elocal/share/bob/nvim\x2dbin\x1e/Users/ycm/\x2elocal/bin\x1e/opt/homebrew/bin\x1e/opt/homebrew/share/google\x2dcloud\x2dsdk/bin\x1e/Users/ycm/\x2elocal/share/go/bin\x1e/Users/ycm/\x2elocal/share/bob/nvim\x2dbin\x1e/Users/ycm/\x2elocal/bin\x1e/opt/homebrew/bin\x1e/usr/local/bin\x1e/System/Cryptexes/App/usr/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/local/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/appleinternal/bin\x1e/Users/ycm/\x2elocal/bin\x1e/opt/homebrew/bin\x1e/usr/local/bin\x1e/System/Cryptexes/App/usr/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/local/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/appleinternal/bin\x1e/Users/ycm/\x2elocal/bin\x1e/opt/homebrew/bin\x1e/opt/homebrew/share/google\x2dcloud\x2dsdk/bin\x1e/Users/ycm/\x2elocal/share/go/bin\x1e/Users/ycm/\x2elocal/share/bob/nvim\x2dbin\x1e/Users/ycm/\x2elocal/bin\x1e/opt/homebrew/bin\x1e/usr/local/bin\x1e/System/Cryptexes/App/usr/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/local/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/appleinternal/bin\x1e/Users/ycm/\x2elocal/bin\x1e/opt/homebrew/bin\x1e/usr/local/bin\x1e/System/Cryptexes/App/usr/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/local/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/bin\x1e/var/run/com\x2eapple\x2esecurity\x2ecryptexd/codex\x2esystem/bootstrap/usr/appleinternal/bin\x1e/Users/ycm/\x2espoof\x2ddpi/bin
-SETUVAR --export PNPM_HOME:/Users/ycm/\x2elocal/share/pnpm
+SETUVAR --export PNPM_HOME:/Users/hendricksmacbookair/\x2elocal/share/pnpm
 SETUVAR --export VISUAL:nvim
-SETUVAR __fish_initialized:4300
+SETUVAR __fish_initialized:3800
 SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fish_greeting:\x1d
 SETUVAR fish_key_bindings:fish_default_key_bindings
-SETUVAR fish_user_paths:/Users/ycm/\x2elocal/share/go/bin\x1e/Users/ycm/\x2elocal/share/bun/bin\x1e/Users/ycm/\x2elocal/bin\x1e/Users/ycm/\x2elocal/share/pnpm\x1e/Users/ycm/Library/pnpm\x1e/Users/ycm/\x2ecodeium/windsurf/bin\x1e/opt/homebrew/bin
+SETUVAR fish_user_paths:/Users/hendricksmacbookair/\x2elocal/share/pnpm\x1e/Users/hendricksmacbookair/\x2elocal/share/go/bin\x1e/Users/hendricksmacbookair/\x2elocal/share/bun/bin\x1e/Users/hendricksmacbookair/\x2elocal/bin\x1e/Users/ycm/\x2elocal/share/go/bin\x1e/Users/ycm/\x2elocal/share/bun/bin\x1e/Users/ycm/\x2elocal/bin\x1e/Users/ycm/\x2elocal/share/pnpm\x1e/Users/ycm/Library/pnpm\x1e/Users/ycm/\x2ecodeium/windsurf/bin\x1e/opt/homebrew/bin

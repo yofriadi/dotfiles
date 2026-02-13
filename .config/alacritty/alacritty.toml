@@ -7,6 +7,9 @@ position = { x = 475, y = 100 }
 decorations = "Buttonless"
 option_as_alt = "OnlyLeft"
 
+[scrolling]
+history = 100000
+
 [font]
 normal = { family = "JetBrainsMonoNL Nerd Font Mono", style = "Light" }
 italic = { family = "JetBrainsMonoNL Nerd Font Mono", style = "LightItalic" }
@@ -17,8 +20,7 @@ size = 15.5
 [cursor]
 style = { shape = "Beam", blinking = "Always" }
 blink_interval = 600
-
-[[keyboard.bindings]]
-key = "Return"
-mods = "Shift"
-chars = "\u001b\u000d"
+[keyboard]
+bindings = [
+  { key = "Return", mods = "Shift", chars = "\n" }
+]
