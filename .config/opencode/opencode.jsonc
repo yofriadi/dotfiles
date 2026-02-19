@@ -14,9 +14,38 @@
   },
   "autoupdate": true,
   "plugin": [
-    "opencode-antigravity-auth@1.4.6"
+    "opencode-antigravity-auth@1.5.1"
   ],
   "provider": {
+    "ollama": {
+      "models": {
+        "glm-5:cloud": {
+          "name": "glm-5:cloud"
+        },
+        "kimi-k2.5:cloud": {
+          "limit": {
+            "context": 262144,
+            "output": 262144
+          },
+          "name": "kimi-k2.5:cloud"
+        },
+        "minimax-m2.5:cloud": {
+          "name": "minimax-m2.5:cloud"
+        },
+        "qwen3-coder-next:cloud": {
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          },
+          "name": "qwen3-coder-next:cloud"
+        }
+      },
+      "name": "Ollama (cloud)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:11434/v1"
+      }
+    },
     "google": {
       "models": {
         "antigravity-gemini-3-pro": {
@@ -226,7 +255,7 @@
       "template": "Run the full test suite with coverage report and show any failures.\nFocus on the failing tests and suggest fixes.",
       "description": "Run tests with coverage",
       "agent": "build",
-      "model": "gemini/3-flash-preview"
+      "model": "google/gemini-3-flash-preview"
     }
   }
 }

@@ -16,3 +16,8 @@ end
 if test -f ~/.config/fish/themes/Rosé\ Pine\ Dawn.theme
     source ~/.config/fish/themes/Rosé\ Pine\ Dawn.theme
 end
+
+# Ensure Homebrew paths are configured
+if test -x /opt/homebrew/bin/brew
+    eval (/opt/homebrew/bin/brew shellenv)
+end

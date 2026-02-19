@@ -15,12 +15,6 @@ set -g __anth_provider__ollama__base_url "http://localhost:11434"
 # Base URL matches the official chutes_claude_code_env.sh script
 set -g __anth_provider__chutes__token    $CHUTES_API_KEY
 set -g __anth_provider__chutes__base_url "https://claude.chutes.ai"
-set -g __anth_provider__chutes__extra_env \
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL=moonshotai/Kimi-K2.5-TEE" \
-    "ANTHROPIC_DEFAULT_SONNET_MODEL=moonshotai/Kimi-K2.5-TEE" \
-    "ANTHROPIC_DEFAULT_OPUS_MODEL=moonshotai/Kimi-K2.5-TEE" \
-    "CLAUDE_CODE_SUBAGENT_MODEL=moonshotai/Kimi-K2.5-TEE" \
-    "ANTHROPIC_SMALL_FAST_MODEL=moonshotai/Kimi-K2.5-TEE"
 
 # z.ai (GLM / Zhipu AI)
 set -g __anth_provider__zai__token       $ZAI_API_KEY

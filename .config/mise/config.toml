@@ -1,6 +1,7 @@
 [tools]
 bun = "1"
 gemini-cli = "latest"
+"github:can1357/oh-my-pi" = "latest"
 go = "1.25"
 lua = "5.1.5"
 neovim = "latest"
