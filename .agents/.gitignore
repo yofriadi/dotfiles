@@ -1,0 +1,6 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Skill caches (e.g. skills/job-search/cache/)
+skills/*/cache/
