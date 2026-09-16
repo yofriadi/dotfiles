@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "showPruneStatusLine": true,
+  "showStartupNotice": true,
+  "summarizerModel": "google-antigravity/gemini-3.7-flash",
+  "summarizerThinking": "medium",
+  "pruneOn": "on-demand",
+  "remindUnprunedCount": true,
+  "notifySkipped": true,
+  "batchingMode": "agent-message"
+}

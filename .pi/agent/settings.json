@@ -1,0 +1,293 @@
+{
+  "hidePiDocs": true,
+  "compaction": {
+    "enabled": true,
+    "reserveTokens": 13600,
+    "keepRecentTokens": 20000
+  },
+  "warnings": {
+    "anthropicExtraUsage": false
+  },
+  "defaultModel": "gemini-3.8-flash",
+  "defaultProvider": "antigravity",
+  "defaultThinkingLevel": "high",
+  "editorPaddingX": 1,
+  "enabledModels": [
+    "apinex/free/qwen-3.8-max",
+    "apinex/free/gpt-5.6-luna",
+    "apinex/free/glm-5.3-flash",
+    "bai/qwen3.8-flash",
+    "kira2/qwen3.8-flash-free",
+    "kira2/glm-5.3-free",
+    "kira/qwen3.8-flash-free",
+    "kira/glm-5.3-free",
+    "tokenharbor/deepseek-v4.1-flash:free",
+    "cline/z-ai/glm-5.3-flash",
+    "hcnsec/kimi-k3",
+    "inferhub/combo/glm-flash",
+    "inferhub/combo/glm",
+    "inferhub/combo/kimi",
+    "inferhub/combo/qwen",
+    "inferhub/combo/gpt-luna",
+    "inferhub/combo/gpt-terra",
+    "inferhub/combo/gpt-sol",
+    "justwoker/claude-opus-5-thinking",
+    "antigravity/gemini-3.8-flash"
+  ],
+  "images": {
+    "autoResize": true
+  },
+  "lastChangelogVersion": "0.85.1",
+  "packages": [
+    "npm:@ff-labs/pi-fff",
+    "npm:@gotgenes/pi-permission-system",
+    "npm:pi-provider-kiro",
+    "npm:@championswimmer/pi-speedometer",
+    "git:github.com/championswimmer/pi-context-usage",
+    "git:github.com/championswimmer/pi-cache-graph",
+    "npm:@narumitw/pi-caffeinate",
+    "git:github.com/fitchmultz/pi-agent-browser-native",
+    "npm:@narumitw/pi-stamp",
+    "git:github.com/Rahularya01/pi-antigravity",
+    "git:github.com/maxpaulus43/pi-cline",
+    "npm:billion-context-pi",
+    "npm:donsetch",
+    "../../Developer/oss/pi-extensions/packages/pi-colgrep",
+    "../../Developer/oss/pi-extensions/packages/pi-session-recap",
+    "../../Developer/oss/pi-extensions/packages/pi-mlflow",
+    "../../Developer/oss/pi-extensions/packages/pi-subagent-herdr",
+    "../../Developer/oss/pi-extensions/packages/pi-hashline-edit",
+    "../../Developer/oss/pi-extensions/packages/pi-tilth",
+    "../../Developer/oss/pi-extensions/packages/pi-event-sounds",
+    "../../Developer/oss/pi-extensions/packages/pi-cc-ui",
+    "../../Developer/oss/pi-extensions/packages/pi-thinking-preview",
+    "../../Developer/oss/pi-extensions/packages/pi-auto-continue"
+  ],
+  "skills": [
+    ".agents/skills"
+  ],
+  "commands": [
+    ".agents/commands"
+  ],
+  "theme": "light",
+  "enableSkillCommands": true,
+  "quietStartup": false,
+  "enableInstallTelemetry": false,
+  "treeFilterMode": "no-tools",
+  "contextPrune": {
+    "enabled": true,
+    "showPruneStatusLine": false,
+    "summarizerModel": "bai/qwen3.8-flash",
+    "summarizerThinking": "high",
+    "pruneOn": "on-demand",
+    "batchingMode": "agent-message",
+    "quietOversizedSkips": true,
+    "minBatchChars": 5000,
+    "recoveryGraceTurns": 3,
+    "summarizerIdleTimeoutMs": 0,
+    "summarizerMaxTimeoutMs": 180000,
+    "summarizerConcurrency": 8,
+    "protectedTools": [],
+    "protectedPaths": [
+      "**/skills/**/*.md",
+      "**/*.env"
+    ],
+    "chainCompression": {
+      "enabled": true,
+      "rollingWindow": 3,
+      "stripFinalAssistantThinking": true,
+      "fuseRangeSummary": true
+    },
+    "purgeErrors": {
+      "enabled": true,
+      "cooldownTurns": 2,
+      "minArgChars": 500
+    },
+    "dedupByContentHash": true,
+    "autoBudgetThreshold": 0.9,
+    "spillThreshold": 65536,
+    "spillPreviewBytes": 2048,
+    "budgetTurnDelta": null,
+    "proactiveBudgetTiers": [
+      0.4,
+      0.6,
+      0.8
+    ],
+    "proactiveBatchLimit": 1,
+    "thinkingStrip": {
+      "enabled": true,
+      "keepLastTurns": 16
+    }
+  },
+  "sessionRecap": {
+    "model": "bai/qwen3.8-flash"
+  },
+  "models": {
+    "antigravity/gemini-3.8-flash": {
+      "enabled": true
+    }
+  },
+  "ayu": {
+    "rewind": {
+      "restoreOnTree": "never"
+    },
+    "checkpoint": {
+      "restoreOnResume": false,
+      "restoreOnFork": false,
+      "restoreOnClone": false,
+      "exclude": [
+        "tmp/generated",
+        "tmp/generated/**",
+        "node_modules",
+        "dist",
+        "build",
+        "target",
+        ".next",
+        ".nuxt",
+        ".svelte-kit",
+        ".parcel-cache",
+        ".turbo",
+        ".cache",
+        "coverage",
+        ".venv",
+        "venv",
+        ".tox",
+        "__pycache__",
+        "Pods",
+        "DerivedData",
+        ".terraform",
+        ".serverless",
+        ".aws-sam",
+        ".npm",
+        ".bun",
+        ".local",
+        ".cargo",
+        ".rustup",
+        ".gem",
+        ".rbenv",
+        ".pyenv",
+        ".nvm",
+        ".asdf",
+        ".Trash",
+        "Library",
+        "Applications",
+        "Developer",
+        "Documents",
+        "Downloads",
+        "Desktop",
+        "Movies",
+        "Music",
+        "Pictures",
+        "Public"
+      ],
+      "include": [
+        "tmp/generated/keep-me.txt"
+      ],
+      "maxFileMB": 25
+    }
+  },
+  "outputPad": 1,
+  "steeringMode": "one-at-a-time",
+  "doubleEscapeAction": "tree",
+  "tuiMode": "regular",
+  "retry": {
+    "enabled": true
+  },
+  "hideThinkingBlock": false,
+  "sounds": {
+    "enabled": true,
+    "volume": 0.1,
+    "events": {
+      "sessionStart": [],
+      "promptSubmit": [],
+      "agentStart": [
+        "~/.pi/agent/sounds/roger-that.mp3",
+        "~/.pi/agent/sounds/warcraft-peon-work-work.mp3",
+        "~/.pi/agent/sounds/tuturu.mp3",
+        "~/.pi/agent/sounds/hidup-jokowi-prabowo.mp3",
+        "~/.pi/agent/sounds/hub-intro.mp3",
+        "~/.pi/agent/sounds/run-vine.mp3",
+        "~/.pi/agent/sounds/dota-2-match-ready.mp3"
+      ],
+      "agentSettled": [
+        "~/.pi/agent/sounds/orc-peon-work-complete.mp3",
+        "~/.pi/agent/sounds/correct-answer-gameshow.mp3",
+        "~/.pi/agent/sounds/iphone-notification.mp3",
+        "~/.pi/agent/sounds/yaaaaaaaay.mp3",
+        "~/.pi/agent/sounds/heavenly-music.mp3",
+        "~/.pi/agent/sounds/wow-anime-meme.mp3",
+        "~/.pi/agent/sounds/apple-pay.mp3"
+      ],
+      "agentFailed": [
+        "~/.pi/agent/sounds/one-eternity-later-spongebob-time-card-9_pZPzxp4.mp3",
+        "~/.pi/agent/sounds/spongebob-2000-years-later-2019-download-link.mp3",
+        "~/.pi/agent/sounds/one-hour-later-spongebob-time-card-96.mp3",
+        "~/.pi/agent/sounds/spongebob-two-hours-later-2019-download-link.mp3"
+      ],
+      "agentAborted": [
+        "~/.pi/agent/sounds/jokowi-kaget.mp3"
+      ],
+      "question": [
+        "~/.pi/agent/sounds/spiderman-meme-song.mp3"
+      ],
+      "error": [
+        "~/.pi/agent/sounds/wut.mp3",
+        "~/.pi/agent/sounds/akh.mp3",
+        "~/.pi/agent/sounds/anime-ahh.mp3",
+        "~/.pi/agent/sounds/tip41-jokowi-kaget.mp3",
+        "~/.pi/agent/sounds/duck-toy.mp3",
+        "~/.pi/agent/sounds/mac-quack.mp3",
+        "~/.pi/agent/sounds/kentut.mp3"
+      ],
+      "quota": [
+        "~/.pi/agent/sounds/anjing-prabowo.mp3",
+        "~/.pi/agent/sounds/haiyaa.mp3",
+        "~/.pi/agent/sounds/alamak-najisnyee.mp3",
+        "~/.pi/agent/sounds/ah-capek-ah-komeng.mp3",
+        "~/.pi/agent/sounds/tip41-jokowi-kaget.mp3"
+      ],
+      "quotaExhausted": [
+        "~/.pi/agent/sounds/dari-mana-duitnya.mp3",
+        "~/.pi/agent/sounds/knightnogold1.mp3"
+      ]
+    },
+    "turns": {
+      "every": 25,
+      "files": [
+        "~/.pi/agent/sounds/a-few-moments-later-hd.mp3"
+      ]
+    },
+    "elapsed": {
+      "seconds": 300,
+      "repeat": true,
+      "files": [
+        "~/.pi/agent/sounds/5-minutes-later-spongebob.mp3"
+      ]
+    }
+  },
+  "autoContinue": {
+    "enabled": true,
+    "maxRetries": 3,
+    "backoffMultiplier": 1.5,
+    "baseDelayMs": "5s",
+    "maxDelayMs": "5m",
+    "rateLimit": {
+      "enabled": true,
+      "baseDelayMs": "70s",
+      "maxDelayMs": "5m",
+      "maxRetries": "90m",
+      "jitter": true,
+      "windowRetryMargin": 1.15,
+      "retryPrompt": ".",
+      "fatalFirst": true
+    },
+    "tokenLimit": {
+      "enabled": true,
+      "continuePrompt": "Continue exactly where you stopped. No preamble, no repetition."
+    },
+    "incompleteToolCall": {
+      "enabled": true,
+      "continuePrompt": "Re-issue that tool call with complete arguments. No preamble."
+    }
+  }
+}

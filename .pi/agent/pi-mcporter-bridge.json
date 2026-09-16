@@ -1,0 +1,15 @@
+{
+  "baseUrl": "http://127.0.0.1:4748/mcp",
+  "toolPrefix": "mcp_",
+  "callTimeoutMs": 120000,
+  "connectTimeoutMs": 5000,
+  "defaultEnabled": false,
+  "mcporterConfigPath": "~/.mcporter/mcporter.json",
+  "disabled": [],
+  "servers": [
+    { "name": "exa", "enabled": false },
+    { "name": "gh_grep", "enabled": true },
+    { "name": "lazyweb", "enabled": false },
+    { "name": "linkedin", "enabled": false }
+  ]
+}

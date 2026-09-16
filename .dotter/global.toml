@@ -22,5 +22,20 @@ depends = []
 ".config/wezterm" = { target = "~/.config/wezterm", type = "symbolic" }
 ".config/zed" = { target = "~/.config/zed", type = "symbolic" }
 ".config/zellij" = { target = "~/.config/zellij", type = "symbolic" }
+".agents" = { target = "~/.agents", type = "symbolic" }
+".pi/agent/settings.json" = { target = "~/.pi/agent/settings.json", type = "symbolic" }
+".pi/agent/keybindings.json" = { target = "~/.pi/agent/keybindings.json", type = "symbolic" }
+".pi/agent/models.json" = { target = "~/.pi/agent/models.json", type = "symbolic" }
+".pi/agent/claude-code-style.json" = { target = "~/.pi/agent/claude-code-style.json", type = "symbolic" }
+".pi/agent/hashline.json" = { target = "~/.pi/agent/hashline.json", type = "symbolic" }
+".pi/agent/pi-caffeinate.json" = { target = "~/.pi/agent/pi-caffeinate.json", type = "symbolic" }
+".pi/agent/pi-fff.json" = { target = "~/.pi/agent/pi-fff.json", type = "symbolic" }
+".pi/agent/pi-handoff-config.json" = { target = "~/.pi/agent/pi-handoff-config.json", type = "symbolic" }
+".pi/agent/pi-mcporter-bridge.json" = { target = "~/.pi/agent/pi-mcporter-bridge.json", type = "symbolic" }
+".pi/agent/SYSTEM.md" = { target = "~/.pi/agent/SYSTEM.md", type = "symbolic" }
+".pi/agent/generate-system-prompt.js" = { target = "~/.pi/agent/generate-system-prompt.js", type = "symbolic" }
+".pi/agent/sounds" = { target = "~/.pi/agent/sounds", type = "symbolic" }
+".pi/agent/context-prune" = { target = "~/.pi/agent/context-prune", type = "symbolic" }
+".pi/agent/extensions" = { target = "~/.pi/agent/extensions", type = "symbolic" }
 
 [default.variables]

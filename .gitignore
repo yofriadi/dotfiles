@@ -1,3 +1,19 @@
 .dotter/local.toml
 .dotter/cache.toml
 .dotter/cache
+
+# pi agent: secrets and machine-local state (never commit)
+.pi/agent/auth.json
+.pi/agent/pi-accounts.json
+.pi/agent/models-store.json
+.pi/agent/trust.json
+.pi/agent/sessions/
+.pi/agent/*.log
+.pi/agent/**/*.pre-symlink-bak
+.pi/agent/*.bak
+.pi/agent/npm/
+.pi/agent/git/
+.pi/agent/ayu/
+.pi/agent/fff/
+.pi/agent/pi-cache-optimizer-stats.d/
+.pi/agent/disabled-skill-overrides/

@@ -1,0 +1,30 @@
+{
+  "yoloMode": true,
+  "permission": {
+    "*": "allow",
+    "path": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow"
+    },
+    "bash": {
+      "*": "allow",
+      "rm *": "allow",
+      "sudo *": "deny",
+      "kill *": "ask",
+      "git reset *": "ask",
+      "git clean *": "ask",
+      "git branch -D *": "ask",
+      "git push *--force*": "ask",
+      "git push * -f*": "ask",
+      "git restore *": "ask",
+      "git checkout *": "ask",
+      "git commit --amend*": "ask",
+      "git rebase *": "ask",
+      "git tag -d *": "ask",
+      "git gc *": "ask",
+      "git reflog *": "ask"
+    }
+  }
+}

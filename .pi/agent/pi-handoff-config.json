@@ -1,0 +1,5 @@
+{
+  "model": "cline-pass/minimax-m3",
+  "threshold": { "type": "percent", "value": 80 },
+  "compaction": "enrich"
+}

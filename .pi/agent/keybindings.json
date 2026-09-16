@@ -1,0 +1,6 @@
+{
+  "tui.altScreen.pageUp": "shift+up",
+  "tui.altScreen.pageDown": "shift+down",
+  "tui.altScreen.previousPrompt": "ctrl+up",
+  "tui.altScreen.nextPrompt": "ctrl+down"
+}
