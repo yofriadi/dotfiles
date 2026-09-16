@@ -31,3 +31,27 @@ fish_add_path "$PNPM_HOME"
 # Rainfrog
 set -gx RAINFROG_CONFIG "$HOME/.config/rainfrog"
 set -gx RAINFROG_FAVORITES "$HOME/.local/share/rainfrog/favorites"
+
+# ante
+fish_add_path /Users/ycm/.ante/bin
+
+# cargo
+fish_add_path /Users/ycm/.cargo/bin
+
+# pnpm
+set -gx PNPM_HOME "/Users/ycm/.local/share/pnpm"
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+  set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+
+# OpenCLI configuration for background headless Chromium
+set -gx OPENCLI_CDP_ENDPOINT "http://127.0.0.1:9222"
+
+# Zerobrew
+#set -gx ZEROBREW_ROOT "$HOME/.local/share/zerobrew"
+#set -gx ZEROBREW_PREFIX "/opt/zerobrew"
+#fish_add_path "$ZEROBREW_PREFIX/bin"
+
+# Mason LSP servers (nvim)
+# Append so existing cargo/go/homebrew binaries keep priority.
+fish_add_path --append "$HOME/.local/share/nvim/n/mason/bin"

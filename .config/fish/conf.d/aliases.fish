@@ -4,6 +4,7 @@ alias .....='cd ../../../..'
 
 alias n='NVIM_APPNAME=nvim/n nvim'
 alias nn='NVIM_APPNAME=nvim/nn nvim'
+alias nnn='NVIM_APPNAME=nvim/nnn nvim'
 alias nan='NVIM_APPNAME=nvim/AstroNvim nvim'
 alias nvc='NVIM_APPNAME=nvim/NvChad nvim'
 alias nlv='NVIM_APPNAME=nvim/LazyVim nvim'
