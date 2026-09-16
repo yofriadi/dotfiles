@@ -7,10 +7,6 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-  "preferred_line_length": 80,
-  "edit_predictions": {
-    "provider": "zed"
-  },
   "show_wrap_guides": true,
   "git_panel": {
     "tree_view": true,
@@ -22,6 +18,9 @@
     },
     "favorite_models": [],
     "model_parameters": [],
+  },
+  "features": {
+    "edit_prediction_provider": "zed",
   },
   "telemetry": {
     "metrics": false,
