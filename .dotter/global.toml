@@ -18,7 +18,6 @@ depends = []
 ".config/karabiner" = { target = "~/.config/karabiner", type = "symbolic" }
 ".config/mise" = { target = "~/.config/mise", type = "symbolic" }
 ".config/opencode/opencode.jsonc" = { target = "~/.config/opencode/opencode.jsonc", type = "symbolic" }
-".config/starship.toml" = { target = "~/.config/starship.toml", type = "symbolic" }
 ".config/television" = { target = "~/.config/television", type = "symbolic" }
 ".config/wezterm" = { target = "~/.config/wezterm", type = "symbolic" }
 ".config/zed" = { target = "~/.config/zed", type = "symbolic" }

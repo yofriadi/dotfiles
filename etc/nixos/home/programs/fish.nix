@@ -21,7 +21,6 @@
       eval (zellij setup --generate-auto-start fish | string collect)
 
       zoxide init fish --cmd z | source
-      #starship init fish | source
       atuin init fish | source
     '';
 

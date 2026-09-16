@@ -15,14 +15,7 @@ if status is-interactive
         zoxide init fish --cmd z | source
     end
 
-    # Starship
-    if type -q starship
-        if not set -q __starship_rebuilt
-            __starship_rebuild
-            set -g __starship_rebuilt 1
-        end
-        starship init fish | source
-    end
+
     
     # Fzf
     if type -q fzf
