@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "rosepine",
+  "keybinds": {
+    "history_previous": "shift+up",
+    "history_next": "shift+down",
+    "messages_half_page_up": "up",
+    "messages_half_page_down": "down"
+  }
+}
