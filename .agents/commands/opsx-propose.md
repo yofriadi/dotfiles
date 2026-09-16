@@ -17,6 +17,7 @@ When ready to implement, run /opsx-apply
 **Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`). Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
 
 **Input**: The argument after `/opsx-propose` is the change name (kebab-case), OR a description of what the user wants to build.
+
 **Provided arguments**: $@
 
 **Steps**
@@ -88,7 +89,7 @@ After completing all artifacts, summarize:
 - Change name and location
 - List of artifacts created with brief descriptions
 - What's ready: "All artifacts created! Ready for implementation."
-- Prompt: "Before implementing, review the plan: `/plan-tandem-review <change>` (tandem) or `/plan-review <change>` (final gate only). Then `/opsx-apply`."
+- Prompt: "Before implementing, review the plan: `/adversarial-review <change>`. Then `/opsx-apply`."
 
 **Artifact Creation Guidelines**
 
