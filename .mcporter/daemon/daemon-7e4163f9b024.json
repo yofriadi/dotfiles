@@ -1,0 +1,19 @@
+{
+  "pid": 67215,
+  "socketPath": "/Users/ycm/.mcporter/daemon/daemon-7e4163f9b024.sock",
+  "configPath": "/private/tmp/config/mcporter.json",
+  "configLayers": [
+    {
+      "path": "/Users/ycm/.mcporter/mcporter.json",
+      "mtimeMs": 1783217414346.0623
+    },
+    {
+      "path": "/private/tmp/config/mcporter.json",
+      "mtimeMs": 1783323864654.2305
+    }
+  ],
+  "startedAt": 1783323870669,
+  "logPath": null,
+  "configMtimeMs": 1783323864654.2305,
+  "definitionHash": "e3c1f2d9a1b6db97"
+}

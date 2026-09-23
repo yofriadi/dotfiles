@@ -1,0 +1,11 @@
+{
+  "pid": 72352,
+  "protocolVersion": 3,
+  "startedAt": 1790072766993,
+  "configPath": "",
+  "socketPath": "/Users/ycm/.mcporter/daemon/user.sock",
+  "generation": "33eec9b2-6151-46c0-9430-1fb488146459",
+  "views": 0,
+  "servers": [],
+  "idleShutdownBlocked": false
+}

@@ -1,0 +1,2 @@
+MCPorter serve HTTP bridge http://127.0.0.1:4748/mcp
+[mcporter] Restarting 'exa' before retrying listTools: SSE error: Non-200 status code (405)
