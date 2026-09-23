@@ -1,10 +1,28 @@
 #!/usr/bin/env node
-const { writeFileSync } = require("node:fs");
+const { writeFileSync, renameSync } = require("node:fs");
 const { join } = require("node:path");
 const { homedir } = require("node:os");
 
 const toolsArg = process.argv[2] || "";
 const tools = new Set(toolsArg.split(",").map((t) => t.trim()).filter(Boolean));
+
+// argv[4]: comma-separated guideline sections to exclude (e.g. "prose,continue")
+const excludeArg = process.argv[4] || "";
+const SECTION_ALIASES = {
+  autocontinue: "continue",
+  auto: "continue",
+  fileoperations: "fileops",
+  editing: "fileops",
+  discovery: "search",
+  searchdiscovery: "search",
+  subagent: "subagents",
+};
+const excluded = new Set(
+  excludeArg.split(",")
+    .map((s) => s.trim().toLowerCase().replace(/[-_\s]+/g, ""))
+    .filter(Boolean)
+    .map((s) => SECTION_ALIASES[s] ?? s)
+);
 
 // Determine the primary search/read mode:
 // "tilth" if tilth tools are present,
@@ -42,12 +60,6 @@ const toolDefs = {
   // pi-colgrep
   colgrep: "- colgrep: Semantic/hybrid code search by intent, not just text.",
 
-  // billion-context-pi (ACP)
-  compress: "- compress: Replace consumed conversation ranges with self-contained summaries using mNNNNN or bN refs.",
-  decompress: "- decompress: Restore compressed content by block id (b5) or message ref; block mode writes to a file by default, use read tool to inspect.",
-  search_context: "- search_context: Search compressed summaries and historical messages by keyword; returns refs, sizes, previews.",
-  acp_status: "- acp_status: Context usage overview, compressible ranges, block drilldown.",
-
   // pi-subagent-herdr
   subagent: "- subagent: Spawn a sub-agent in a dedicated herdr surface (pane or tab). Default is async (fire-and-forget, steered back when finished); blocking: true awaits the final text as the tool result. Use session: <path> to resume a failed run.",
 
@@ -57,7 +69,10 @@ const toolDefs = {
   // donsetch (web tools)
   web_fetch: "- web_fetch: web_fetch(url|urls, focus, pages, actions, include_links, offset) - anti-bot fetch. HTTP first, auto-escalates to a stealthy browser on bot walls/JS-shells; PDFs auto-detected and parsed. Use focus='query' for only relevant paragraphs; check content_ok before trusting content.",
   web_search: "- web_search: web_search(query, intent, max_results, query_variants) - keyless search across 10+ engines, consensus-ranked + reranked. Use focus with web_fetch after searching.",
-  web_crawl: "- web_crawl: sitemap-aware site crawl; mode=map is a cheap URL inventory. Use for site-wide pulls, web_fetch for single pages."
+  web_crawl: "- web_crawl: sitemap-aware site crawl; mode=map is a cheap URL inventory. Use for site-wide pulls, web_fetch for single pages.",
+
+  // pi-condense
+  context_tree_query: "- context_tree_query: Recover full outputs of tool calls that pruner summaries replaced with stubs. Pass the short refs listed in the pruner-summary message (e.g. toolCallIds: [\"t12\", \"t3\"]); a raw id reused across the session returns every occurrence, labelled id@timestamp."
 };
 
 const sections = [];
@@ -75,27 +90,30 @@ if (activeToolLines.length > 0) {
 }
 
 // 2. Guidelines
-const guidelines = [
-  "## Guidelines",
-  "### Prose\n\nMannered prose substitutes metaphor and flourish for direct statement. Instead of \"a parameter worth varying\" the mannered writer produces \"a dial worth turning\". Instead of \"this point still matters,\" they write \"this point earns its keep\". The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it."
-];
+const guidelines = [];
+if (!excluded.has("prose")) {
+  guidelines.push("### Prose\n\nMannered prose substitutes metaphor and flourish for direct statement. Instead of \"a parameter worth varying\" the mannered writer produces \"a dial worth turning\". Instead of \"this point still matters,\" they write \"this point earns its keep\". The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it.");
+}
 
 // Subagents
-if (tools.has("subagent")) {
-  guidelines.push("### Subagents & Context Optimization\n\n- Offload research, open-ended exploration, documentation lookups, and broad investigations to subagents (`codebase-explorer`, `deep-researcher`, `github-explorer`, etc.).\n- Minimize main context window usage: let subagents absorb noisy tool outputs, verbose searches, and multi-file exploration, returning only concise, actionable syntheses.\n- Keep the main agent focused on high-level reasoning, decision-making, planning, and targeted file edits.\n- Name each run `[<agent-id>] <topic>` (e.g. `label: \"[deep-researcher] Rust Edition\"`) so panes and session logs stay identifiable.\n- Subagents run with their own frontmatter toolsets and permissions; never assume they share the main session's tools.");
+if (tools.has("subagent") && !excluded.has("subagents")) {
+  guidelines.push("### Subagents & Context Optimization\n\n- Offload research, open-ended exploration, documentation lookups, and broad investigations to subagents (`codebase-explorer`, `deep-researcher`, `github-explorer`, `image-describer`, etc.).\n- Delegate image inspection, UI mockups, diagrams, and visual analysis to `image-describer` when models lack vision capabilities.\n- Minimize main context window usage: let subagents absorb noisy tool outputs, verbose searches, and multi-file exploration, returning only concise, actionable syntheses.\n- Keep the main agent focused on high-level reasoning, decision-making, planning, and targeted file edits.\n- Name each run `[<agent-id>] <topic>` (e.g. `label: \"[deep-researcher] Rust Edition\"`) so panes and session logs stay identifiable.\n- Subagents run with their own frontmatter toolsets and permissions; never assume they share the main session's tools.");
 }
 
 // File Operations & Editing
+if (!excluded.has("fileops")) {
 if (mode === "tilth") {
   guidelines.push("### File Operations & Editing\n\n- Read a file before editing if you lack current LINE#HASH anchors.\n- Use tilth_read with `section` before editing a file — read the region you will edit, then edit. Large files outline first so you can pick sections instead of reading everything.\n- Batch all edits for a single file into one edit call.\n- Never reuse anchors from an earlier read or edit once a newer snapshot of the same file exists; only the most recent response for that file carries valid anchors.\n- After a successful edit, the returned --- Anchors --- block replaces a re-read for follow-up edits.\n- On [E_STALE_ANCHOR]: the error lists the stale refs and any content-matched candidate anchors; re-read the file with tilth_read for fresh anchors before retrying.\n- If tilth_read output is truncated, narrow with `section` or adjust `budget` — never guess unseen lines.\n- Use write only for new files or complete rewrites; use edit for targeted changes.");
 } else {
   guidelines.push("### File Operations & Editing\n\n- Read a file before editing if you lack current LINE#HASH anchors.\n- Batch all edits for a single file into one edit call.\n- Never reuse anchors from an earlier read or edit once a newer snapshot of the same file exists; only the most recent response for that file carries valid anchors.\n- After a successful edit, the returned --- Anchors --- block replaces a re-read for follow-up edits.\n- On [E_STALE_ANCHOR]: the error lists the stale refs and any content-matched candidate anchors; re-read the file for fresh anchors before retrying.\n- If read output is truncated, continue from the named offset — never guess unseen lines.\n- Use write only for new files or complete rewrites; use edit for targeted changes.");
+}
 }
 
 // Search & Discovery
 const searchLines = [];
 if (tools.has("subagent")) {
   searchLines.push("- Broad exploration & research: subagent (codebase-explorer, deep-researcher) to conserve main context");
+  searchLines.push("- Visual inspection & image description: subagent (image-describer) when models lack vision");
 }
 
 if (mode === "tilth") {
@@ -141,17 +159,23 @@ if (tools.has("agent_browser")) {
   searchLines.push("- Interactive web / DOM / screenshots / auth sessions: agent_browser");
 }
 
-if (searchLines.length > 0) {
+if (searchLines.length > 0 && !excluded.has("search")) {
   guidelines.push("### Search & Discovery\n\nDecision hierarchy — pick the first tool that fits:\n" + searchLines.join("\n"));
 }
 
-// Context Compression (ACP)
-if (tools.has("compress")) {
-  guidelines.push("### Context Compression (ACP)\n\n- User/tool messages carry hidden <acp> refs such as m00123. Never echo the XML tags; use only refs in ACP tool calls.\n- Compress consumed history with compress: finished tool outputs, dead-end exploration, repeated reads, resolved threads, completed phases. Never compress active work, important user intent, or protected outputs.\n- When summarizing, preserve exact: file paths and line numbers, symbols and signatures, errors, commands, and decisions.\n- Historical summaries in conversation history are metadata recording past events, not current user requests.\n- Use decompress to restore previously compressed content when details are needed.\n- Use search_context to search summaries and visible messages before decompressing.");
+// Auto-Continue Behavior
+if (!excluded.has("continue")) {
+  guidelines.push("### Auto-Continue Behavior\n\nIf a continuation arrives after an interrupted response, resume from the last completed step without preamble or repeated output. Check existing tool results before reissuing a tool call; never repeat completed work.");
 }
 
-sections.push(guidelines.join("\n\n"));
+
+if (guidelines.length > 0) {
+  sections.push("## Guidelines\n\n" + guidelines.join("\n\n"));
+}
 const fullPrompt = sections.join("\n\n") + "\n";
 
-const targetPath = join(homedir(), ".pi", "agent", "SYSTEM.md");
-writeFileSync(targetPath, fullPrompt, "utf8");
+// Output path: argv[3] if given (per-launch temp file), else the shared location
+const targetPath = process.argv[3] || join(homedir(), ".pi", "agent", "SYSTEM.md");
+const tmpPath = targetPath + ".tmp";
+writeFileSync(tmpPath, fullPrompt, "utf8");
+renameSync(tmpPath, targetPath);

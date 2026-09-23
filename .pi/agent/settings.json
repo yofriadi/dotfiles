@@ -13,17 +13,8 @@
   "defaultThinkingLevel": "high",
   "editorPaddingX": 1,
   "enabledModels": [
-    "apinex/free/qwen-3.8-max",
-    "apinex/free/gpt-5.6-luna",
-    "apinex/free/glm-5.3-flash",
-    "bai/qwen3.8-flash",
-    "kira2/qwen3.8-flash-free",
-    "kira2/glm-5.3-free",
-    "kira/qwen3.8-flash-free",
-    "kira/glm-5.3-free",
-    "tokenharbor/deepseek-v4.1-flash:free",
+    "cline/cline-free/deepseek-v4.1-flash",
     "cline/z-ai/glm-5.3-flash",
-    "hcnsec/kimi-k3",
     "inferhub/combo/glm-flash",
     "inferhub/combo/glm",
     "inferhub/combo/kimi",
@@ -31,7 +22,6 @@
     "inferhub/combo/gpt-luna",
     "inferhub/combo/gpt-terra",
     "inferhub/combo/gpt-sol",
-    "justwoker/claude-opus-5-thinking",
     "antigravity/gemini-3.8-flash"
   ],
   "images": {
@@ -40,9 +30,7 @@
   "lastChangelogVersion": "0.85.1",
   "packages": [
     "npm:@ff-labs/pi-fff",
-    "npm:@gotgenes/pi-permission-system",
     "npm:pi-provider-kiro",
-    "npm:@championswimmer/pi-speedometer",
     "git:github.com/championswimmer/pi-context-usage",
     "git:github.com/championswimmer/pi-cache-graph",
     "npm:@narumitw/pi-caffeinate",
@@ -50,7 +38,6 @@
     "npm:@narumitw/pi-stamp",
     "git:github.com/Rahularya01/pi-antigravity",
     "git:github.com/maxpaulus43/pi-cline",
-    "npm:billion-context-pi",
     "npm:donsetch",
     "../../Developer/oss/pi-extensions/packages/pi-colgrep",
     "../../Developer/oss/pi-extensions/packages/pi-session-recap",
@@ -61,7 +48,9 @@
     "../../Developer/oss/pi-extensions/packages/pi-event-sounds",
     "../../Developer/oss/pi-extensions/packages/pi-cc-ui",
     "../../Developer/oss/pi-extensions/packages/pi-thinking-preview",
-    "../../Developer/oss/pi-extensions/packages/pi-auto-continue"
+    "../../Developer/oss/pi-extensions/packages/pi-auto-continue",
+    "../../Developer/oss/pi-extensions/packages/pi-permission-system",
+    "../../Developer/oss/pi-extensions/packages/pi-condense"
   ],
   "skills": [
     ".agents/skills"

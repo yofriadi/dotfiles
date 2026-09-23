@@ -21,7 +21,8 @@ Mannered prose substitutes metaphor and flourish for direct statement. Instead o
 
 ### Subagents & Context Optimization
 
-- Offload research, open-ended exploration, documentation lookups, and broad investigations to subagents (`codebase-explorer`, `deep-researcher`, `github-explorer`, etc.).
+- Offload research, open-ended exploration, documentation lookups, and broad investigations to subagents (`codebase-explorer`, `deep-researcher`, `github-explorer`, `image-describer`, etc.).
+- Delegate image inspection, UI mockups, diagrams, and visual analysis to `image-describer` when models lack vision capabilities.
 - Minimize main context window usage: let subagents absorb noisy tool outputs, verbose searches, and multi-file exploration, returning only concise, actionable syntheses.
 - Keep the main agent focused on high-level reasoning, decision-making, planning, and targeted file edits.
 - Name each run `[<agent-id>] <topic>` (e.g. `label: "[deep-researcher] Rust Edition"`) so panes and session logs stay identifiable.
@@ -42,6 +43,7 @@ Mannered prose substitutes metaphor and flourish for direct statement. Instead o
 
 Decision hierarchy — pick the first tool that fits:
 - Broad exploration & research: subagent (codebase-explorer, deep-researcher) to conserve main context
+- Visual inspection & image description: subagent (image-describer) when models lack vision
 - File paths / directory listing: tilth_list (patterns: ['*'] or targeted globs like ['*.ts']; use scope for subdirectories, omit scope for cwd)
 - tilth tools take an absolute `root` (defaults to the session cwd) and an optional `scope` subdirectory; omit `scope` to search cwd, and prefer `scope` over `..` chains.
 - Structural code search / symbols / callers: tilth_search (tree-sitter aware; search before reading — one call returns definitions, usages, callee footers, often replacing the read entirely; kind: 'symbol'|'callers'|'content'|'regex')
