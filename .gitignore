@@ -5,6 +5,7 @@
 # pi agent: secrets and machine-local state (never commit)
 .pi/agent/auth.json
 .pi/agent/pi-accounts.json
+.pi/agent/*-accounts.json
 .pi/agent/models-store.json
 .pi/agent/trust.json
 .pi/agent/sessions/
@@ -33,3 +34,8 @@
 .config/fish/completions/docker.fish
 .config/fish/completions/kubectl.fish
 .config/fish/completions/orbctl.fish
+# herdr runtime files
+.config/herdr/*.log
+.config/herdr/*.sock
+.config/herdr/session.json
+.config/herdr/.plugins.lock

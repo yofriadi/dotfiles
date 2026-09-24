@@ -26,3 +26,10 @@ end
 if test -d "$HOME/.qoder/entry"
     fish_add_path -p -m "$HOME/.qoder/entry"
 end
+# Herdr config by OS
+switch (uname)
+    case Darwin
+        set -gx HERDR_CONFIG_PATH ~/.config/herdr/config.macos.toml
+    case Linux
+        set -gx HERDR_CONFIG_PATH ~/.config/herdr/config.linux.toml
+end
