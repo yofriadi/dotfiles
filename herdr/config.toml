@@ -1,0 +1,49 @@
+onboarding = false
+# herdr configuration
+# https://herdr.dev/docs/configuration/
+
+[theme]
+# Follow host terminal light/dark and switch Herdr UI themes.
+auto_switch = true
+dark_name = "tokyo-night"
+light_name = "rose-pine-dawn"
+
+[keys]
+# Prefix key to enter prefix mode (default: "ctrl+b")
+# macOS Option is written as `alt` in Herdr key names.
+prefix = "alt+."
+
+# Prefix-free navigation (the existing prefix bindings remain available).
+cycle_pane_next = "alt+j"
+cycle_pane_previous = "alt+k"
+previous_tab = "alt+h"
+next_tab = "alt+l"
+split_vertical = "alt+\\"
+split_horizontal = "alt+-"
+
+# Indexed jumps: switch workspace with prefix+1..9 instead of tab
+# Tab & Workspace management (prefix-free)
+new_tab = "alt+t"
+#close_tab = ["prefix+shift+x", "alt+w", "ctrl+alt+w"]
+#close_pane = ["prefix+x", "alt+x", "ctrl+alt+x"]
+toggle_sidebar = "alt+b"
+previous_workspace = "alt+["
+next_workspace = "alt+]"
+
+# Scroll & copy mode
+copy_mode = ["prefix+[", "alt+u", "ctrl+alt+u"]
+edit_scrollback = ["prefix+e", "alt+e", "ctrl+alt+e"]
+
+[ui]
+agent_panel_sort = "spaces"
+
+show_agent_labels_on_pane_borders = true
+status_indicators = "symbols"
+[ui.toast]
+delivery = "system"
+
+[experimental]
+pane_history = false
+
+[ui.sound]
+enabled = false
