@@ -1,6 +1,7 @@
 ---
 name: github-grep
 description: Search for literal code patterns, library usage, and syntax implementations across public GitHub repositories using grep.app via mcporter.
+disable-model-invocation: true
 ---
 
 ## Tool Call Syntax

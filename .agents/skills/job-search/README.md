@@ -34,4 +34,4 @@ You can prompt the agent naturally using any of the variables above:
   *"Search for remote Founding Engineer jobs in Indonesia, sort by latest"*
   - Under the hood: mcporter call linkedin.search_jobs keywords="founding engineer" location="Indonesia" work_type="remote" sort_by="date"
 
-in Indonesia, any work type for the last day, fulltime, 4 years above experience
+in APAC countries, any work type for the last day, full-time, 4 years above experience

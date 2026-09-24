@@ -71,6 +71,12 @@ Implement tasks from an OpenSpec change.
    - Mark task complete in the tasks file: `- [ ]` → `- [x]`
    - Continue to next task
 
+   **Defer code testing:**
+   - Do not write unit, integration, or end-to-end tests during implementation.
+   - Do not run test suites.
+   - Focus strictly on functional implementation code.
+   - If a task explicitly specifies writing or running tests, leave it unchecked (`- [ ]`). Testing is deferred to a subsequent pass with a smaller model after implementation is complete.
+
    **Pause if:**
    - Task is unclear → ask for clarification
    - Implementation reveals a design issue → suggest updating artifacts
@@ -113,7 +119,7 @@ Working on task 4/7: <task description>
 - [x] Task 2
 ...
 
-All implementation tasks complete! review the code with `/adversarial-review <change>`, then `/opsx-archive`.
+All implementation tasks complete! (Note: Code testing was deferred.) Run tests with a smaller model, review the code with `/adversarial-review <change>`, then `/opsx-archive`.
 ```
 
 **Output On Pause (Issue Encountered)**
@@ -143,6 +149,7 @@ What would you like to do?
 - If implementation reveals issues, pause and suggest artifact updates
 - Keep code changes minimal and scoped to each task
 - Update task checkbox immediately after completing each task
+- Defer code testing (unit, integration, e2e): do not write or run tests; leave test tasks unchecked for a subsequent pass with a smaller model
 - Pause on errors, blockers, or unclear requirements - don't guess
 - Use contextFiles from CLI output, don't assume specific file names
 
