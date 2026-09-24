@@ -3,8 +3,6 @@ set -gx EDITOR nvim
 
 if test -d /opt/homebrew/bin
     fish_add_path --append /opt/homebrew/bin
-else if test -d /home/linuxbrew/.linuxbrew/bin
-    fish_add_path --append /home/linuxbrew/.linuxbrew/bin
 end
 
 fish_add_path $HOME/.local/bin

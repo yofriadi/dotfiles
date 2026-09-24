@@ -4,9 +4,6 @@
 depends = []
 
 [default.files]
-".zshenv" = { target = "~/.zshenv", type = "symbolic" }
-".config/zsh" = { target = "~/.config/zsh", type = "symbolic" }
-".tmux.conf" = { target = "~/.tmux.conf", type = "symbolic" }
 ".config/alacritty" = { target = "~/.config/alacritty", type = "symbolic" }
 ".config/nvim" = { target = "~/.config/nvim", type = "symbolic" }
 ".config/atuin" = { target = "~/.config/atuin", type = "symbolic" }

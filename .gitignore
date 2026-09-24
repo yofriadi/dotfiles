@@ -29,5 +29,7 @@
 .config/fish/functions/fish_title.fish
 .config/fish/functions/fisher.fish
 
-# zsh compiled wordcode (architecture-specific)
-*.zwc
+# OrbStack completions (auto-managed on macOS)
+.config/fish/completions/docker.fish
+.config/fish/completions/kubectl.fish
+.config/fish/completions/orbctl.fish
