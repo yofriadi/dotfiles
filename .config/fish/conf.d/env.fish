@@ -1,7 +1,11 @@
 set -gx VISUAL nvim
 set -gx EDITOR nvim
 
-fish_add_path --append /opt/homebrew/bin
+if test -d /opt/homebrew/bin
+    fish_add_path --append /opt/homebrew/bin
+else if test -d /home/linuxbrew/.linuxbrew/bin
+    fish_add_path --append /home/linuxbrew/.linuxbrew/bin
+end
 
 fish_add_path $HOME/.local/bin
 
@@ -16,7 +20,9 @@ set -x GOBIN "$GOPATH/bin"
 fish_add_path "$GOBIN"
 
 # Gcloud
-if type -q brew
+if test -f "$HOME/.local/bin/google-cloud-sdk/path.fish.inc"
+    source "$HOME/.local/bin/google-cloud-sdk/path.fish.inc"
+else if type -q brew
     if test -f (brew --prefix)/share/google-cloud-sdk/path.fish.inc
         source (brew --prefix)/share/google-cloud-sdk/path.fish.inc
     end

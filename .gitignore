@@ -28,3 +28,6 @@
 .config/fish/functions/fish_prompt.fish
 .config/fish/functions/fish_title.fish
 .config/fish/functions/fisher.fish
+
+# zsh compiled wordcode (architecture-specific)
+*.zwc
