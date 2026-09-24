@@ -17,3 +17,14 @@
 .pi/agent/fff/
 .pi/agent/pi-cache-optimizer-stats.d/
 .pi/agent/disabled-skill-overrides/
+
+# fish: machine-local state and Fisher-managed plugins (managed via fish_plugins)
+.config/fish/fish_variables
+.config/fish/completions/fisher.fish
+.config/fish/conf.d/_pure_init.fish
+.config/fish/conf.d/pure.fish
+.config/fish/functions/_pure*.fish
+.config/fish/functions/fish_mode_prompt.fish
+.config/fish/functions/fish_prompt.fish
+.config/fish/functions/fish_title.fish
+.config/fish/functions/fisher.fish

@@ -1,5 +1,5 @@
-set -Ux VISUAL nvim
-set -Ux EDITOR nvim
+set -gx VISUAL nvim
+set -gx EDITOR nvim
 
 fish_add_path --append /opt/homebrew/bin
 
@@ -22,27 +22,25 @@ if type -q brew
     end
 end
 
-set -Ux BAT_THEME rose-pine-dawn
+set -gx BAT_THEME rose-pine-dawn
 
 # pnpm
-set -Ux PNPM_HOME "$HOME/.local/share/pnpm"
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
 fish_add_path "$PNPM_HOME"
+if not string match -q -- "$PNPM_HOME/bin" $PATH
+    set -gx PATH "$PNPM_HOME/bin" $PATH
+end
+
 
 # Rainfrog
 set -gx RAINFROG_CONFIG "$HOME/.config/rainfrog"
 set -gx RAINFROG_FAVORITES "$HOME/.local/share/rainfrog/favorites"
 
 # ante
-fish_add_path /Users/ycm/.ante/bin
+fish_add_path "$HOME/.ante/bin"
 
 # cargo
-fish_add_path /Users/ycm/.cargo/bin
-
-# pnpm
-set -gx PNPM_HOME "/Users/ycm/.local/share/pnpm"
-if not string match -q -- "$PNPM_HOME/bin" $PATH
-  set -gx PATH "$PNPM_HOME/bin" $PATH
-end
+fish_add_path "$HOME/.cargo/bin"
 
 # OpenCLI configuration for background headless Chromium
 set -gx OPENCLI_CDP_ENDPOINT "http://127.0.0.1:9222"

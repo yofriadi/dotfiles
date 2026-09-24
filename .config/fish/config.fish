@@ -22,6 +22,7 @@ if test -x /opt/homebrew/bin/brew
     eval (/opt/homebrew/bin/brew shellenv)
 end
 
-# QODER_DISPATCHER_PATH v1
-fish_add_path -p -m $HOME/.qoder/entry
-# END QODER_DISPATCHER_PATH v1
+# Qoder
+if test -d "$HOME/.qoder/entry"
+    fish_add_path -p -m "$HOME/.qoder/entry"
+end
